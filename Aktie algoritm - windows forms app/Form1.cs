@@ -23,7 +23,7 @@ namespace Aktie_algoritm___windows_forms_app
 
         BalanceSheetResponse BalanceSheet = new BalanceSheetResponse();
 
-        GlobalQuoteResponse Globalquote = new GlobalQuoteResponse();
+        GlobalQuoteResponse GlobalQuote = new GlobalQuoteResponse();
 
         bool demo = false; // for testing and not wasting API calls
 
@@ -39,8 +39,9 @@ namespace Aktie_algoritm___windows_forms_app
         private async void btnSökAktie_Click(object sender, EventArgs e)
         {
             string intag = tbxSymbol.Text;
-
-            await TickerSearch.SättaVärde(intag, apiKey, demo);
+            
+            
+           // await TickerSearch.SättaVärde(intag, apiKey, demo);
             try
             {
                 LbxTickerSök.Items.Clear();
@@ -73,39 +74,16 @@ namespace Aktie_algoritm___windows_forms_app
             try
             {
                 string val = LbxTickerSök.SelectedItem.ToString();
-                await HittaVärde(symbol, apiKey, val);
+                // hitta värden här
+
+
                 //göra något med data
                 tbxData.Text = "lyckat?";
             }
             catch (Exception ex)
             { MessageBox.Show("Exception caught: "+ex); }
         }
-        async Task HittaVärde(string symbol, string apiKey, string requestType)
-        {
-
-            switch (requestType)
-            {
-               
-
-                case "Income_Statement":
-                    await IncomeStatement.SättaVärde(symbol, apiKey, demo);
-                    break;
-                case "Balance_Sheet":
-                    await BalanceSheet.SättaVärde(symbol, apiKey, demo);
-                    break;
-                case "Ticker_Search":
-                    await TickerSearch.SättaVärde(symbol, apiKey, demo);
-                    break;
-                case "Global_Quote":
-                    await Globalquote.SättaVärde(symbol, apiKey, demo);
-                    break;
-                case "Market_status":
-
-                    break;
-
-            }
-
-        }
+        
 
         private void tbxSymbol_TextChanged(object sender, EventArgs e)
         {
@@ -114,36 +92,41 @@ namespace Aktie_algoritm___windows_forms_app
         }
         private async void btnValidering_Click(object sender, EventArgs e)
         {
+            //testing
+           await SetValue.Prepare( IncomeStatement, "IBM", "DEMO");
+            SetValue.SetObjectValue(ref IncomeStatement);
+            tbxData.Text += IncomeStatement.ic_annualReports[1].totalRevenue+"\n";
+            tbxData.Text += IncomeStatement.ic_annualReports[1].reportedCurrency + "\n";
+            tbxData.Text += IncomeStatement.ic_annualReports[1].otherNonOperatingIncome;
+            //string intag = tbxApiKey.Text;
 
-            string intag = tbxApiKey.Text;
-            
-            if (demo == false)
-            {
-                await HittaVärde("IBM", intag, "Income_Statement");
-                
-                if (IncomeStatement.success == true)
-                {
+            //if (demo == false)
+            //{
+            //   //hitta värden här
 
-                    MessageBox.Show("Lyckad validering");
+            //    if (IncomeStatement.success == true)
+            //    {
 
-                    gbxAktieSök.Enabled = true;
-                
-                    apiKey = intag;
+            //        MessageBox.Show("Lyckad validering");
 
-                }
-                else
-                {
-                    
-                    //error
-                    MessageBox.Show("ogiltig APIKEY, kontrollera att din APIKEY är korrekt");
-                }
-            }
-            else
-            {
-                gbxAktieSök.Enabled = true;
-              
-                apiKey = intag;
-            }
+            //        gbxAktieSök.Enabled = true;
+
+            //        apiKey = intag;
+
+            //    }
+            //    else
+            //    {
+
+            //        //error
+            //        MessageBox.Show("ogiltig APIKEY, kontrollera att din APIKEY är korrekt");
+            //    }
+            //}
+            //else
+            //{
+            //    gbxAktieSök.Enabled = true;
+
+            //    apiKey = intag;
+            //}
 
         }
 

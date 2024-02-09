@@ -51,10 +51,9 @@
             // 
             // tbxSymbol
             // 
-            this.tbxSymbol.Location = new System.Drawing.Point(139, 50);
-            this.tbxSymbol.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbxSymbol.Location = new System.Drawing.Point(208, 77);
             this.tbxSymbol.Name = "tbxSymbol";
-            this.tbxSymbol.Size = new System.Drawing.Size(185, 20);
+            this.tbxSymbol.Size = new System.Drawing.Size(276, 26);
             this.tbxSymbol.TabIndex = 0;
             this.tbxSymbol.Text = " ";
             this.tbxSymbol.TextChanged += new System.EventHandler(this.tbxSymbol_TextChanged);
@@ -62,11 +61,10 @@
             // tbxData
             // 
             this.tbxData.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbxData.Location = new System.Drawing.Point(29, 417);
-            this.tbxData.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbxData.Location = new System.Drawing.Point(44, 642);
             this.tbxData.Name = "tbxData";
             this.tbxData.ReadOnly = true;
-            this.tbxData.Size = new System.Drawing.Size(480, 361);
+            this.tbxData.Size = new System.Drawing.Size(718, 553);
             this.tbxData.TabIndex = 1;
             this.tbxData.Text = "";
             // 
@@ -74,14 +72,14 @@
             // 
             this.lbxRequestType.Enabled = false;
             this.lbxRequestType.FormattingEnabled = true;
+            this.lbxRequestType.ItemHeight = 20;
             this.lbxRequestType.Items.AddRange(new object[] {
             "Income_Statement",
             "Balance_Sheet",
             "Global_Quote"});
-            this.lbxRequestType.Location = new System.Drawing.Point(67, 289);
-            this.lbxRequestType.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lbxRequestType.Location = new System.Drawing.Point(100, 445);
             this.lbxRequestType.Name = "lbxRequestType";
-            this.lbxRequestType.Size = new System.Drawing.Size(168, 95);
+            this.lbxRequestType.Size = new System.Drawing.Size(250, 144);
             this.lbxRequestType.TabIndex = 2;
             // 
             // directorySearcher1
@@ -95,20 +93,19 @@
             this.LbxTickerSök.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LbxTickerSök.Enabled = false;
             this.LbxTickerSök.FormattingEnabled = true;
-            this.LbxTickerSök.Location = new System.Drawing.Point(51, 125);
-            this.LbxTickerSök.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.LbxTickerSök.ItemHeight = 20;
+            this.LbxTickerSök.Location = new System.Drawing.Point(76, 192);
             this.LbxTickerSök.Name = "LbxTickerSök";
-            this.LbxTickerSök.Size = new System.Drawing.Size(153, 67);
+            this.LbxTickerSök.Size = new System.Drawing.Size(228, 102);
             this.LbxTickerSök.TabIndex = 3;
             this.LbxTickerSök.SelectedIndexChanged += new System.EventHandler(this.LbxTickerSök_SelectedIndexChanged);
             this.LbxTickerSök.SelectedValueChanged += new System.EventHandler(this.LbxTickerSök_SelectedValueChanged);
             // 
             // btnKör
             // 
-            this.btnKör.Location = new System.Drawing.Point(290, 320);
-            this.btnKör.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnKör.Location = new System.Drawing.Point(435, 492);
             this.btnKör.Name = "btnKör";
-            this.btnKör.Size = new System.Drawing.Size(83, 33);
+            this.btnKör.Size = new System.Drawing.Size(124, 51);
             this.btnKör.TabIndex = 5;
             this.btnKör.Text = "Run program";
             this.btnKör.UseVisualStyleBackColor = true;
@@ -117,20 +114,18 @@
             // lblNamn
             // 
             this.lblNamn.AutoSize = true;
-            this.lblNamn.Location = new System.Drawing.Point(9, 54);
-            this.lblNamn.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblNamn.Location = new System.Drawing.Point(14, 83);
             this.lblNamn.Name = "lblNamn";
-            this.lblNamn.Size = new System.Drawing.Size(130, 13);
+            this.lblNamn.Size = new System.Drawing.Size(190, 20);
             this.lblNamn.TabIndex = 6;
             this.lblNamn.Text = "Skriv in namnet på aktien:";
             // 
             // btnSökAktie
             // 
             this.btnSökAktie.Enabled = false;
-            this.btnSökAktie.Location = new System.Drawing.Point(349, 44);
-            this.btnSökAktie.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSökAktie.Location = new System.Drawing.Point(524, 68);
             this.btnSökAktie.Name = "btnSökAktie";
-            this.btnSökAktie.Size = new System.Drawing.Size(158, 25);
+            this.btnSökAktie.Size = new System.Drawing.Size(237, 38);
             this.btnSökAktie.TabIndex = 7;
             this.btnSökAktie.Text = "Sök Ticker namn";
             this.btnSökAktie.UseVisualStyleBackColor = true;
@@ -148,11 +143,9 @@
             this.gbxAktieSök.Controls.Add(this.lbxRequestType);
             this.gbxAktieSök.Controls.Add(this.tbxSymbol);
             this.gbxAktieSök.Enabled = false;
-            this.gbxAktieSök.Location = new System.Drawing.Point(8, 34);
-            this.gbxAktieSök.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gbxAktieSök.Location = new System.Drawing.Point(12, 52);
             this.gbxAktieSök.Name = "gbxAktieSök";
-            this.gbxAktieSök.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.gbxAktieSök.Size = new System.Drawing.Size(550, 805);
+            this.gbxAktieSök.Size = new System.Drawing.Size(825, 1238);
             this.gbxAktieSök.TabIndex = 8;
             this.gbxAktieSök.TabStop = false;
             this.gbxAktieSök.Text = "Aktie Sök";
@@ -160,39 +153,35 @@
             // lblTickerSök
             // 
             this.lblTickerSök.AutoSize = true;
-            this.lblTickerSök.Location = new System.Drawing.Point(49, 103);
-            this.lblTickerSök.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblTickerSök.Location = new System.Drawing.Point(74, 158);
             this.lblTickerSök.Name = "lblTickerSök";
-            this.lblTickerSök.Size = new System.Drawing.Size(60, 13);
+            this.lblTickerSök.Size = new System.Drawing.Size(85, 20);
             this.lblTickerSök.TabIndex = 9;
             this.lblTickerSök.Text = "Välj Ticker:";
             // 
             // tbxTickerSearchInfo
             // 
-            this.tbxTickerSearchInfo.Location = new System.Drawing.Point(269, 118);
-            this.tbxTickerSearchInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbxTickerSearchInfo.Location = new System.Drawing.Point(404, 182);
             this.tbxTickerSearchInfo.Multiline = true;
             this.tbxTickerSearchInfo.Name = "tbxTickerSearchInfo";
             this.tbxTickerSearchInfo.ReadOnly = true;
-            this.tbxTickerSearchInfo.Size = new System.Drawing.Size(189, 83);
+            this.tbxTickerSearchInfo.Size = new System.Drawing.Size(282, 126);
             this.tbxTickerSearchInfo.TabIndex = 8;
             // 
             // btnArkiverade
             // 
-            this.btnArkiverade.Location = new System.Drawing.Point(672, 710);
-            this.btnArkiverade.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnArkiverade.Location = new System.Drawing.Point(1008, 1092);
             this.btnArkiverade.Name = "btnArkiverade";
-            this.btnArkiverade.Size = new System.Drawing.Size(158, 25);
+            this.btnArkiverade.Size = new System.Drawing.Size(237, 38);
             this.btnArkiverade.TabIndex = 9;
             this.btnArkiverade.Text = "Utifrån arkiv // projekt";
             this.btnArkiverade.UseVisualStyleBackColor = true;
             // 
             // tbxApiKey
             // 
-            this.tbxApiKey.Location = new System.Drawing.Point(599, 38);
-            this.tbxApiKey.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbxApiKey.Location = new System.Drawing.Point(898, 58);
             this.tbxApiKey.Name = "tbxApiKey";
-            this.tbxApiKey.Size = new System.Drawing.Size(157, 20);
+            this.tbxApiKey.Size = new System.Drawing.Size(234, 26);
             this.tbxApiKey.TabIndex = 10;
             this.tbxApiKey.TextChanged += new System.EventHandler(this.tbxApiKey_TextChanged);
             // 
@@ -200,20 +189,17 @@
             // 
             this.lblAktieNyckel.AutoSize = true;
             this.lblAktieNyckel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAktieNyckel.Location = new System.Drawing.Point(596, 23);
-            this.lblAktieNyckel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblAktieNyckel.Location = new System.Drawing.Point(894, 35);
             this.lblAktieNyckel.Name = "lblAktieNyckel";
-            this.lblAktieNyckel.Size = new System.Drawing.Size(178, 13);
+            this.lblAktieNyckel.Size = new System.Drawing.Size(249, 20);
             this.lblAktieNyckel.TabIndex = 11;
             this.lblAktieNyckel.Text = "Din AlphaVantage API nyckel:";
             // 
             // btnValidering
             // 
-            this.btnValidering.Enabled = false;
-            this.btnValidering.Location = new System.Drawing.Point(775, 36);
-            this.btnValidering.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnValidering.Location = new System.Drawing.Point(1162, 55);
             this.btnValidering.Name = "btnValidering";
-            this.btnValidering.Size = new System.Drawing.Size(96, 21);
+            this.btnValidering.Size = new System.Drawing.Size(144, 32);
             this.btnValidering.TabIndex = 12;
             this.btnValidering.Text = "Validera nyckel";
             this.btnValidering.UseVisualStyleBackColor = true;
@@ -221,21 +207,19 @@
             // 
             // tbxMarketOpenClose
             // 
-            this.tbxMarketOpenClose.Location = new System.Drawing.Point(1037, 21);
-            this.tbxMarketOpenClose.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tbxMarketOpenClose.Location = new System.Drawing.Point(1556, 32);
             this.tbxMarketOpenClose.Multiline = true;
             this.tbxMarketOpenClose.Name = "tbxMarketOpenClose";
             this.tbxMarketOpenClose.ReadOnly = true;
-            this.tbxMarketOpenClose.Size = new System.Drawing.Size(189, 83);
+            this.tbxMarketOpenClose.Size = new System.Drawing.Size(282, 126);
             this.tbxMarketOpenClose.TabIndex = 10;
             // 
             // btnMarketStatus
             // 
             this.btnMarketStatus.Enabled = false;
-            this.btnMarketStatus.Location = new System.Drawing.Point(1079, 118);
-            this.btnMarketStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnMarketStatus.Location = new System.Drawing.Point(1618, 182);
             this.btnMarketStatus.Name = "btnMarketStatus";
-            this.btnMarketStatus.Size = new System.Drawing.Size(117, 20);
+            this.btnMarketStatus.Size = new System.Drawing.Size(176, 31);
             this.btnMarketStatus.TabIndex = 13;
             this.btnMarketStatus.Text = "Kolla marknadsstatus";
             this.btnMarketStatus.UseVisualStyleBackColor = true;
@@ -243,10 +227,9 @@
             // CheckBoxDemo
             // 
             this.CheckBoxDemo.AutoSize = true;
-            this.CheckBoxDemo.Location = new System.Drawing.Point(928, 14);
-            this.CheckBoxDemo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CheckBoxDemo.Location = new System.Drawing.Point(1392, 22);
             this.CheckBoxDemo.Name = "CheckBoxDemo";
-            this.CheckBoxDemo.Size = new System.Drawing.Size(58, 17);
+            this.CheckBoxDemo.Size = new System.Drawing.Size(83, 24);
             this.CheckBoxDemo.TabIndex = 14;
             this.CheckBoxDemo.Text = "DEMO";
             this.CheckBoxDemo.UseVisualStyleBackColor = true;
@@ -254,9 +237,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1250, 768);
+            this.ClientSize = new System.Drawing.Size(1875, 1182);
             this.Controls.Add(this.CheckBoxDemo);
             this.Controls.Add(this.btnMarketStatus);
             this.Controls.Add(this.tbxMarketOpenClose);
@@ -265,7 +248,6 @@
             this.Controls.Add(this.tbxApiKey);
             this.Controls.Add(this.gbxAktieSök);
             this.Controls.Add(this.btnArkiverade);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.gbxAktieSök.ResumeLayout(false);
