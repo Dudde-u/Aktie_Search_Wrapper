@@ -1,233 +1,14 @@
-﻿using ClassLibrary;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Security.AccessControl;
-using System.Threading;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace ClassLibrary 
+namespace Class_library
 {
-    public class SetValue
-    {
 
-
-        private static string jsonString { get; set; }
-        private static string symbol;
-        private static string apiKey;
-        private static string address;
-        private static string JsonString
-        {
-            get
-            {
-                if (jsonString != null && jsonString != "")
-                {
-                    return jsonString;
-                }
-                else
-                {
-                    MessageBox.Show("symbol is null");
-                    throw new Exception();
-                }
-            }
-            set { jsonString = value; }
-        }
-        private static string Symbol {
-            get
-            {
-                if (symbol != null && symbol != "")
-                {
-                    return symbol;
-                }
-                else
-                {
-                    MessageBox.Show("symbol is null");
-                    throw new Exception();
-                }
-            }
-            set { symbol = value; }
-        }
-        
-        private static string Apikey {
-            get
-            {
-                if (apiKey != null && apiKey != "")
-                {
-                    return apiKey;
-                }
-                else
-                {
-                    MessageBox.Show("ApiKey is null");
-                    throw new Exception();
-                }
-            }
-            set { apiKey = value; }
-        }
-        public static string Address
-        {
-
-            get
-            {
-                if (address != null && address != "")
-                {
-                    return address;
-                }
-                else
-                {
-                    MessageBox.Show("adress is null");
-                    throw new Exception();
-                }
-            }
-            set { address = value; }
-        }
-
-        public static Task AddressSet<TargetObject>(TargetObject target)
-        {
-            //switch måste fixas, ytterligare går det säkert att göra på ett mer effektivt sätt
-            //og = switch(target.ToString())
-            switch ("IncomeStatement")
-            {
-                case "TickerSearch":
-                    Address = $"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={Symbol}&apikey={Apikey}";
-                    break;
-                case "GlobalQuote":
-                    Address = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={Symbol}&apikey={Apikey}";
-                    break;
-                case "IncomeStatement":
-                    Address = $"https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol={Symbol}&apikey={Apikey}";
-                    break;
-                case "BalanceSheet":
-                    Address = $"https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol={Symbol}&apikey={Apikey}";
-                    break;
-                default:
-                    MessageBox.Show("TargetObject not valid");
-
-                    throw new Exception();
-                    
-            }
-            return Task.CompletedTask;
-        }
-        public static async Task SetJsonString()
-        {
-            HttpClient httpClient = HttpClientProvider.GetHttpClient();
-
-            HttpResponseMessage response = await httpClient.GetAsync(address);
-
-            JsonString = await response.Content.ReadAsStringAsync();
-        }
-
-       
-        public static void SetObjectValue<TargetClass>(ref TargetClass TargetObject) 
-        {
-            try
-            {
-                TargetObject = JsonConvert.DeserializeObject<TargetClass>(jsonString);
-
-            }
-            catch (HttpRequestException ex)
-            {
-                MessageBox.Show($"HTTP Request Exception: {ex.Message}");
-            }
-            catch (Newtonsoft.Json.JsonException ex)
-            {
-                MessageBox.Show($"JSON Deserialization Exception: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
-            }
-
-        }
-        public static async Task Prepare<TargetClass>(TargetClass TargetObject,string symbol,string apikey)
-        {
-            Symbol = symbol;
-            Apikey = apikey;
-
-            await AddressSet(TargetObject);
-            
-           await SetJsonString();
-        
-        }
-    }
-}
-    public static class HttpClientProvider 
-    {
-        // HttpClient instance
-        private static readonly HttpClient httpClient = new HttpClient();
-
-        // Global HttpClient Instance
-        public static HttpClient GetHttpClient()
-        {
-            return httpClient;
-        }
-        // Disposing here:
-        public static void DisposeHttpClient()
-        {
-            httpClient.Dispose();
-        }
-
-
-
-    }
-    public class BalanceSheetResponse
-    {
-       
-        [JsonProperty("symbol")]
-        public string symbol { get; set; }
-
-        [JsonProperty("annualReports")]
-        public List<bs_AnnualReport> bs_annualReports { get; set; }
-        [JsonProperty("quarterlyReports")]
-        public List<bs_QuarterlyReport> bs_quarterlyReports { get; set; }
-
-  
-    }
-
-    public class GlobalMarketResponse //market open/close status
-    {
-        [JsonProperty("endpoint")]
-        public string Endpoint { get; set; }
-
-        [JsonProperty("markets")]
-        public List<MarketData> Markets { get; set; }
-
-      
-    }
-
-    public class GlobalQuoteResponse // quote endpoint/global quote
-    {
-        [JsonProperty("Global Quote")]
-        public GlobalQuote GlobalQuote { get; set; }
-
-       
-
-    }
-    public class TickerSearchResponse
-    {
-
-        [JsonProperty("bestMatches")]
-        public List<BestMatch> bestMatches { get; set; }
-       
-
-    }
-
-    public class IncomeStatementResponse // income_statement
-    {
-        [JsonProperty("symbol")]
-        public string symbol_ { get; set; }
-        [JsonProperty("annualReports")]
-        public List<ic_Annualreport> ic_annualReports { get; set; }
-        [JsonProperty("quarterlyReports")]
-        public List<ic_Quarterlyreport> ic_quarterlyReports { get; set; }
-        public bool success { get; set; }
-
-    }
-
-
-    public class OverviewResponse
+    public class OverviewResponse : Responses
     {
 
         public string Symbol { get; set; }
@@ -293,9 +74,6 @@ namespace ClassLibrary
         public string SharesOutstanding { get; set; }
         public string DividendDate { get; set; }
         public string ExDividendDate { get; set; }
-
-
-
     }
 
 
@@ -366,14 +144,6 @@ namespace ClassLibrary
         [JsonProperty("9. matchScore")]
         public string matchScore { get; set; }
     }
-
-
-
-
-
-
-
-
     // Define a class to represent the JSON response
 
     public class MarketData    //market open/close status
@@ -399,9 +169,6 @@ namespace ClassLibrary
         [JsonProperty("notes")]
         public string notes { get; set; }
     }
-
-
-
 
 
 
@@ -693,125 +460,121 @@ namespace ClassLibrary
     }
 
 
-public class bs_QuarterlyReport : BalanceSheetResponse//balancesheet
-{
-    [JsonProperty("fiscalDateEnding")]
-    public string fiscalDateEnding { get; set; }
+    public class bs_QuarterlyReport : BalanceSheetResponse//balancesheet
+    {
+        [JsonProperty("fiscalDateEnding")]
+        public string fiscalDateEnding { get; set; }
 
-    [JsonProperty("reportedCurrency")]
-    public string reportedCurrency { get; set; }
+        [JsonProperty("reportedCurrency")]
+        public string reportedCurrency { get; set; }
 
-    [JsonProperty("totalAssets")]
-    public string totalAssets { get; set; }
+        [JsonProperty("totalAssets")]
+        public string totalAssets { get; set; }
 
-    [JsonProperty("totalCurrentAssets")]
-    public string totalCurrentAssets { get; set; }
+        [JsonProperty("totalCurrentAssets")]
+        public string totalCurrentAssets { get; set; }
 
-    [JsonProperty("cashAndCashEquivalentsAtCarryingValue")]
-    public string cashAndCashEquivalentsAtCarryingValue { get; set; }
+        [JsonProperty("cashAndCashEquivalentsAtCarryingValue")]
+        public string cashAndCashEquivalentsAtCarryingValue { get; set; }
 
-    [JsonProperty("cashAndShortTermInvestments")]
-    public string cashAndShortTermInvestments { get; set; }
+        [JsonProperty("cashAndShortTermInvestments")]
+        public string cashAndShortTermInvestments { get; set; }
 
-    [JsonProperty("inventory")]
-    public string inventory { get; set; }
+        [JsonProperty("inventory")]
+        public string inventory { get; set; }
 
-    [JsonProperty("currentNetReceivables")]
-    public string currentNetReceivables { get; set; }
+        [JsonProperty("currentNetReceivables")]
+        public string currentNetReceivables { get; set; }
 
-    [JsonProperty("totalNonCurrentAssets")]
-    public string totalNonCurrentAssets { get; set; }
+        [JsonProperty("totalNonCurrentAssets")]
+        public string totalNonCurrentAssets { get; set; }
 
-    [JsonProperty("propertyPlantEquipment")]
-    public string propertyPlantEquipment { get; set; }
+        [JsonProperty("propertyPlantEquipment")]
+        public string propertyPlantEquipment { get; set; }
 
-    [JsonProperty("accumulatedDepreciationAmortizationPPE")]
-    public string accumulatedDepreciationAmortizationPPE { get; set; }
+        [JsonProperty("accumulatedDepreciationAmortizationPPE")]
+        public string accumulatedDepreciationAmortizationPPE { get; set; }
 
-    [JsonProperty("intangibleAssets")]
-    public string intangibleAssets { get; set; }
+        [JsonProperty("intangibleAssets")]
+        public string intangibleAssets { get; set; }
 
-    [JsonProperty("intangibleAssetsExcludingGoodwill")]
-    public string intangibleAssetsExcludingGoodwill { get; set; }
+        [JsonProperty("intangibleAssetsExcludingGoodwill")]
+        public string intangibleAssetsExcludingGoodwill { get; set; }
 
-    [JsonProperty("goodwill")]
-    public string goodwill { get; set; }
+        [JsonProperty("goodwill")]
+        public string goodwill { get; set; }
 
-    [JsonProperty("investments")]
-    public string investments { get; set; }
+        [JsonProperty("investments")]
+        public string investments { get; set; }
 
-    [JsonProperty("longTermInvestments")]
-    public string longTermInvestments { get; set; }
+        [JsonProperty("longTermInvestments")]
+        public string longTermInvestments { get; set; }
 
-    [JsonProperty("shortTermInvestments")]
-    public string shortTermInvestments { get; set; }
+        [JsonProperty("shortTermInvestments")]
+        public string shortTermInvestments { get; set; }
 
-    [JsonProperty("otherCurrentAssets")]
-    public string otherCurrentAssets { get; set; }
+        [JsonProperty("otherCurrentAssets")]
+        public string otherCurrentAssets { get; set; }
 
-    [JsonProperty("otherNonCurrentAssets")]
-    public string otherNonCurrentAssets { get; set; }
+        [JsonProperty("otherNonCurrentAssets")]
+        public string otherNonCurrentAssets { get; set; }
 
-    [JsonProperty("totalLiabilities")]
-    public string totalLiabilities { get; set; }
+        [JsonProperty("totalLiabilities")]
+        public string totalLiabilities { get; set; }
 
-    [JsonProperty("totalCurrentLiabilities")]
-    public string totalCurrentLiabilities { get; set; }
+        [JsonProperty("totalCurrentLiabilities")]
+        public string totalCurrentLiabilities { get; set; }
 
-    [JsonProperty("currentAccountsPayable")]
-    public string currentAccountsPayable { get; set; }
+        [JsonProperty("currentAccountsPayable")]
+        public string currentAccountsPayable { get; set; }
 
-    [JsonProperty("deferredRevenue")]
-    public string deferredRevenue { get; set; }
+        [JsonProperty("deferredRevenue")]
+        public string deferredRevenue { get; set; }
 
-    [JsonProperty("currentDebt")]
-    public string currentDebt { get; set; }
+        [JsonProperty("currentDebt")]
+        public string currentDebt { get; set; }
 
-    [JsonProperty("shortTermDebt")]
-    public string shortTermDebt { get; set; }
+        [JsonProperty("shortTermDebt")]
+        public string shortTermDebt { get; set; }
 
-    [JsonProperty("totalNonCurrentLiabilities")]
-    public string totalNonCurrentLiabilities { get; set; }
+        [JsonProperty("totalNonCurrentLiabilities")]
+        public string totalNonCurrentLiabilities { get; set; }
 
-    [JsonProperty("capitalLeaseObligations")]
-    public string capitalLeaseObligations { get; set; }
+        [JsonProperty("capitalLeaseObligations")]
+        public string capitalLeaseObligations { get; set; }
 
-    [JsonProperty("longTermDebt")]
-    public string longTermDebt { get; set; }
+        [JsonProperty("longTermDebt")]
+        public string longTermDebt { get; set; }
 
-    [JsonProperty("currentLongTermDebt")]
-    public string currentLongTermDebt { get; set; }
+        [JsonProperty("currentLongTermDebt")]
+        public string currentLongTermDebt { get; set; }
 
-    [JsonProperty("longTermDebtNoncurrent")]
-    public string longTermDebtNoncurrent { get; set; }
+        [JsonProperty("longTermDebtNoncurrent")]
+        public string longTermDebtNoncurrent { get; set; }
 
-    [JsonProperty("shortLongTermDebtTotal")]
-    public string shortLongTermDebtTotal { get; set; }
+        [JsonProperty("shortLongTermDebtTotal")]
+        public string shortLongTermDebtTotal { get; set; }
 
-    [JsonProperty("otherCurrentLiabilities")]
-    public string otherCurrentLiabilities { get; set; }
+        [JsonProperty("otherCurrentLiabilities")]
+        public string otherCurrentLiabilities { get; set; }
 
-    [JsonProperty("otherNonCurrentLiabilities")]
-    public string otherNonCurrentLiabilities { get; set; }
+        [JsonProperty("otherNonCurrentLiabilities")]
+        public string otherNonCurrentLiabilities { get; set; }
 
-    [JsonProperty("totalShareholderEquity")]
-    public string totalShareholderEquity { get; set; }
+        [JsonProperty("totalShareholderEquity")]
+        public string totalShareholderEquity { get; set; }
 
-    [JsonProperty("treasuryStock")]
-    public string treasuryStock { get; set; }
+        [JsonProperty("treasuryStock")]
+        public string treasuryStock { get; set; }
 
-    [JsonProperty("retainedEarnings")]
-    public string retainedEarnings { get; set; }
+        [JsonProperty("retainedEarnings")]
+        public string retainedEarnings { get; set; }
 
-    [JsonProperty("commonStock")]
-    public string commonStock { get; set; }
+        [JsonProperty("commonStock")]
+        public string commonStock { get; set; }
 
-    [JsonProperty("commonStockSharesOutstanding")]
-    public string commonStockSharesOutstanding { get; set; }
+        [JsonProperty("commonStockSharesOutstanding")]
+        public string commonStockSharesOutstanding { get; set; }
+    }
+
 }
-
-
-
-
-
-
