@@ -1,5 +1,5 @@
-﻿using Class_library;
-using ClassLibrary;
+﻿
+
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataClass
+namespace ClassLibrary // file for the raw return data
 {
     public class OverviewResponse : IResponses
     {
@@ -566,4 +566,246 @@ namespace DataClass
         public string commonStockSharesOutstanding { get; set; }
     }
 
+
+   
+    public class CF_AnnualReport
+    {
+        [JsonProperty("fiscalDateEnding")]
+        public string fiscalDateEnding { get; set; }
+
+        [JsonProperty("reportedCurrency")]
+        public string reportedCurrency { get; set; }
+
+        [JsonProperty("operatingCashflow")]
+        public string operatingCashflow { get; set; }
+
+        [JsonProperty("paymentsForOperatingActivities")]
+        public string paymentsForOperatingActivities { get; set; }
+
+        [JsonProperty("proceedsFromOperatingActivities")]
+        public string proceedsFromOperatingActivities { get; set; }
+
+        [JsonProperty("changeInOperatingLiabilities")]
+        public string changeInOperatingLiabilities { get; set; }
+
+        [JsonProperty("changeInOperatingAssets")]
+        public string changeInOperatingAssets { get; set; }
+
+        [JsonProperty("depreciationDepletionAndAmortization")]
+        public string depreciationDepletionAndAmortization { get; set; }
+
+        [JsonProperty("capitalExpenditures")]
+        public string capitalExpenditures { get; set; }
+
+        [JsonProperty("changeInReceivables")]
+        public string changeInReceivables { get; set; }
+
+        [JsonProperty("changeInInventory")]
+        public string changeInInventory { get; set; }
+
+        [JsonProperty("profitLoss")]
+        public string profitLoss { get; set; }
+
+        [JsonProperty("cashflowFromInvestment")]
+        public string cashflowFromInvestment { get; set; }
+
+        [JsonProperty("cashflowFromFinancing")]
+        public string cashflowFromFinancing { get; set; }
+
+        [JsonProperty("proceedsFromRepaymentsOfShortTermDebt")]
+        public string proceedsFromRepaymentsOfShortTermDebt { get; set; }
+
+        [JsonProperty("paymentsForRepurchaseOfCommonStock")]
+        public string paymentsForRepurchaseOfCommonStock { get; set; }
+
+        [JsonProperty("paymentsForRepurchaseOfEquity")]
+        public string paymentsForRepurchaseOfEquity { get; set; }
+
+        [JsonProperty("paymentsForRepurchaseOfPreferredStock")]
+        public string paymentsForRepurchaseOfPreferredStock { get; set; }
+
+        [JsonProperty("dividendPayout")]
+        public string dividendPayout { get; set; }
+
+        [JsonProperty("dividendPayoutCommonStock")]
+        public string dividendPayoutCommonStock { get; set; }
+
+        [JsonProperty("dividendPayoutPreferredStock")]
+        public string dividendPayoutPreferredStock { get; set; }
+
+        [JsonProperty("proceedsFromIssuanceOfCommonStock")]
+        public string proceedsFromIssuanceOfCommonStock { get; set; }
+
+        [JsonProperty("proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet")]
+        public string proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet { get; set; }
+
+        [JsonProperty("proceedsFromIssuanceOfPreferredStock")]
+        public string proceedsFromIssuanceOfPreferredStock { get; set; }
+
+        [JsonProperty("proceedsFromRepurchaseOfEquity")]
+        public string proceedsFromRepurchaseOfEquity { get; set; }
+
+        [JsonProperty("proceedsFromSaleOfTreasuryStock")]
+        public string proceedsFromSaleOfTreasuryStock { get; set; }
+
+        [JsonProperty("changeInCashAndCashEquivalents")]
+        public string changeInCashAndCashEquivalents { get; set; }
+
+        [JsonProperty("changeInExchangeRate")]
+        public string changeInExchangeRate { get; set; }
+
+        [JsonProperty("netIncome")]
+        public string netIncome { get; set; }
+    }
+
+    public class CF_QuarterlyReport
+    {
+        [JsonProperty("fiscalDateEnding")]
+        public string fiscalDateEnding { get; set; }
+
+        [JsonProperty("reportedCurrency")]
+        public string reportedCurrency { get; set; }
+
+        [JsonProperty("operatingCashflow")]
+        public string operatingCashflow { get; set; }
+
+        [JsonProperty("paymentsForOperatingActivities")]
+        public string paymentsForOperatingActivities { get; set; }
+
+        [JsonProperty("proceedsFromOperatingActivities")]
+        public string proceedsFromOperatingActivities { get; set; }
+
+        [JsonProperty("changeInOperatingLiabilities")]
+        public string changeInOperatingLiabilities { get; set; }
+
+        [JsonProperty("changeInOperatingAssets")]
+        public string changeInOperatingAssets { get; set; }
+
+        [JsonProperty("depreciationDepletionAndAmortization")]
+        public string depreciationDepletionAndAmortization { get; set; }
+
+        [JsonProperty("capitalExpenditures")]
+        public string capitalExpenditures { get; set; }
+
+        [JsonProperty("changeInReceivables")]
+        public string changeInReceivables { get; set; }
+
+        [JsonProperty("changeInInventory")]
+        public string changeInInventory { get; set; }
+
+        [JsonProperty("profitLoss")]
+        public string profitLoss { get; set; }
+
+        [JsonProperty("cashflowFromInvestment")]
+        public string cashflowFromInvestment { get; set; }
+
+        [JsonProperty("cashflowFromFinancing")]
+        public string cashflowFromFinancing { get; set; }
+
+        [JsonProperty("proceedsFromRepaymentsOfShortTermDebt")]
+        public string proceedsFromRepaymentsOfShortTermDebt { get; set; }
+
+        [JsonProperty("paymentsForRepurchaseOfCommonStock")]
+        public string paymentsForRepurchaseOfCommonStock { get; set; }
+
+        [JsonProperty("paymentsForRepurchaseOfEquity")]
+        public string paymentsForRepurchaseOfEquity { get; set; }
+
+        [JsonProperty("paymentsForRepurchaseOfPreferredStock")]
+        public string paymentsForRepurchaseOfPreferredStock { get; set; }
+
+        [JsonProperty("dividendPayout")]
+        public string dividendPayout { get; set; }
+
+        [JsonProperty("dividendPayoutCommonStock")]
+        public string dividendPayoutCommonStock { get; set; }
+
+        [JsonProperty("dividendPayoutPreferredStock")]
+        public string dividendPayoutPreferredStock { get; set; }
+
+        [JsonProperty("proceedsFromIssuanceOfCommonStock")]
+        public string proceedsFromIssuanceOfCommonStock { get; set; }
+
+        [JsonProperty("proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet")]
+        public string proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet { get; set; }
+
+        [JsonProperty("proceedsFromIssuanceOfPreferredStock")]
+        public string proceedsFromIssuanceOfPreferredStock { get; set; }
+
+        [JsonProperty("proceedsFromRepurchaseOfEquity")]
+        public string proceedsFromRepurchaseOfEquity { get; set; }
+
+        [JsonProperty("proceedsFromSaleOfTreasuryStock")]
+        public string proceedsFromSaleOfTreasuryStock { get; set; }
+
+        [JsonProperty("changeInCashAndCashEquivalents")]
+        public string changeInCashAndCashEquivalents { get; set; }
+
+        [JsonProperty("changeInExchangeRate")]
+        public string changeInExchangeRate { get; set; }
+
+        [JsonProperty("netIncome")]
+        public string netIncome { get; set; }
+    }
+
+    public class MostActivelyTraded
+    {
+        [JsonProperty("ticker")]
+        public string ticker { get; set; }
+
+        [JsonProperty("price")]
+        public string price { get; set; }
+
+        [JsonProperty("change_amount")]
+        public string change_amount { get; set; }
+
+        [JsonProperty("change_percentage")]
+        public string change_percentage { get; set; }
+
+        [JsonProperty("volume")]
+        public string volume { get; set; }
+    }
+
+    public class TopGainer
+    {
+        [JsonProperty("ticker")]
+        public string ticker { get; set; }
+
+        [JsonProperty("price")]
+        public string price { get; set; }
+
+        [JsonProperty("change_amount")]
+        public string change_amount { get; set; }
+
+        [JsonProperty("change_percentage")]
+        public string change_percentage { get; set; }
+
+        [JsonProperty("volume")]
+        public string volume { get; set; }
+    }
+
+    public class TopLoser
+    {
+        [JsonProperty("ticker")]
+        public string ticker { get; set; }
+
+        [JsonProperty("price")]
+        public string price { get; set; }
+
+        [JsonProperty("change_amount")]
+        public string change_amount { get; set; }
+
+        [JsonProperty("change_percentage")]
+        public string change_percentage { get; set; }
+
+        [JsonProperty("volume")]
+        public string volume { get; set; }
+    }
+
+
+
 }
+
+
+
+

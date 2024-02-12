@@ -4,13 +4,13 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Security.AccessControl;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DataClass;
-using Class_library;
+
 
 namespace ClassLibrary
 {
@@ -91,7 +91,7 @@ namespace ClassLibrary
 
         public static Task AddressSet<TargetObject>(TargetObject target)
         {
-            // går säkert att göra på ett mer effektivt sätt
+            // TODO - proper structure
 
             switch (target.ToString())
             {
@@ -156,13 +156,17 @@ namespace ClassLibrary
             await SetJsonString();
 
         }
-        public async static Task<bool> Validate(string apikey)
+        public async static Task<bool> Validate(string apikey) // validates key with incomeStatement API request.
         {
+            // Note that any non-key related issues will still result in no validation
+
             IncomeStatementResponse income = new IncomeStatementResponse();
+
             IncomeStatementResponse demoIncome = new IncomeStatementResponse();
 
             await Prepare(income, "IBM", apikey);
             SetObjectValue(ref income);
+
             await Prepare(demoIncome, "IBM", "DEMO");
             SetObjectValue(ref demoIncome);
             string temp = null;
@@ -187,81 +191,80 @@ namespace ClassLibrary
 
         }
     }
-
-    public static class HttpClientProvider
+    public static class Archival
     {
-        // HttpClient instance
-        private static readonly HttpClient httpClient = new HttpClient();
-
-        // Global HttpClient Instance
-        public static HttpClient GetHttpClient()
+        public static void InitTest(string symbol, DateTime date)
         {
-            return httpClient;
+
         }
-        // Disposing here:
-        public static void DisposeHttpClient()
+        public static void SaveToFile(string symbol, DateTime date)
         {
-            httpClient.Dispose();
+
+        }
+        public async static void ReadFromFile<TargetClass>(TargetClass TargetObject, string symbol)
+        {
+            //file naming convention needed, I.e how are files named
+            string options = "";
+            string path = TargetObject.ToString() + symbol + options + ".txt";
+            StreamReader StreamReader = new StreamReader(path);
+
+            Char[] buffer;
+
+            buffer = new Char[(int)StreamReader.BaseStream.Length];
+            await StreamReader.ReadAsync(buffer, 0, (int)StreamReader.BaseStream.Length);
+            await SetValue.Prepare(TargetObject, symbol, ""); //put apikey
+            SetValue.SetObjectValue(ref TargetObject);
+
+
+        }
+
+    }
+        public class AdressClass //TODO
+        {
+            public static string Base { get; set; }
+            public static string ApiKey { get; set; }
+            public static string Function { get; set; }
+
+        }
+    
+
+        public static class HttpClientProvider
+        {
+            // HttpClient instance
+            private static readonly HttpClient httpClient = new HttpClient();
+
+            // Global HttpClient Instance
+            public static HttpClient GetHttpClient()
+            {
+                return httpClient;
+            }
+            // Disposing here:
+            public static void DisposeHttpClient()
+            {
+                httpClient.Dispose();
+            }
+
+
+
         }
 
 
 
-    }
-    public class BalanceSheetResponse : IResponses
-    {
-
-        [JsonProperty("symbol")]
-        public string Symbol { get; set; }
-
-        [JsonProperty("annualReports")]
-        public List<bs_AnnualReport> bs_annualReports { get; set; }
-        [JsonProperty("quarterlyReports")]
-        public List<bs_QuarterlyReport> bs_quarterlyReports { get; set; }
-
-
-    }
-
-    public class GlobalMarketResponse  //market open/close status
-    {
-        [JsonProperty("endpoint")]
-        public string Endpoint { get; set; }
-
-        [JsonProperty("markets")]
-        public List<MarketData> Markets { get; set; }
-
-
-    }
-
-    public class GlobalQuoteResponse// quote endpoint/global quote
-    {
-        [JsonProperty("Global Quote")]
-        public GlobalQuote GlobalQuote { get; set; }
 
 
 
-    }
-    public class TickerSearchResponse
-    {
-
-        [JsonProperty("bestMatches")]
-        public List<BestMatch> bestMatches { get; set; }
 
 
-    }
-
-    public class IncomeStatementResponse : IResponses // income_statement
-    {
-        [JsonProperty("symbol")]
-        public string Symbol { get; set; }
-        [JsonProperty("annualReports")]
-        public List<ic_Annualreport> ic_annualReports { get; set; }
-        [JsonProperty("quarterlyReports")]
-        public List<ic_Quarterlyreport> ic_quarterlyReports { get; set; }
-        public bool success { get; set; }
-
-    }
 
 
+
+
+
+
+
+
+
+    
 }
 
 

@@ -4,15 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Class_library
+namespace ClassLibrary // file for Interfaces
 {
-    internal interface IResponses
+    internal interface IResponses // to see the symbol of instantiatized response objects
     {
         string Symbol { get; set; }
 
     }
-    internal interface IListResponses : IResponses
-    {
-
-    }
+   
 }
