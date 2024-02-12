@@ -86,20 +86,20 @@ namespace ClassLibrary
 
         public static Task AddressSet<TargetObject>(TargetObject target)
         {
-            //switch måste fixas, ytterligare går det säkert att göra på ett mer effektivt sätt
-            //og = switch(target.ToString())
-            switch ("IncomeStatement")
+            // går säkert att göra på ett mer effektivt sätt
+            
+            switch (target.ToString())
             {
-                case "TickerSearch":
+                case "TickerSearchResponse":
                     Address = $"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={Symbol}&apikey={Apikey}";
                     break;
-                case "GlobalQuote":
+                case "GlobalQuoteResponse":
                     Address = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={Symbol}&apikey={Apikey}";
                     break;
-                case "IncomeStatement":
+                case "IncomeStatementResponse":
                     Address = $"https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol={Symbol}&apikey={Apikey}";
                     break;
-                case "BalanceSheet":
+                case "BalanceSheetResponse":
                     Address = $"https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol={Symbol}&apikey={Apikey}";
                     break;
                 default:
@@ -150,6 +150,36 @@ namespace ClassLibrary
             
            await SetJsonString();
         
+        }
+        public async static Task<bool> Validate (string apikey)
+        {
+            IncomeStatementResponse income = new IncomeStatementResponse();
+            IncomeStatementResponse demoIncome = new IncomeStatementResponse();
+
+           await Prepare(income, "IBM", apikey);
+            SetObjectValue(ref income);
+            await Prepare(demoIncome, "IBM", "DEMO");
+            SetObjectValue(ref demoIncome);
+            string temp = null;
+            string temp2 = null;
+            try
+            {
+                 temp = income.ic_annualReports[0].totalRevenue;
+                 temp2 = demoIncome.ic_annualReports[0].totalRevenue;
+            }
+            catch 
+            {
+            return false;
+            }
+            if (temp == temp2 && temp != null)
+            {
+                return true;
+            }
+            else 
+            {
+                return false; 
+            }
+
         }
     }
 }

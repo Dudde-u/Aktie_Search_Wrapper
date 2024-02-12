@@ -36,12 +36,12 @@ namespace Aktie_algoritm___windows_forms_app
         }
 
 
-        private async void btnSökAktie_Click(object sender, EventArgs e)
+        private void btnSökAktie_Click(object sender, EventArgs e)
         {
             string intag = tbxSymbol.Text;
             
             
-           // await TickerSearch.SättaVärde(intag, apiKey, demo);
+           
             try
             {
                 LbxTickerSök.Items.Clear();
@@ -67,7 +67,7 @@ namespace Aktie_algoritm___windows_forms_app
 
         }
 
-        private async void btnKör_Click(object sender, EventArgs e)
+        private void btnKör_Click(object sender, EventArgs e)
         {
             string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].symbol;
 
@@ -93,40 +93,44 @@ namespace Aktie_algoritm___windows_forms_app
         private async void btnValidering_Click(object sender, EventArgs e)
         {
             //testing
-           await SetValue.Prepare( IncomeStatement, "IBM", "DEMO");
-            SetValue.SetObjectValue(ref IncomeStatement);
-            tbxData.Text += IncomeStatement.ic_annualReports[1].totalRevenue+"\n";
-            tbxData.Text += IncomeStatement.ic_annualReports[1].reportedCurrency + "\n";
-            tbxData.Text += IncomeStatement.ic_annualReports[1].otherNonOperatingIncome;
-            //string intag = tbxApiKey.Text;
+            //await SetValue.Prepare( IncomeStatement, "IBM", "DEMO");
+            // SetValue.SetObjectValue(ref IncomeStatement);
+            // tbxData.Text += IncomeStatement.ic_annualReports[1].totalRevenue+"\n";
+            // tbxData.Text += IncomeStatement.ic_annualReports[1].reportedCurrency + "\n";
+            // tbxData.Text += IncomeStatement.ic_annualReports[1].otherNonOperatingIncome;
 
-            //if (demo == false)
-            //{
-            //   //hitta värden här
+            string PreKey = tbxSymbol.Text;
 
-            //    if (IncomeStatement.success == true)
-            //    {
+            
 
-            //        MessageBox.Show("Lyckad validering");
+            if (demo == true)
+            {
+                gbxAktieSök.Enabled = true;
 
-            //        gbxAktieSök.Enabled = true;
+                apiKey = "demo";
+            }
+            else
+            {
+                bool validationResult=await SetValue.Validate(PreKey);
 
-            //        apiKey = intag;
+                if (validationResult == true)
+                {
 
-            //    }
-            //    else
-            //    {
+                    MessageBox.Show("Lyckad validering");
 
-            //        //error
-            //        MessageBox.Show("ogiltig APIKEY, kontrollera att din APIKEY är korrekt");
-            //    }
-            //}
-            //else
-            //{
-            //    gbxAktieSök.Enabled = true;
+                    gbxAktieSök.Enabled = true;
 
-            //    apiKey = intag;
-            //}
+                    apiKey = PreKey;
+
+                }
+                else
+                {
+
+                    //error
+                    MessageBox.Show("ogiltig APIKEY, kontrollera att din APIKEY är korrekt");
+                }
+            }
+            
 
         }
 
