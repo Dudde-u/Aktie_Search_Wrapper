@@ -108,6 +108,9 @@ namespace ClassLibrary
                     Address = $"https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol={Symbol}&apikey={Apikey}";
                     break;
                 default:
+                case "OverviewResponse":
+                    Address = $"https://www.alphavantage.co/query?function=Overview&symbol={Symbol}&apikey={Apikey}";
+                    break;
                     MessageBox.Show("TargetObject not valid");
 
                     throw new Exception();

@@ -24,6 +24,7 @@ namespace Aktie_algoritm___windows_forms_app
         BalanceSheetResponse BalanceSheet = new BalanceSheetResponse();
 
         GlobalQuoteResponse GlobalQuote = new GlobalQuoteResponse();
+        OverviewResponse overview = new OverviewResponse();
 
         bool demo = false; // for testing and not wasting API calls
 
@@ -101,35 +102,36 @@ namespace Aktie_algoritm___windows_forms_app
 
             string PreKey = tbxSymbol.Text;
 
-            
+            await SetValue.Prepare(overview, "WCC", "123");
+                SetValue.SetObjectValue(ref overview);
 
-            if (demo == true)
-            {
-                gbxAktieSök.Enabled = true;
+            //if (demo == true)
+            //{
+            //    gbxAktieSök.Enabled = true;
 
-                apiKey = "demo";
-            }
-            else
-            {
-                bool validationResult=await SetValue.Validate(PreKey);
+            //    apiKey = "demo";
+            //}
+            //else
+            //{
+            //    bool validationResult=await SetValue.Validate(PreKey);
 
-                if (validationResult == true)
-                {
+            //    if (validationResult == true)
+            //    {
 
-                    MessageBox.Show("Lyckad validering");
+            //        MessageBox.Show("Lyckad validering");
 
-                    gbxAktieSök.Enabled = true;
+            //        gbxAktieSök.Enabled = true;
 
-                    apiKey = PreKey;
+            //        apiKey = PreKey;
 
-                }
-                else
-                {
+            //    }
+            //    else
+            //    {
 
-                    //error
-                    MessageBox.Show("ogiltig APIKEY, kontrollera att din APIKEY är korrekt");
-                }
-            }
+            //        //error
+            //        MessageBox.Show("ogiltig APIKEY, kontrollera att din APIKEY är korrekt");
+            //    }
+            //}
             
 
         }
