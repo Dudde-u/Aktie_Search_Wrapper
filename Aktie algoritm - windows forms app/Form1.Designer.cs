@@ -197,7 +197,6 @@
             // 
             // btnValidering
             // 
-            this.btnValidering.Enabled = false;
             this.btnValidering.Location = new System.Drawing.Point(1162, 55);
             this.btnValidering.Name = "btnValidering";
             this.btnValidering.Size = new System.Drawing.Size(144, 32);

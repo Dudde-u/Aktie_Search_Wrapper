@@ -93,6 +93,7 @@ namespace ClassLibrary
         {
             // TODO - proper structure
 
+            //switch (target.ToString())
             switch (target.ToString())
             {
                 case "TickerSearchResponse":
@@ -107,13 +108,14 @@ namespace ClassLibrary
                 case "BalanceSheetResponse":
                     Address = $"https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol={Symbol}&apikey={Apikey}";
                     break;
-                default:
                 case "OverviewResponse":
                     Address = $"https://www.alphavantage.co/query?function=Overview&symbol={Symbol}&apikey={Apikey}";
                     break;
+                default:
                     MessageBox.Show("TargetObject not valid");
-
                     throw new Exception();
+                    
+                    
 
             }
             return Task.CompletedTask;
@@ -155,6 +157,7 @@ namespace ClassLibrary
             Apikey = apikey;
 
             await AddressSet(TargetObject);
+            
 
             await SetJsonString();
 
@@ -191,6 +194,11 @@ namespace ClassLibrary
             {
                 return false;
             }
+
+        }
+        public static void archiveCheck()
+        {
+
 
         }
     }
