@@ -153,7 +153,6 @@ namespace ClassLibrary
         {
             Symbol = symbol;
             Apikey = apikey;
-
             bool DataExists=Archival.InitTest(symbol, target);
             if(DataExists == false) //true => data is not saved locally
             {
