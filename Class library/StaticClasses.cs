@@ -93,6 +93,7 @@ namespace ClassLibrary
         {
             // TODO - proper structure
 
+            //switch (target.ToString())
             switch (target.ToString())
             {
                 case "TickerSearchResponse":
@@ -107,13 +108,14 @@ namespace ClassLibrary
                 case "BalanceSheetResponse":
                     Address = $"https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol={Symbol}&apikey={Apikey}";
                     break;
-                default:
                 case "OverviewResponse":
                     Address = $"https://www.alphavantage.co/query?function=Overview&symbol={Symbol}&apikey={Apikey}";
                     break;
+                default:
                     MessageBox.Show("TargetObject not valid");
-
                     throw new Exception();
+                    
+                    
 
             }
             return Task.CompletedTask;
@@ -153,18 +155,10 @@ namespace ClassLibrary
         {
             Symbol = symbol;
             Apikey = apikey;
-            bool DataExists=Archival.InitTest(symbol, target);
-            if(DataExists == false) //true => data is not saved locally
-            {
-                await AddressSet(TargetObject);
 
-                await SetJsonString();
-            }
-            else //false => data is saved locally
-            {
-                Archival.SaveToFile();
-            }
-           
+            await AddressSet(TargetObject);
+
+            await SetJsonString();
 
         }
         public async static Task<bool> Validate(string apikey) // validates key with incomeStatement API request.
@@ -199,6 +193,11 @@ namespace ClassLibrary
             {
                 return false;
             }
+
+        }
+        public static void archiveCheck()
+        {
+
 
         }
     }

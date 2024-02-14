@@ -3,7 +3,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Aktie_algoritm___windows_forms_app;
+using System.Reflection;
 
 
 
@@ -70,7 +70,7 @@ namespace Aktie_algoritm___windows_forms_app
 
         private void btnKör_Click(object sender, EventArgs e)
         {
-            string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].symbol;
+            string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
 
             try
             {
@@ -102,37 +102,34 @@ namespace Aktie_algoritm___windows_forms_app
 
             string PreKey = tbxSymbol.Text;
 
-            await SetValue.Prepare(overview, "WCC", "123");
-                SetValue.SetObjectValue(ref overview);
+            if (demo == true)
+            {
+                gbxAktieSök.Enabled = true;
 
-            //if (demo == true)
-            //{
-            //    gbxAktieSök.Enabled = true;
+                apiKey = "demo";
+            }
+            else
+            {
+                bool validationResult = await SetValue.Validate(PreKey);
 
-            //    apiKey = "demo";
-            //}
-            //else
-            //{
-            //    bool validationResult=await SetValue.Validate(PreKey);
+                if (validationResult == true)
+                {
 
-            //    if (validationResult == true)
-            //    {
+                    MessageBox.Show("Lyckad validering");
 
-            //        MessageBox.Show("Lyckad validering");
+                    gbxAktieSök.Enabled = true;
 
-            //        gbxAktieSök.Enabled = true;
+                    apiKey = PreKey;
 
-            //        apiKey = PreKey;
+                }
+                else
+                {
 
-            //    }
-            //    else
-            //    {
+                    //error
+                    MessageBox.Show("ogiltig APIKEY, kontrollera att din APIKEY är korrekt");
+                }
+            }
 
-            //        //error
-            //        MessageBox.Show("ogiltig APIKEY, kontrollera att din APIKEY är korrekt");
-            //    }
-            //}
-            
 
         }
 
@@ -150,7 +147,7 @@ namespace Aktie_algoritm___windows_forms_app
                 string ut = "";
                 int index = LbxTickerSök.SelectedIndex;
                 ut += $"Name: {TickerSearch.bestMatches[index].name} \r\n";
-                ut += $"Symbol: {TickerSearch.bestMatches[index].symbol} \r\n";
+                ut += $"Symbol: {TickerSearch.bestMatches[index].Symbol} \r\n";
                 ut += $"Region: {TickerSearch.bestMatches[index].region} \r\n";
                 ut += $"Type: {TickerSearch.bestMatches[index].type} \r\n";
                 ut += $"Currency: {TickerSearch.bestMatches[index].currency} \r\n";

@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Windows.Forms;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +13,7 @@ namespace ClassLibrary // file for the raw return data
 {
     public class OverviewResponse : IResponses
     {
+     
 
         public string Symbol { get; set; }
         public string AssetType { get; set; }
