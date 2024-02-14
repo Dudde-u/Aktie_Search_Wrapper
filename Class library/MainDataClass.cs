@@ -449,7 +449,7 @@ namespace ClassLibrary // file for the raw return data
     }
 
 
-    public class bs_QuarterlyReport : BalanceSheetResponse//balancesheet
+    public class bs_QuarterlyReport //balancesheet
     {
         [JsonProperty("fiscalDateEnding")]
         public string fiscalDateEnding { get; set; }

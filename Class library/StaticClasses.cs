@@ -126,7 +126,7 @@ namespace ClassLibrary
 
             JsonString = await response.Content.ReadAsStringAsync();
         }
-
+     
 
         public static void SetObjectValue<TargetClass>(ref TargetClass TargetObject)
         {
@@ -154,9 +154,18 @@ namespace ClassLibrary
             Symbol = symbol;
             Apikey = apikey;
 
-            await AddressSet(TargetObject);
+            bool DataExists=Archival.InitTest(symbol, target);
+            if(DataExists == false) //true => data is not saved locally
+            {
+                await AddressSet(TargetObject);
 
-            await SetJsonString();
+                await SetJsonString();
+            }
+            else //false => data is saved locally
+            {
+                Archival.SaveToFile();
+            }
+           
 
         }
         public async static Task<bool> Validate(string apikey) // validates key with incomeStatement API request.
@@ -196,19 +205,31 @@ namespace ClassLibrary
     }
     public static class Archival
     {
-        public static void InitTest(string symbol, DateTime date)
+        public static void InitTest<TargetClass>( TargetClass target , string symbol)
         {
+            string path = ""; // figure out relative filepath
+           path = TargetObject.ToString() + symbol + options + ".txt";
+            if (File.Exists(path))
+            {
+                
+            }
+            else
+            {
+                SaveToFile();
+            }
+
 
         }
-        public static void SaveToFile(string symbol, DateTime date)
+        public static void SaveToFile(string JSONstring)
         {
-
+            //TODO - file documenting local saves
         }
         public async static void ReadFromFile<TargetClass>(TargetClass TargetObject, string symbol)
         {
             //file naming convention needed, I.e how are files named
             string options = "";
-            string path = TargetObject.ToString() + symbol + options + ".txt";
+            DateTime date = DateTime.Now;
+            string path = TargetObject.ToString() + symbol+ options + ".txt";
             StreamReader StreamReader = new StreamReader(path);
 
             Char[] buffer;
@@ -222,11 +243,13 @@ namespace ClassLibrary
         }
 
     }
-        public class AdressClass //TODO
+        static string AdressClass<TargetClass>(TargetClass TargetObject) //TODO
         {
             public static string Base { get; set; }
             public static string ApiKey { get; set; }
             public static string Function { get; set; }
+
+
 
         }
     
