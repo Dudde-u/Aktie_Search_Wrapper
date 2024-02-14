@@ -156,9 +156,18 @@ namespace ClassLibrary
             Symbol = symbol;
             Apikey = apikey;
 
-            await AddressSet(TargetObject);
+            bool DataExists = Archival.InitTest(symbol, target);
+            if (DataExists == false) //true => data is not saved locally
+            {
+                await AddressSet(TargetObject);
 
-            await SetJsonString();
+                await SetJsonString();
+            }
+            else //false => data is saved locally
+            {
+                Archival.SaveToFile();
+            }
+
 
         }
         public async static Task<bool> Validate(string apikey) // validates key with incomeStatement API request.
