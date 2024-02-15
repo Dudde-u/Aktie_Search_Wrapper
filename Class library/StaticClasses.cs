@@ -22,8 +22,9 @@ namespace ClassLibrary
         private static string symbol;
         private static string apiKey;
         private static string address;
-        private static string JsonString;
-        private static bool Saved; 
+     
+        private static bool saved { get; set; }
+        private static string JsonString
         {
             get
             {
@@ -33,7 +34,7 @@ namespace ClassLibrary
                 }
                 else
                 {
-                    MessageBox.Show("symbol is null");
+                    MessageBox.Show("Json response is null");
                     throw new Exception();
                 }
             }
@@ -94,7 +95,7 @@ namespace ClassLibrary
         {
             // TODO - proper structure
 
-            //switch (target.ToString())
+          
             switch (target.ToString())
             {
                 case "TickerSearchResponse":
@@ -112,25 +113,32 @@ namespace ClassLibrary
                 case "OverviewResponse":
                     Address = $"https://www.alphavantage.co/query?function=Overview&symbol={Symbol}&apikey={Apikey}";
                     break;
+                case "TopLosersGainersResponse":
+                    Address = $"https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey={Apikey}";
+
+                    break;
+                case "CashFlowResponse":
+                    Address = $"https://www.alphavantage.co/query?function=CASH_FLOW&symbol={Symbol}&apikey={Apikey}";
+                    break;
                 default:
                     MessageBox.Show("TargetObject not valid");
                     throw new Exception();
-                    
-                    
+
+
 
             }
             return Task.CompletedTask;
         }
         public static async Task SetJsonString()
         {
-            
+
             HttpClient httpClient = HttpClientProvider.GetHttpClient();
 
             HttpResponseMessage response = await httpClient.GetAsync(address);
 
             JsonString = await response.Content.ReadAsStringAsync();
         }
-     
+
 
         public static void SetObjectValue<TargetClass>(ref TargetClass TargetObject)
         {
@@ -158,21 +166,22 @@ namespace ClassLibrary
             Symbol = symbol;
             Apikey = apikey;
 
-            bool DataExists = Archival.InitTest(symbol, target);
+            bool DataExists = Archival.InitTest(TargetObject, symbol);
+
             if (DataExists == false) //true => data is not saved locally
             {
-                Saved = false;
-                Archival.SaveToFile();
+                saved = false;
+                Archival.SaveToFile("","");
 
                 await AddressSet(TargetObject);
 
                 await SetJsonString();
-                
+
             }
             else //false => data is saved locally
             {
-                Saved = true;
-                JsonString=Archival.ReadFromFile();
+                saved = true;
+                Archival.ReadFromFile(TargetObject, symbol);
             }
 
 
@@ -217,33 +226,39 @@ namespace ClassLibrary
 
         }
     }
+    
     public static class Archival
     {
-        public static void InitTest<TargetClass>( TargetClass target , string symbol)
+        public static bool InitTest<TargetClass>(TargetClass TargetObject, string symbol)
         {
             string path = ""; // figure out relative filepath
-           path = TargetObject.ToString() + symbol + options + ".txt";
+            string options = "";
+            path = TargetObject.ToString() + symbol + options + ".JSON";
             if (File.Exists(path))
             {
-                
+                return true;
             }
             else
             {
-                SaveToFile();   
+                return false;
             }
 
 
         }
-        public static void SaveToFile(string JSONstring)
+        public static void SaveToFile(string JSONstring, string symbol)
         {
+            string filepath=""; //TODO
+
+            File.WriteAllText(filepath, JSONstring);
+
             //TODO - file documenting local saves
         }
-        public async static string ReadFromFile<TargetClass>(TargetClass TargetObject, string symbol)
+        public async static void ReadFromFile<TargetClass>(TargetClass TargetObject, string symbol)
         {
             //file naming convention needed, I.e how are files named
             string options = "";
             DateTime date = DateTime.Now;
-            string path = TargetObject.ToString() + symbol+ options + ".txt";
+            string path = TargetObject.ToString() + symbol + options + ".txt";
             StreamReader StreamReader = new StreamReader(path);
 
             Char[] buffer;
@@ -257,55 +272,58 @@ namespace ClassLibrary
         }
 
     }
-        static string AdressClass<TargetClass>(TargetClass TargetObject) //TODO
+    public class AdressClass //TODO
+    {
+        public static string Base { get; set; }
+        public static string ApiKey { get; set; }
+        public static string Function { get; set; }
+
+
+
+    }
+
+
+    public static class HttpClientProvider
+    {
+        // HttpClient instance
+        private static readonly HttpClient httpClient = new HttpClient();
+
+        // Global HttpClient Instance
+        public static HttpClient GetHttpClient()
         {
-            public static string Base { get; set; }
-            public static string ApiKey { get; set; }
-            public static string Function { get; set; }
-
-
-
+            return httpClient;
         }
-    
-
-        public static class HttpClientProvider
+        // Disposing here:
+        public static void DisposeHttpClient()
         {
-            // HttpClient instance
-            private static readonly HttpClient httpClient = new HttpClient();
-
-            // Global HttpClient Instance
-            public static HttpClient GetHttpClient()
-            {
-                return httpClient;
-            }
-            // Disposing here:
-            public static void DisposeHttpClient()
-            {
-                httpClient.Dispose();
-            }
-
-
-
+            httpClient.Dispose();
         }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
 
 
 

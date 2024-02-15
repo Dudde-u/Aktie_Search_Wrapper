@@ -11,10 +11,8 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary // file for the raw return data
 {
-    public class OverviewResponse : IResponses
+    public class OverviewResponse 
     {
-     
-
         public string Symbol { get; set; }
         public string AssetType { get; set; }
         public string Name { get; set; }
@@ -82,7 +80,7 @@ namespace ClassLibrary // file for the raw return data
 
 
     }
-    public class GlobalQuote : IResponses // quote endpoint/global quote
+    public class GlobalQuote  // quote endpoint/global quote
     {
         [JsonProperty("01. symbol")]
         public string Symbol { get; set; }

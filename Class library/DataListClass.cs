@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 
 namespace ClassLibrary // file for seeing the different types of responses
 {
-
-    public class BalanceSheetResponse : IResponses // balance_sheet
+    public class BaseResponse
+    {
+        
+    }
+    public class BalanceSheetResponse  // balance_sheet
     {
 
         [JsonProperty("symbol")]
@@ -51,7 +54,7 @@ namespace ClassLibrary // file for seeing the different types of responses
 
     }
 
-    public class IncomeStatementResponse : IResponses // income_statement
+    public class IncomeStatementResponse // income_statement
     {
         [JsonProperty("symbol")]
         public string Symbol { get; set; }
@@ -63,7 +66,7 @@ namespace ClassLibrary // file for seeing the different types of responses
 
     }
 
-    public class CashFlowResponse : IResponses // Cash_Flow //TODO -> https link
+    public class CashFlowResponse // CashFlow
     {
         [JsonProperty("symbol")]
         public string Symbol { get; set; }
@@ -74,7 +77,7 @@ namespace ClassLibrary // file for seeing the different types of responses
         [JsonProperty("quarterlyReports")]
         public List<CF_QuarterlyReport> CF_quarterlyReports { get; set; }
     }
-    public class TopLosersGainersResponse // Cash_Flow //TODO -> https link
+    public class TopLosersGainersResponse // LosersGainers
     {
         [JsonProperty("metadata")]
         public string metadata { get; set; }

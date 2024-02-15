@@ -16,7 +16,7 @@ namespace Aktie_algoritm___windows_forms_app
     {
 
         HttpClient httpClient = new HttpClient();
-
+        //instances are currently reused through the life of the application
         TickerSearchResponse TickerSearch = new TickerSearchResponse();
 
         IncomeStatementResponse IncomeStatement = new IncomeStatementResponse();
@@ -25,6 +25,9 @@ namespace Aktie_algoritm___windows_forms_app
 
         GlobalQuoteResponse GlobalQuote = new GlobalQuoteResponse();
         OverviewResponse overview = new OverviewResponse();
+        GlobalMarketResponse MarketState = new GlobalMarketResponse();
+        TopLosersGainersResponse GainersLosers = new TopLosersGainersResponse();
+        CashFlowResponse CashFlow = new CashFlowResponse();
 
         bool demo = false; // for testing and not wasting API calls
 
