@@ -22,7 +22,8 @@ namespace ClassLibrary
         private static string symbol;
         private static string apiKey;
         private static string address;
-        private static string JsonString
+        private static string JsonString;
+        private static bool Saved; 
         {
             get
             {
@@ -122,6 +123,7 @@ namespace ClassLibrary
         }
         public static async Task SetJsonString()
         {
+            
             HttpClient httpClient = HttpClientProvider.GetHttpClient();
 
             HttpResponseMessage response = await httpClient.GetAsync(address);
@@ -159,13 +161,18 @@ namespace ClassLibrary
             bool DataExists = Archival.InitTest(symbol, target);
             if (DataExists == false) //true => data is not saved locally
             {
+                Saved = false;
+                Archival.SaveToFile();
+
                 await AddressSet(TargetObject);
 
                 await SetJsonString();
+                
             }
             else //false => data is saved locally
             {
-                Archival.SaveToFile();
+                Saved = true;
+                JsonString=Archival.ReadFromFile();
             }
 
 
@@ -222,7 +229,7 @@ namespace ClassLibrary
             }
             else
             {
-                SaveToFile();
+                SaveToFile();   
             }
 
 
@@ -231,7 +238,7 @@ namespace ClassLibrary
         {
             //TODO - file documenting local saves
         }
-        public async static void ReadFromFile<TargetClass>(TargetClass TargetObject, string symbol)
+        public async static string ReadFromFile<TargetClass>(TargetClass TargetObject, string symbol)
         {
             //file naming convention needed, I.e how are files named
             string options = "";
