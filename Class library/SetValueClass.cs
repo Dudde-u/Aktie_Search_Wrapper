@@ -22,8 +22,9 @@ namespace ClassLibrary
         private static string symbol;
         private static string apiKey;
         private static string address;
+        private static string requestType {  get; set; }
      
-        private static bool saved { get; set; }
+        private static bool Saved { get; set; }
         private static string JsonString
         {
             get
@@ -38,7 +39,18 @@ namespace ClassLibrary
                     throw new Exception();
                 }
             }
-            set { jsonString = value; }
+            set {
+                if (value == null)
+                {
+                    MessageBox.Show("Json response is null");
+
+                    throw new Exception();
+                }
+                else
+                {
+                    jsonString = value;
+                }
+            }
         }
         private static string Symbol
         {
@@ -91,40 +103,40 @@ namespace ClassLibrary
             set { address = value; }
         }
 
-        public static Task AddressSet<TargetObject>(TargetObject target)
+        public static Task SetAddress()
         {
             // TODO - proper structure
 
           
-            switch (target.ToString())
+            switch (requestType)
             {
-                case "TickerSearchResponse":
+                case "Ticker_Search":
                     Address = $"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={Symbol}&apikey={Apikey}";
                     break;
-                case "GlobalQuoteResponse":
+                case "Global_Quote":
                     Address = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={Symbol}&apikey={Apikey}";
                     break;
-                case "IncomeStatementResponse":
+                case "Income_Statement":
                     Address = $"https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol={Symbol}&apikey={Apikey}";
                     break;
-                case "BalanceSheetResponse":
+                case "Balance_Sheet":
                     Address = $"https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol={Symbol}&apikey={Apikey}";
                     break;
-                case "OverviewResponse":
+                case "Overview":
                     Address = $"https://www.alphavantage.co/query?function=Overview&symbol={Symbol}&apikey={Apikey}";
                     break;
-                case "TopLosersGainersResponse":
+                case "LosersGainers":
                     Address = $"https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey={Apikey}";
 
                     break;
-                case "CashFlowResponse":
+                case "Cash_Flow":
                     Address = $"https://www.alphavantage.co/query?function=CASH_FLOW&symbol={Symbol}&apikey={Apikey}";
                     break;
                 default:
                     MessageBox.Show("TargetObject not valid");
                     throw new Exception();
 
-
+                   
 
             }
             return Task.CompletedTask;
@@ -140,7 +152,7 @@ namespace ClassLibrary
         }
 
 
-        public static void SetObjectValue<TargetClass>(ref TargetClass TargetObject)
+        public static void SetObject<TargetClass>(ref TargetClass TargetObject)
         {
             try
             {
@@ -161,29 +173,32 @@ namespace ClassLibrary
             }
 
         }
-        public static async Task Prepare<TargetClass>(TargetClass TargetObject, string symbol, string apikey)
+        public static async Task Prepare(string requestType_, string symbol, string apikey)
         {
             Symbol = symbol;
             Apikey = apikey;
 
-            bool DataExists = Archival.InitTest(TargetObject, symbol);
+            requestType = requestType_;
+            await SetAddress();
+            await SetJsonString();
+            //bool DataExists = Archival.InitTest(requestType, symbol);
 
-            if (DataExists == false) //true => data is not saved locally
-            {
-                saved = false;
-                Archival.SaveToFile("","");
+            //if (DataExists == false) //true => data is not saved locally
+            //{
+            //    Saved = false;
+            //    Archival.SaveToFile("","");
 
-                await AddressSet(TargetObject);
+            //    await AddressSet();
 
-                await SetJsonString();
+            //    await SetJsonString();
 
-            }
-            else //false => data is saved locally
-            {
-                saved = true;
-                Archival.ReadFromFile(TargetObject, symbol);
-            }
-
+            //}
+            //else //false => data is saved locally
+            //{
+            //    Saved = true;
+            //    Archival.ReadFromFile(requestType, symbol);
+            //}
+            
 
         }
         public async static Task<bool> Validate(string apikey) // validates key with incomeStatement API request.
@@ -194,11 +209,11 @@ namespace ClassLibrary
 
             IncomeStatementResponse demoIncome = new IncomeStatementResponse();
 
-            await Prepare(income, "IBM", apikey);
-            SetObjectValue(ref income);
+            await Prepare("income_statement", "IBM", apikey);
+            SetObject(ref income);
 
-            await Prepare(demoIncome, "IBM", "DEMO");
-            SetObjectValue(ref demoIncome);
+            await Prepare("income_statement", "IBM", "DEMO");
+            SetObject(ref demoIncome);
             string temp = null;
             string temp2 = null;
             try
@@ -220,65 +235,12 @@ namespace ClassLibrary
             }
 
         }
-        public static void archiveCheck()
-        {
-
-
-        }
     }
-    
-    public static class Archival
-    {
-        public static bool InitTest<TargetClass>(TargetClass TargetObject, string symbol)
-        {
-            string path = ""; // figure out relative filepath
-            string options = "";
-            path = TargetObject.ToString() + symbol + options + ".JSON";
-            if (File.Exists(path))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-
-        }
-        public static void SaveToFile(string JSONstring, string symbol)
-        {
-            string filepath=""; //TODO
-
-            File.WriteAllText(filepath, JSONstring);
-
-            //TODO - file documenting local saves
-        }
-        public async static void ReadFromFile<TargetClass>(TargetClass TargetObject, string symbol)
-        {
-            //file naming convention needed, I.e how are files named
-            string options = "";
-            DateTime date = DateTime.Now;
-            string path = TargetObject.ToString() + symbol + options + ".txt";
-            StreamReader StreamReader = new StreamReader(path);
-
-            Char[] buffer;
-
-            buffer = new Char[(int)StreamReader.BaseStream.Length];
-            await StreamReader.ReadAsync(buffer, 0, (int)StreamReader.BaseStream.Length);
-            await SetValue.Prepare(TargetObject, symbol, ""); //put apikey
-            SetValue.SetObjectValue(ref TargetObject);
-
-
-        }
-
-    }
-    public class AdressClass //TODO
+        public class AdressClass //TODO
     {
         public static string Base { get; set; }
         public static string ApiKey { get; set; }
         public static string Function { get; set; }
-
-
 
     }
 

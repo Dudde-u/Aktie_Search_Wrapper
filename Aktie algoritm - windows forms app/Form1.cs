@@ -71,10 +71,12 @@ namespace Aktie_algoritm___windows_forms_app
 
         }
 
-        private void btnKör_Click(object sender, EventArgs e)
+        private async void btnKör_Click(object sender, EventArgs e)
         {
             string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
 
+            await SetValue.Prepare("ticker_search",symbol,apiKey);
+           
             try
             {
                 string val = LbxTickerSök.SelectedItem.ToString();
@@ -85,7 +87,7 @@ namespace Aktie_algoritm___windows_forms_app
                 tbxData.Text = "lyckat?";
             }
             catch (Exception ex)
-            { MessageBox.Show("Exception caught: "+ex); }
+            { MessageBox.Show("Exception caught: "+ex);}
         }
         
 

@@ -142,7 +142,6 @@
             this.gbxAktieSök.Controls.Add(this.btnKör);
             this.gbxAktieSök.Controls.Add(this.lbxRequestType);
             this.gbxAktieSök.Controls.Add(this.tbxSymbol);
-            this.gbxAktieSök.Enabled = false;
             this.gbxAktieSök.Location = new System.Drawing.Point(12, 52);
             this.gbxAktieSök.Name = "gbxAktieSök";
             this.gbxAktieSök.Size = new System.Drawing.Size(825, 1238);
