@@ -13,14 +13,9 @@ namespace ClassLibrary // file for seeing the different types of responses
 {
     public class SymbolResponse : BaseResponse
     {
-       // protected string symbol; 
+    
         protected string Symbol { get; set; }
-        //{
-        //    get { return symbol; }
-
-        //    set => symbol = value ?? throw new ArgumentNullException(nameof(value));
-
-        //}
+   
 
         public SymbolResponse(string apiKey, string reqType, string symbol) : base(apiKey, reqType) 
         {

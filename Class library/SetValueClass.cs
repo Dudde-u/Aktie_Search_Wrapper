@@ -30,7 +30,7 @@ namespace ClassLibrary
         private static bool Saved { get; set; }
 
 
-        public static void SetObject<TargetClass>(ref TargetClass TargetObject, string jsonString)
+        public static void SetObject<TargetClass>(TargetClass TargetObject, string jsonString)
         {
 
             try
@@ -62,8 +62,8 @@ namespace ClassLibrary
                 await income.SetJsonString();
                 await demoIncome.SetJsonString();
            
-            SetValue.SetObject(ref income,income.JsonString);
-                SetValue.SetObject(ref demoIncome,demoIncome.JsonString);
+            SetValue.SetObject( income,income.JsonString); //during this call a new instance of IncomeStatementResponse is created for some reason? i.e malfunctions
+                SetValue.SetObject( demoIncome,demoIncome.JsonString);// 
 
 
                 string temp = null;
