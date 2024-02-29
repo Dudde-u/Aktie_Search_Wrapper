@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Aktie_algoritm___windows_forms_app
+namespace Aktie_Logik
 {
     internal static class Program
     {

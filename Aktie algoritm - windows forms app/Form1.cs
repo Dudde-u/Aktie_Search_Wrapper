@@ -8,26 +8,19 @@ using System.Reflection;
 
 
 
-namespace Aktie_algoritm___windows_forms_app
+
+namespace Aktie_Logik
 {
 
 
     public partial class Form1 : Form
     {
+        TickerSearchResponse TickerSearch;
 
         HttpClient httpClient = new HttpClient();
         //instances are currently reused through the life of the application
-        TickerSearchResponse TickerSearch = new TickerSearchResponse();
+       
 
-        IncomeStatementResponse IncomeStatement = new IncomeStatementResponse();
-
-        BalanceSheetResponse BalanceSheet = new BalanceSheetResponse();
-
-        GlobalQuoteResponse GlobalQuote = new GlobalQuoteResponse();
-        OverviewResponse overview = new OverviewResponse();
-        GlobalMarketResponse MarketState = new GlobalMarketResponse();
-        TopLosersGainersResponse GainersLosers = new TopLosersGainersResponse();
-        CashFlowResponse CashFlow = new CashFlowResponse();
 
         bool demo = false; // for testing and not wasting API calls
 
@@ -75,7 +68,7 @@ namespace Aktie_algoritm___windows_forms_app
         {
             string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
 
-            await SetValue.Prepare("ticker_search",symbol,apiKey);
+           
            
             try
             {
@@ -99,13 +92,12 @@ namespace Aktie_algoritm___windows_forms_app
         private async void btnValidering_Click(object sender, EventArgs e)
         {
             //testing
-            //await SetValue.Prepare( IncomeStatement, "IBM", "DEMO");
-            // SetValue.SetObjectValue(ref IncomeStatement);
+         
             // tbxData.Text += IncomeStatement.ic_annualReports[1].totalRevenue+"\n";
             // tbxData.Text += IncomeStatement.ic_annualReports[1].reportedCurrency + "\n";
             // tbxData.Text += IncomeStatement.ic_annualReports[1].otherNonOperatingIncome;
 
-            string PreKey = tbxSymbol.Text;
+            string PreKey = tbxApiKey.Text;
 
             if (demo == true)
             {

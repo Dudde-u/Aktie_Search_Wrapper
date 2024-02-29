@@ -10,6 +10,11 @@ using System.Security.AccessControl;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.RichTextBox;
+
+
+
+
 
 
 namespace ClassLibrary
@@ -18,142 +23,16 @@ namespace ClassLibrary
     {
 
 
-        private static string jsonString { get; set; }
-        private static string symbol;
-        private static string apiKey;
-        private static string address;
-        private static string requestType {  get; set; }
+      
+        
+        
      
         private static bool Saved { get; set; }
-        private static string JsonString
-        {
-            get
-            {
-                if (jsonString != null && jsonString != "")
-                {
-                    return jsonString;
-                }
-                else
-                {
-                    MessageBox.Show("Json response is null");
-                    throw new Exception();
-                }
-            }
-            set {
-                if (value == null)
-                {
-                    MessageBox.Show("Json response is null");
 
-                    throw new Exception();
-                }
-                else
-                {
-                    jsonString = value;
-                }
-            }
-        }
-        private static string Symbol
-        {
-            get
-            {
-                if (symbol != null && symbol != "")
-                {
-                    return symbol;
-                }
-                else
-                {
-                    MessageBox.Show("symbol is null");
-                    throw new Exception();
-                }
-            }
-            set { symbol = value; }
-        }
 
-        private static string Apikey
-        {
-            get
-            {
-                if (apiKey != null && apiKey != "")
-                {
-                    return apiKey;
-                }
-                else
-                {
-                    MessageBox.Show("ApiKey is null");
-                    throw new Exception();
-                }
-            }
-            set { apiKey = value; }
-        }
-        public static string Address
+        public static void SetObject<TargetClass>(ref TargetClass TargetObject, string jsonString)
         {
 
-            get
-            {
-                if (address != null && address != "")
-                {
-                    return address;
-                }
-                else
-                {
-                    MessageBox.Show("adress is null");
-                    throw new Exception();
-                }
-            }
-            set { address = value; }
-        }
-
-        public static Task SetAddress()
-        {
-            // TODO - proper structure
-
-          
-            switch (requestType)
-            {
-                case "Ticker_Search":
-                    Address = $"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={Symbol}&apikey={Apikey}";
-                    break;
-                case "Global_Quote":
-                    Address = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={Symbol}&apikey={Apikey}";
-                    break;
-                case "Income_Statement":
-                    Address = $"https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol={Symbol}&apikey={Apikey}";
-                    break;
-                case "Balance_Sheet":
-                    Address = $"https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol={Symbol}&apikey={Apikey}";
-                    break;
-                case "Overview":
-                    Address = $"https://www.alphavantage.co/query?function=Overview&symbol={Symbol}&apikey={Apikey}";
-                    break;
-                case "LosersGainers":
-                    Address = $"https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey={Apikey}";
-
-                    break;
-                case "Cash_Flow":
-                    Address = $"https://www.alphavantage.co/query?function=CASH_FLOW&symbol={Symbol}&apikey={Apikey}";
-                    break;
-                default:
-                    MessageBox.Show("TargetObject not valid");
-                    throw new Exception();
-
-                   
-
-            }
-            return Task.CompletedTask;
-        }
-        public static async Task SetJsonString()
-        {
-
-            HttpClient httpClient = HttpClientProvider.GetHttpClient();
-
-            HttpResponseMessage response = await httpClient.GetAsync(address);
-
-            JsonString = await response.Content.ReadAsStringAsync();
-        }
-
-
-        public static void SetObject<TargetClass>(ref TargetClass TargetObject)
-        {
             try
             {
                 TargetObject = JsonConvert.DeserializeObject<TargetClass>(jsonString);
@@ -171,71 +50,49 @@ namespace ClassLibrary
             {
                 MessageBox.Show($"An unexpected error occurred: {ex.Message}");
             }
+        }
+        
+            public async static Task<bool> Validate(string prekey) // validates key with incomeStatement request.
+            {
+                //  Note that any non-key related issues will still result in no validation
+
+                IncomeStatementResponse income = new IncomeStatementResponse(prekey, "Income_Statement", "IBM");
+
+                IncomeStatementResponse demoIncome = new IncomeStatementResponse("DEMO", "Income_Statement", "IBM");
+                await income.SetJsonString();
+                await demoIncome.SetJsonString();
+           
+            SetValue.SetObject(ref income,income.JsonString);
+                SetValue.SetObject(ref demoIncome,demoIncome.JsonString);
+
+
+                string temp = null;
+                string temp2 = null;//does not really matter what the strings are at first.
+                try
+                {
+                    temp = income.ic_annualReports[0].totalRevenue;
+                    temp2 = demoIncome.ic_annualReports[0].totalRevenue;
+                }
+                catch
+                {
+                    return false;
+                }
+                if (temp == temp2 && temp != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+
+
 
         }
-        public static async Task Prepare(string requestType_, string symbol, string apikey)
-        {
-            Symbol = symbol;
-            Apikey = apikey;
 
-            requestType = requestType_;
-            await SetAddress();
-            await SetJsonString();
-            //bool DataExists = Archival.InitTest(requestType, symbol);
 
-            //if (DataExists == false) //true => data is not saved locally
-            //{
-            //    Saved = false;
-            //    Archival.SaveToFile("","");
-
-            //    await AddressSet();
-
-            //    await SetJsonString();
-
-            //}
-            //else //false => data is saved locally
-            //{
-            //    Saved = true;
-            //    Archival.ReadFromFile(requestType, symbol);
-            //}
-            
-
-        }
-        public async static Task<bool> Validate(string apikey) // validates key with incomeStatement API request.
-        {
-            // Note that any non-key related issues will still result in no validation
-
-            IncomeStatementResponse income = new IncomeStatementResponse();
-
-            IncomeStatementResponse demoIncome = new IncomeStatementResponse();
-
-            await Prepare("income_statement", "IBM", apikey);
-            SetObject(ref income);
-
-            await Prepare("income_statement", "IBM", "DEMO");
-            SetObject(ref demoIncome);
-            string temp = null;
-            string temp2 = null;
-            try
-            {
-                temp = income.ic_annualReports[0].totalRevenue;
-                temp2 = demoIncome.ic_annualReports[0].totalRevenue;
-            }
-            catch
-            {
-                return false;
-            }
-            if (temp == temp2 && temp != null)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-    }
         public class AdressClass //TODO
     {
         public static string Base { get; set; }

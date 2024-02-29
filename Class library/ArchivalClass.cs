@@ -21,14 +21,21 @@ namespace Class_library
             }
             else
             {
+                
                 return false;
             }
         }
-        public static void SaveToFile(string JSONstring, string symbol)
+        public static void SaveToFile(string JSONstring, string symbol,string RequstType)
         {
-            string filepath = ""; //TODO
+            DateTime dateTime = DateTime.Now;
+            string filepath = "Save" + symbol +dateTime.Month+ RequstType + ".txt";
+            File.WriteAllText(filepath, JSONstring);
+            StreamWriter writer = File.AppendText(filepath);
+            writer.Write(filepath+"   ");
+
 
             File.WriteAllText(filepath, JSONstring);
+           
 
             //TODO - file documenting local saves
         }

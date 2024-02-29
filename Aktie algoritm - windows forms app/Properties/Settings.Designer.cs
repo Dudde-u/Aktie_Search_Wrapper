@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Aktie_algoritm___windows_forms_app.Properties
+namespace Aktie_Logik.Properties
 {
 
 

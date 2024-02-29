@@ -1,4 +1,4 @@
-﻿namespace Aktie_algoritm___windows_forms_app
+﻿namespace Aktie_Logik
 {
     partial class Form1
     {
@@ -61,7 +61,7 @@
             // tbxData
             // 
             this.tbxData.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbxData.Location = new System.Drawing.Point(44, 642);
+            this.tbxData.Location = new System.Drawing.Point(43, 636);
             this.tbxData.Name = "tbxData";
             this.tbxData.ReadOnly = true;
             this.tbxData.Size = new System.Drawing.Size(718, 553);
@@ -259,7 +259,6 @@
         #endregion
 
         private System.Windows.Forms.TextBox tbxSymbol;
-        private System.Windows.Forms.RichTextBox tbxData;
         private System.Windows.Forms.ListBox lbxRequestType;
         private System.DirectoryServices.DirectorySearcher directorySearcher1;
         private System.Windows.Forms.ListBox LbxTickerSök;
@@ -276,6 +275,7 @@
         private System.Windows.Forms.TextBox tbxMarketOpenClose;
         private System.Windows.Forms.Button btnMarketStatus;
         private System.Windows.Forms.CheckBox CheckBoxDemo;
+        public System.Windows.Forms.RichTextBox tbxData;
     }
 }
 
