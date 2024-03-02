@@ -46,11 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArchivalClass.cs" />
-    <Compile Include="DataListClass.cs" />
-    <Compile Include="IResponses.cs" />
+    <Compile Include="BaseResponse.cs" />
+    <Compile Include="Responses.cs" />
     <Compile Include="SetValueClass.cs" />
     <Compile Include="MainDataClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SymbolResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

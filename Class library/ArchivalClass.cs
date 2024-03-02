@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Class_library
 {
 
-    public static class Archival
+    public static class Archival //TODO
     {
         public static bool InitTest(string requestType, string symbol)
         {
@@ -37,7 +37,7 @@ namespace Class_library
             File.WriteAllText(filepath, JSONstring);
            
 
-            //TODO - file documenting local saves
+         
         }
         public async static void ReadFromFile(string requestType, string symbol)
         {

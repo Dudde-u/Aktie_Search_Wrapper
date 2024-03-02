@@ -43,7 +43,7 @@ namespace Aktie_Logik
             {
                 LbxTickerSök.Items.Clear();
                 LbxTickerSök.ClearSelected();
-                //NullReferenceException fångas inte
+           
 
                 for (int i = 0; i < TickerSearch.bestMatches.Count; i++)
                 {
@@ -91,12 +91,6 @@ namespace Aktie_Logik
         }
         private async void btnValidering_Click(object sender, EventArgs e)
         {
-            //testing
-         
-            // tbxData.Text += IncomeStatement.ic_annualReports[1].totalRevenue+"\n";
-            // tbxData.Text += IncomeStatement.ic_annualReports[1].reportedCurrency + "\n";
-            // tbxData.Text += IncomeStatement.ic_annualReports[1].otherNonOperatingIncome;
-
             string PreKey = tbxApiKey.Text;
 
             if (demo == true)
@@ -107,7 +101,7 @@ namespace Aktie_Logik
             }
             else
             {
-                bool validationResult = await SetValue.Validate(PreKey);
+                bool validationResult = await SetValue.ValidateAsync(PreKey);
 
                 if (validationResult == true)
                 {
@@ -121,9 +115,8 @@ namespace Aktie_Logik
                 }
                 else
                 {
-
                     //error
-                    MessageBox.Show("ogiltig APIKEY, kontrollera att din APIKEY är korrekt");
+                    MessageBox.Show("ogiltig APIKEY, försök igen");
                 }
             }
 

@@ -5,6 +5,8 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.AccessControl;
 using System.Threading;
@@ -17,25 +19,35 @@ using static System.Windows.Forms.RichTextBox;
 
 
 
+
 namespace ClassLibrary
 {
+
+
     public class SetValue
     {
-
-
-      
-        
-        
-     
         private static bool Saved { get; set; }
 
 
-        public static void SetObject<TargetClass>(TargetClass TargetObject, string jsonString)
+        //method returns an object enabling it to be async
+        public static async Task<TargetClass> SetObjectAsync<TargetClass>(TargetClass target, string Address)
         {
+         
+            
 
+            //Gets the JSON data 
+            HttpClient httpClient = HttpClientProvider.GetHttpClient();
+
+            HttpResponseMessage response = await httpClient.GetAsync(Address);
+
+            string JsonString = await response.Content.ReadAsStringAsync();
+
+
+            //Deserealization of said JSON data
+            TargetClass ReturnObject =  default(TargetClass);
             try
             {
-                TargetObject = JsonConvert.DeserializeObject<TargetClass>(jsonString);
+                ReturnObject = await Task.Run(() => JsonConvert.DeserializeObject<TargetClass>(JsonString));
 
             }
             catch (HttpRequestException ex)
@@ -50,28 +62,30 @@ namespace ClassLibrary
             {
                 MessageBox.Show($"An unexpected error occurred: {ex.Message}");
             }
+              
+            
+            return ReturnObject;
         }
         
-            public async static Task<bool> Validate(string prekey) // validates key with incomeStatement request.
+            public async static Task<bool> ValidateAsync(string prekey) // validates key with incomeStatement request.
             {
-                //  Note that any non-key related issues will still result in no validation
+            //  Note that any non-key related issues will still result in no validation
 
-                IncomeStatementResponse income = new IncomeStatementResponse(prekey, "Income_Statement", "IBM");
+            GlobalQuoteResponse GQ = new GlobalQuoteResponse(prekey, "Global_Quote", "IBM");
+            await GQ.Initialize(); //Fix Async behaviour here
+            GlobalQuoteResponse demoGQ = new GlobalQuoteResponse("demo", "Global_Quote", "IBM");
+            await demoGQ.Initialize(); //Fix Async behaviour here
 
-                IncomeStatementResponse demoIncome = new IncomeStatementResponse("DEMO", "Income_Statement", "IBM");
-                await income.SetJsonString();
-                await demoIncome.SetJsonString();
-           
-            SetValue.SetObject( income,income.JsonString); //during this call a new instance of IncomeStatementResponse is created for some reason? i.e malfunctions
-                SetValue.SetObject( demoIncome,demoIncome.JsonString);// 
+            GQ =await SetValue.SetObjectAsync<GlobalQuoteResponse>(GQ, GQ.Address);
+            demoGQ = await SetValue.SetObjectAsync<GlobalQuoteResponse>(demoGQ, demoGQ.Address); 
+            //object.Completion not necessary here
 
-
-                string temp = null;
-                string temp2 = null;//does not really matter what the strings are at first.
+            string temp = null;
+                string temp2 = null;//does not really matter what the strings are assigned at first.
                 try
                 {
-                    temp = income.ic_annualReports[0].totalRevenue;
-                    temp2 = demoIncome.ic_annualReports[0].totalRevenue;
+                temp = GQ.GlobalQuote._06volume;
+                    temp2 = demoGQ.GlobalQuote._06volume;
                 }
                 catch
                 {
@@ -91,17 +105,6 @@ namespace ClassLibrary
 
 
         }
-
-
-        public class AdressClass //TODO
-    {
-        public static string Base { get; set; }
-        public static string ApiKey { get; set; }
-        public static string Function { get; set; }
-
-    }
-
-
     public static class HttpClientProvider
     {
         // HttpClient instance
