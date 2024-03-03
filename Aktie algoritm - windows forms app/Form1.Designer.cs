@@ -70,7 +70,6 @@
             // 
             // lbxRequestType
             // 
-            this.lbxRequestType.Enabled = false;
             this.lbxRequestType.FormattingEnabled = true;
             this.lbxRequestType.ItemHeight = 20;
             this.lbxRequestType.Items.AddRange(new object[] {
@@ -99,7 +98,6 @@
             this.LbxTickerSök.Size = new System.Drawing.Size(228, 102);
             this.LbxTickerSök.TabIndex = 3;
             this.LbxTickerSök.SelectedIndexChanged += new System.EventHandler(this.LbxTickerSök_SelectedIndexChanged);
-            this.LbxTickerSök.SelectedValueChanged += new System.EventHandler(this.LbxTickerSök_SelectedValueChanged);
             // 
             // btnKör
             // 
@@ -107,18 +105,18 @@
             this.btnKör.Name = "btnKör";
             this.btnKör.Size = new System.Drawing.Size(124, 51);
             this.btnKör.TabIndex = 5;
-            this.btnKör.Text = "Run program";
+            this.btnKör.Text = "Show data";
             this.btnKör.UseVisualStyleBackColor = true;
             this.btnKör.Click += new System.EventHandler(this.btnKör_Click);
             // 
             // lblNamn
             // 
             this.lblNamn.AutoSize = true;
-            this.lblNamn.Location = new System.Drawing.Point(14, 83);
+            this.lblNamn.Location = new System.Drawing.Point(6, 83);
             this.lblNamn.Name = "lblNamn";
-            this.lblNamn.Size = new System.Drawing.Size(190, 20);
+            this.lblNamn.Size = new System.Drawing.Size(208, 20);
             this.lblNamn.TabIndex = 6;
-            this.lblNamn.Text = "Skriv in namnet på aktien:";
+            this.lblNamn.Text = "Write the name of the stock:";
             // 
             // btnSökAktie
             // 
@@ -127,7 +125,7 @@
             this.btnSökAktie.Name = "btnSökAktie";
             this.btnSökAktie.Size = new System.Drawing.Size(237, 38);
             this.btnSökAktie.TabIndex = 7;
-            this.btnSökAktie.Text = "Sök Ticker namn";
+            this.btnSökAktie.Text = "Search Ticker";
             this.btnSökAktie.UseVisualStyleBackColor = true;
             this.btnSökAktie.Click += new System.EventHandler(this.btnSökAktie_Click);
             // 
@@ -154,9 +152,9 @@
             this.lblTickerSök.AutoSize = true;
             this.lblTickerSök.Location = new System.Drawing.Point(74, 158);
             this.lblTickerSök.Name = "lblTickerSök";
-            this.lblTickerSök.Size = new System.Drawing.Size(85, 20);
+            this.lblTickerSök.Size = new System.Drawing.Size(96, 20);
             this.lblTickerSök.TabIndex = 9;
-            this.lblTickerSök.Text = "Välj Ticker:";
+            this.lblTickerSök.Text = "Select ticker";
             // 
             // tbxTickerSearchInfo
             // 

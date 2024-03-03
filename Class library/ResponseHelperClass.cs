@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Security.AccessControl;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,17 +24,31 @@ using static System.Windows.Forms.RichTextBox;
 namespace ClassLibrary
 {
 
-
-    public class SetValue
+    //public class ResponseHelperProperties //maybe something TODO
+    //{
+    //    public static string JsonString { get; set; }
+    //    public static string Symbol { get; set; }
+    //    public static string reqType { get; set; }
+    //    public static string Address { get; set; }
+    //    public static string apiKey { get; set; }
+    //}
+    public class ResponseHelper
     {
+        
         private static bool Saved { get; set; }
+        public static string JsonString { get; set; }
+        public static string Symbol {  get; set; }
+        public static string reqType {  get; set; }
+        public static string Address {  get; set; }
+        public static string apiKey {  get; set; }
 
 
-        //method returns an object enabling it to be async
+        //method returns an object enabling it to be async contrary to using ref etc
         public static async Task<TargetClass> SetObjectAsync<TargetClass>(TargetClass target, string Address)
         {
-         
-            
+
+            ResponseHelper.Address = Address;
+
 
             //Gets the JSON data 
             HttpClient httpClient = HttpClientProvider.GetHttpClient();
@@ -41,6 +56,8 @@ namespace ClassLibrary
             HttpResponseMessage response = await httpClient.GetAsync(Address);
 
             string JsonString = await response.Content.ReadAsStringAsync();
+
+            ResponseHelper.JsonString = JsonString;
 
 
             //Deserealization of said JSON data
@@ -62,8 +79,8 @@ namespace ClassLibrary
             {
                 MessageBox.Show($"An unexpected error occurred: {ex.Message}");
             }
-              
             
+
             return ReturnObject;
         }
         
@@ -73,12 +90,16 @@ namespace ClassLibrary
 
             GlobalQuoteResponse GQ = new GlobalQuoteResponse(prekey, "Global_Quote", "IBM");
             await GQ.Initialize(); //Fix Async behaviour here
+
+            GQ = await ResponseHelper.SetObjectAsync<GlobalQuoteResponse>(GQ, GQ.Address);
+
             GlobalQuoteResponse demoGQ = new GlobalQuoteResponse("demo", "Global_Quote", "IBM");
             await demoGQ.Initialize(); //Fix Async behaviour here
 
-            GQ =await SetValue.SetObjectAsync<GlobalQuoteResponse>(GQ, GQ.Address);
-            demoGQ = await SetValue.SetObjectAsync<GlobalQuoteResponse>(demoGQ, demoGQ.Address); 
-            //object.Completion not necessary here
+            demoGQ = await ResponseHelper.SetObjectAsync<GlobalQuoteResponse>(demoGQ, demoGQ.Address);
+
+
+            
 
             string temp = null;
                 string temp2 = null;//does not really matter what the strings are assigned at first.
@@ -120,9 +141,6 @@ namespace ClassLibrary
         {
             httpClient.Dispose();
         }
-
-
-
     }
 }
 

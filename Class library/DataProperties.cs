@@ -8,12 +8,14 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Text;
 using System.Threading.Tasks;
+using Class_library;
+using System.Runtime.CompilerServices;
 
 namespace ClassLibrary // file for the raw return data
 {
-    public class OverviewResponse 
+    public class OverviewResponse : SymbolResponse
     {
-        public string Symbol { get; set; }
+        new public string Symbol { get; set; }
         public string AssetType { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -23,7 +25,7 @@ namespace ClassLibrary // file for the raw return data
         public string Country { get; set; }
         public string Sector { get; set; }
         public string Industry { get; set; }
-        public string Address { get; set; }
+        new public string Address { get; set; }
         public string FiscalYearEnd { get; set; }
         public string LatestQuarter { get; set; }
         public string MarketCapitalization { get; set; }
@@ -76,8 +78,16 @@ namespace ClassLibrary // file for the raw return data
         public string SharesOutstanding { get; set; }
         public string DividendDate { get; set; }
         public string ExDividendDate { get; set; }
+        public override async Task Initialize()
+        {
+            await Task.Run(() => SetAddress());
+        }
+        protected override void SetAddress()
+        {
+            Address = $"https://www.alphavantage.co/query?function=Overview&symbol={Symbol}&apikey={apiKey}";
 
-
+        }
+       
 
     }
     public class GlobalQuote  // quote endpoint/global quote

@@ -33,12 +33,15 @@ namespace Aktie_Logik
         }
 
 
-        private void btnSökAktie_Click(object sender, EventArgs e)
+        private async void btnSökAktie_Click(object sender, EventArgs e)
         {
             string intag = tbxSymbol.Text;
             
+            TickerSearch=new TickerSearchResponse(apiKey,"Ticker_Search",intag);
+            await TickerSearch.Initialize();
             
-           
+            TickerSearch = await ResponseHelper.SetObjectAsync<TickerSearchResponse>(TickerSearch,TickerSearch.Address);
+            //TODO add jsonstring
             try
             {
                 LbxTickerSök.Items.Clear();
@@ -49,12 +52,10 @@ namespace Aktie_Logik
                 {
                     LbxTickerSök.Items.Add(TickerSearch.bestMatches[i].name);
                 }
-                
-
             }
             catch (NullReferenceException ex)
             {
-                MessageBox.Show("referens till nullvalue "+ex);
+                MessageBox.Show("nullvalue reference " + ex);
             }
             catch (Exception ex)
             {
@@ -66,18 +67,41 @@ namespace Aktie_Logik
 
         private async void btnKör_Click(object sender, EventArgs e)
         {
-            string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
-
-           
-           
+            //string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
+            string symbol = "";
+            string reqType=lbxRequestType.SelectedItem.ToString();
+           // string reqType = "Income_Statement";
+            string outtext = "";
             try
             {
-                string val = LbxTickerSök.SelectedItem.ToString();
                 // hitta värden här
+                switch (reqType) 
+                { //response manager needed -> very bad logic otherwise
+                    case "Income_Statement":
+                        IncomeStatementResponse response = new IncomeStatementResponse("demo", "Income_Statement", "IBM");
+                        await response.Initialize();
+                        response=await ResponseHelper.SetObjectAsync<IncomeStatementResponse>(response,response.Address);
+                        
+                        break;
+                    case "Balance_Sheet":
+                        BalanceSheetResponse balanceSheetResponse = new BalanceSheetResponse(apiKey, "Balance_Sheet", symbol);
+                        await balanceSheetResponse.Initialize();
+                        balanceSheetResponse=await ResponseHelper.SetObjectAsync<BalanceSheetResponse>(balanceSheetResponse, balanceSheetResponse.Address);
+                        
+                        break;
+                    case "Global_Quote":
+                        GlobalQuoteResponse globalQuoteResponse = new GlobalQuoteResponse(apiKey, "Global_Quote", symbol);
+                        await globalQuoteResponse.Initialize();
+                        globalQuoteResponse=await ResponseHelper.SetObjectAsync<GlobalQuoteResponse>(globalQuoteResponse, globalQuoteResponse.Address);
+                        
 
-
+                        break;
+                        default:
+                        MessageBox.Show("Internal logic issue");
+                        break;
+                }
                 //göra något med data
-                tbxData.Text = "lyckat?";
+               
             }
             catch (Exception ex)
             { MessageBox.Show("Exception caught: "+ex);}
@@ -86,27 +110,28 @@ namespace Aktie_Logik
 
         private void tbxSymbol_TextChanged(object sender, EventArgs e)
         {
-            TextCheck(tbxSymbol, btnSökAktie, 2);
+            TextBoxStatus(tbxSymbol, btnSökAktie, 2);
            
         }
         private async void btnValidering_Click(object sender, EventArgs e)
         {
             string PreKey = tbxApiKey.Text;
 
-            if (demo == true)
+            if (demo == true||PreKey.ToLower()=="demo")
             {
                 gbxAktieSök.Enabled = true;
 
                 apiKey = "demo";
+                MessageBox.Show("The Application is now in demo mode");
             }
             else
             {
-                bool validationResult = await SetValue.ValidateAsync(PreKey);
+                bool validationResult = await ResponseHelper.ValidateAsync(PreKey);
 
                 if (validationResult == true)
                 {
 
-                    MessageBox.Show("Lyckad validering");
+                    MessageBox.Show("Key validation successful");
 
                     gbxAktieSök.Enabled = true;
 
@@ -116,7 +141,7 @@ namespace Aktie_Logik
                 else
                 {
                     //error
-                    MessageBox.Show("ogiltig APIKEY, försök igen");
+                    MessageBox.Show("Key validation unsuccessful");
                 }
             }
 
@@ -126,7 +151,7 @@ namespace Aktie_Logik
         private void tbxApiKey_TextChanged(object sender, EventArgs e)
         {
 
-            TextCheck(tbxApiKey, btnValidering, 3);
+            TextBoxStatus(tbxApiKey, btnValidering, 3);
          
         }
 
@@ -144,8 +169,13 @@ namespace Aktie_Logik
 
                 tbxTickerSearchInfo.Text = ut;
 
+                lbxRequestType.Enabled = true;
             }
-            lbxRequestType.Enabled = true;
+            else 
+            {
+            lbxRequestType.Enabled= false;
+            }
+            
         }
 
         private void CheckBoxDemo_CheckedChanged(object sender, EventArgs e)
@@ -162,10 +192,10 @@ namespace Aktie_Logik
             }
         }
 
-        public void TextCheck( TextBox textbox, Button button,int Length)
+        public void TextBoxStatus( TextBox textbox, Button button,int requiredLength)
         {
 
-            if(textbox.Text.Length > Length) 
+            if(textbox.Text.Length > requiredLength) 
             {
             button.Enabled = true;
             }
@@ -177,10 +207,7 @@ namespace Aktie_Logik
 
         }
 
-        private void LbxTickerSök_SelectedValueChanged(object sender, EventArgs e)
-        {
-            tbxApiKey.Text = "lets go";
-        }
+       
     }
 
 }
