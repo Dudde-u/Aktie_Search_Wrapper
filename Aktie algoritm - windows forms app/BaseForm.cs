@@ -4,6 +4,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
+using Aktie_algoritm___windows_forms_app;
+using Class_library;
+using System.Threading;
 
 
 
@@ -13,31 +16,35 @@ namespace Aktie_Logik
 {
 
 
-    public partial class Form1 : Form
+    public partial class BaseForm : Form
     {
         TickerSearchResponse TickerSearch;
 
         HttpClient httpClient = new HttpClient();
         //instances are currently reused through the life of the application
        
-
+        
 
         bool demo = false; // for testing and not wasting API calls
 
-        private string apiKey = "";
+       
+        
 
-        public Form1()
+        public BaseForm()
         {
-
+          
+            
             InitializeComponent();
+
+            
         }
 
 
         private async void btnSökAktie_Click(object sender, EventArgs e)
         {
             string intag = tbxSymbol.Text;
-            
-            TickerSearch=new TickerSearchResponse(apiKey,"Ticker_Search",intag);
+           
+            TickerSearch=new TickerSearchResponse(ApiKeyHandler.Key,intag);
             await TickerSearch.Initialize();
             
             TickerSearch = await ResponseHelper.SetObjectAsync<TickerSearchResponse>(TickerSearch,TickerSearch.Address);
@@ -67,30 +74,29 @@ namespace Aktie_Logik
 
         private async void btnKör_Click(object sender, EventArgs e)
         {
-            //string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
-            string symbol = "";
+            string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
+            
             string reqType=lbxRequestType.SelectedItem.ToString();
-           // string reqType = "Income_Statement";
-            string outtext = "";
+         
             try
             {
                 // hitta värden här
-                switch (reqType) 
+                switch (reqType.Replace(' ','_') )
                 { //response manager needed -> very bad logic otherwise
                     case "Income_Statement":
-                        IncomeStatementResponse response = new IncomeStatementResponse("demo", "Income_Statement", "IBM");
+                        IncomeStatementResponse response = new IncomeStatementResponse("demo", "IBM");
                         await response.Initialize();
                         response=await ResponseHelper.SetObjectAsync<IncomeStatementResponse>(response,response.Address);
                         
                         break;
                     case "Balance_Sheet":
-                        BalanceSheetResponse balanceSheetResponse = new BalanceSheetResponse(apiKey, "Balance_Sheet", symbol);
+                        BalanceSheetResponse balanceSheetResponse = new BalanceSheetResponse(ApiKeyHandler.Key, symbol);
                         await balanceSheetResponse.Initialize();
                         balanceSheetResponse=await ResponseHelper.SetObjectAsync<BalanceSheetResponse>(balanceSheetResponse, balanceSheetResponse.Address);
                         
                         break;
                     case "Global_Quote":
-                        GlobalQuoteResponse globalQuoteResponse = new GlobalQuoteResponse(apiKey, "Global_Quote", symbol);
+                        GlobalQuoteResponse globalQuoteResponse = new GlobalQuoteResponse(ApiKeyHandler.Key, symbol);
                         await globalQuoteResponse.Initialize();
                         globalQuoteResponse=await ResponseHelper.SetObjectAsync<GlobalQuoteResponse>(globalQuoteResponse, globalQuoteResponse.Address);
                         
@@ -113,47 +119,8 @@ namespace Aktie_Logik
             TextBoxStatus(tbxSymbol, btnSökAktie, 2);
            
         }
-        private async void btnValidering_Click(object sender, EventArgs e)
-        {
-            string PreKey = tbxApiKey.Text;
+        
 
-            if (demo == true||PreKey.ToLower()=="demo")
-            {
-                gbxAktieSök.Enabled = true;
-
-                apiKey = "demo";
-                MessageBox.Show("The Application is now in demo mode");
-            }
-            else
-            {
-                bool validationResult = await ResponseHelper.ValidateAsync(PreKey);
-
-                if (validationResult == true)
-                {
-
-                    MessageBox.Show("Key validation successful");
-
-                    gbxAktieSök.Enabled = true;
-
-                    apiKey = PreKey;
-
-                }
-                else
-                {
-                    //error
-                    MessageBox.Show("Key validation unsuccessful");
-                }
-            }
-
-
-        }
-
-        private void tbxApiKey_TextChanged(object sender, EventArgs e)
-        {
-
-            TextBoxStatus(tbxApiKey, btnValidering, 3);
-         
-        }
 
         private void LbxTickerSök_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -206,8 +173,60 @@ namespace Aktie_Logik
             }
 
         }
+     
 
-       
+        private void BaseDataForm_Shown(object sender, EventArgs e)
+        {
+            this.Hide();
+            SetupForm setupform = new SetupForm(this);
+            setupform.Show();
+        }
+
+      
+
+        private void BaseDataForm_VisibleChanged(object sender, EventArgs e)
+        {
+            if (ApiKeyHandler.KeyIsValidated)
+            {
+                gbxAktieSök.Enabled = true;
+            }
+            else
+            {
+               gbxAktieSök.Enabled=false;
+            }
+         
+        }
+
+        private void btnValidationOpen_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            ValidationForm validationForm = new ValidationForm(this);
+            validationForm.Show();
+        }
+
+        private async void btnMarketOpenClose_Click(object sender, EventArgs e)//todo
+        {
+            GlobalMarketResponse response = new GlobalMarketResponse(ApiKeyHandler.Key);
+            await response.Initialize();
+           await ResponseHelper.SetObjectAsync(response, response.Address);
+            foreach( MarketData marketData in response.Markets)
+            {
+                string textOut = "";
+                textOut += "Region: "+marketData.region + "\n";
+                textOut +="Current Status: "+ marketData.current_status + "\n";
+               
+                lblMarketOpenClose.Text += textOut;
+            }
+
+        }
+
+        private void lbxRequestType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(LbxTickerSök.SelectedIndex != -1&&lbxRequestType.SelectedIndex!=-1)
+            {
+                btnKör.Enabled = true;
+            }
+        }
     }
 
 }

@@ -88,12 +88,12 @@ namespace ClassLibrary
             {
             //  Note that any non-key related issues will still result in no validation
 
-            GlobalQuoteResponse GQ = new GlobalQuoteResponse(prekey, "Global_Quote", "IBM");
+            GlobalQuoteResponse GQ = new GlobalQuoteResponse(prekey, "IBM");
             await GQ.Initialize(); //Fix Async behaviour here
 
             GQ = await ResponseHelper.SetObjectAsync<GlobalQuoteResponse>(GQ, GQ.Address);
 
-            GlobalQuoteResponse demoGQ = new GlobalQuoteResponse("demo", "Global_Quote", "IBM");
+            GlobalQuoteResponse demoGQ = new GlobalQuoteResponse("demo", "IBM");
             await demoGQ.Initialize(); //Fix Async behaviour here
 
             demoGQ = await ResponseHelper.SetObjectAsync<GlobalQuoteResponse>(demoGQ, demoGQ.Address);

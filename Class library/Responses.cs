@@ -22,7 +22,7 @@ namespace ClassLibrary // file for seeing the different types of responses
         public List<bs_AnnualReport> bs_annualReports { get; set; }
         [JsonProperty("quarterlyReports")]
         public List<bs_QuarterlyReport> bs_quarterlyReports { get; set; }
-        public BalanceSheetResponse(string apiKey, string reqType, string symbol) : base(apiKey, reqType,symbol) { }
+        public BalanceSheetResponse(string apiKey, string symbol) : base(apiKey,symbol) { }
         public BalanceSheetResponse() { }
         public override async Task Initialize()
         {
@@ -44,15 +44,15 @@ namespace ClassLibrary // file for seeing the different types of responses
         public List<MarketData> Markets { get; set; }
 
         public GlobalMarketResponse() { }
-        public GlobalMarketResponse(string apikey, string reqType) : base(apikey, reqType) { }
+        public GlobalMarketResponse(string apikey) : base(apikey) { }
         public override async Task Initialize()
         {
             await Task.Run(() => SetAddress());
         }
         protected override void SetAddress()
         {
-            //TODO - put Address here
-            //Address = "";
+          
+            Address = $"https://www.alphavantage.co/query?function=MARKET_STATUS&apikey={apiKey}";
 
         }
 
@@ -63,7 +63,7 @@ namespace ClassLibrary // file for seeing the different types of responses
         [JsonProperty("Global Quote")]
         public GlobalQuote GlobalQuote { get; set; }
 
-        public GlobalQuoteResponse(string apiKey, string reqType, string symbol) : base(apiKey, reqType, symbol) { }
+        public GlobalQuoteResponse(string apiKey, string symbol) : base(apiKey, symbol) { }
 
         public GlobalQuoteResponse() { }
          public override async Task Initialize()
@@ -82,7 +82,7 @@ namespace ClassLibrary // file for seeing the different types of responses
         [JsonProperty("bestMatches")]
         public List<BestMatch> bestMatches { get; set; }
 
-        public TickerSearchResponse(string apikey, string reqType,string symbol) : base(apikey, reqType,symbol) { }
+        public TickerSearchResponse(string apikey, string symbol) : base(apikey, symbol) { }
         public TickerSearchResponse() { }
         public override async Task Initialize()
         {
@@ -106,7 +106,7 @@ namespace ClassLibrary // file for seeing the different types of responses
         public List<ic_Quarterlyreport> ic_quarterlyReports { get; set; }
         public bool success { get; set; }
         public IncomeStatementResponse() {}
-        public IncomeStatementResponse(string apiKey, string reqType, string symbol) : base(apiKey, reqType, symbol) 
+        public IncomeStatementResponse(string apiKey, string symbol) : base(apiKey, symbol) 
         {
             
             SetAddress();
@@ -133,7 +133,7 @@ namespace ClassLibrary // file for seeing the different types of responses
 
         [JsonProperty("quarterlyReports")]
         public List<CF_QuarterlyReport> CF_quarterlyReports { get; set; }
-        public CashFlowResponse(string apiKey, string reqType, string symbol) : base(apiKey, reqType, symbol) { }
+        public CashFlowResponse(string apiKey, string symbol) : base(apiKey, symbol) { }
        public CashFlowResponse() { }
         public override async Task Initialize()
         {
@@ -162,7 +162,7 @@ namespace ClassLibrary // file for seeing the different types of responses
 
         [JsonProperty("most_actively_traded")]
         public List<MostActivelyTraded> most_actively_traded { get; set; }
-        public TopLosersGainersResponse(string apikey, string reqType):base(apikey, reqType) {}
+        public TopLosersGainersResponse(string apikey) : base(apikey) {}
         public TopLosersGainersResponse():base() {}
         public override async Task Initialize() 
         {

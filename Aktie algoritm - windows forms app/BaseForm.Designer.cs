@@ -1,6 +1,6 @@
 ﻿namespace Aktie_Logik
 {
-    partial class Form1
+    partial class BaseForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.tbxSymbol = new System.Windows.Forms.TextBox();
-            this.tbxData = new System.Windows.Forms.RichTextBox();
             this.lbxRequestType = new System.Windows.Forms.ListBox();
             this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
             this.LbxTickerSök = new System.Windows.Forms.ListBox();
@@ -39,13 +38,12 @@
             this.gbxAktieSök = new System.Windows.Forms.GroupBox();
             this.lblTickerSök = new System.Windows.Forms.Label();
             this.tbxTickerSearchInfo = new System.Windows.Forms.TextBox();
-            this.btnArkiverade = new System.Windows.Forms.Button();
-            this.tbxApiKey = new System.Windows.Forms.TextBox();
-            this.lblAktieNyckel = new System.Windows.Forms.Label();
-            this.btnValidering = new System.Windows.Forms.Button();
-            this.tbxMarketOpenClose = new System.Windows.Forms.TextBox();
-            this.btnMarketStatus = new System.Windows.Forms.Button();
             this.CheckBoxDemo = new System.Windows.Forms.CheckBox();
+            this.btnValidationOpen = new System.Windows.Forms.Button();
+            this.btnMarketOpenClose = new System.Windows.Forms.Button();
+            this.lblMarketOpenClose = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.gbxAktieSök.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,31 +53,22 @@
             this.tbxSymbol.Name = "tbxSymbol";
             this.tbxSymbol.Size = new System.Drawing.Size(276, 26);
             this.tbxSymbol.TabIndex = 0;
-            this.tbxSymbol.Text = " ";
             this.tbxSymbol.TextChanged += new System.EventHandler(this.tbxSymbol_TextChanged);
-            // 
-            // tbxData
-            // 
-            this.tbxData.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbxData.Location = new System.Drawing.Point(43, 636);
-            this.tbxData.Name = "tbxData";
-            this.tbxData.ReadOnly = true;
-            this.tbxData.Size = new System.Drawing.Size(718, 553);
-            this.tbxData.TabIndex = 1;
-            this.tbxData.Text = "";
             // 
             // lbxRequestType
             // 
+            this.lbxRequestType.Enabled = false;
             this.lbxRequestType.FormattingEnabled = true;
             this.lbxRequestType.ItemHeight = 20;
             this.lbxRequestType.Items.AddRange(new object[] {
-            "Income_Statement",
-            "Balance_Sheet",
-            "Global_Quote"});
+            "Income Statement",
+            "Balance Sheet",
+            "Global Quote"});
             this.lbxRequestType.Location = new System.Drawing.Point(100, 445);
             this.lbxRequestType.Name = "lbxRequestType";
             this.lbxRequestType.Size = new System.Drawing.Size(250, 144);
             this.lbxRequestType.TabIndex = 2;
+            this.lbxRequestType.SelectedIndexChanged += new System.EventHandler(this.lbxRequestType_SelectedIndexChanged);
             // 
             // directorySearcher1
             // 
@@ -93,7 +82,7 @@
             this.LbxTickerSök.Enabled = false;
             this.LbxTickerSök.FormattingEnabled = true;
             this.LbxTickerSök.ItemHeight = 20;
-            this.LbxTickerSök.Location = new System.Drawing.Point(76, 192);
+            this.LbxTickerSök.Location = new System.Drawing.Point(78, 193);
             this.LbxTickerSök.Name = "LbxTickerSök";
             this.LbxTickerSök.Size = new System.Drawing.Size(228, 102);
             this.LbxTickerSök.TabIndex = 3;
@@ -101,7 +90,8 @@
             // 
             // btnKör
             // 
-            this.btnKör.Location = new System.Drawing.Point(435, 492);
+            this.btnKör.Enabled = false;
+            this.btnKör.Location = new System.Drawing.Point(474, 478);
             this.btnKör.Name = "btnKör";
             this.btnKör.Size = new System.Drawing.Size(124, 51);
             this.btnKör.TabIndex = 5;
@@ -131,18 +121,19 @@
             // 
             // gbxAktieSök
             // 
+            this.gbxAktieSök.Controls.Add(this.label2);
+            this.gbxAktieSök.Controls.Add(this.label1);
             this.gbxAktieSök.Controls.Add(this.lblTickerSök);
             this.gbxAktieSök.Controls.Add(this.tbxTickerSearchInfo);
             this.gbxAktieSök.Controls.Add(this.lblNamn);
             this.gbxAktieSök.Controls.Add(this.btnSökAktie);
             this.gbxAktieSök.Controls.Add(this.LbxTickerSök);
-            this.gbxAktieSök.Controls.Add(this.tbxData);
             this.gbxAktieSök.Controls.Add(this.btnKör);
             this.gbxAktieSök.Controls.Add(this.lbxRequestType);
             this.gbxAktieSök.Controls.Add(this.tbxSymbol);
             this.gbxAktieSök.Location = new System.Drawing.Point(12, 52);
             this.gbxAktieSök.Name = "gbxAktieSök";
-            this.gbxAktieSök.Size = new System.Drawing.Size(825, 1238);
+            this.gbxAktieSök.Size = new System.Drawing.Size(786, 665);
             this.gbxAktieSök.TabIndex = 8;
             this.gbxAktieSök.TabStop = false;
             this.gbxAktieSök.Text = "Aktie Sök";
@@ -150,7 +141,7 @@
             // lblTickerSök
             // 
             this.lblTickerSök.AutoSize = true;
-            this.lblTickerSök.Location = new System.Drawing.Point(74, 158);
+            this.lblTickerSök.Location = new System.Drawing.Point(74, 170);
             this.lblTickerSök.Name = "lblTickerSök";
             this.lblTickerSök.Size = new System.Drawing.Size(96, 20);
             this.lblTickerSök.TabIndex = 9;
@@ -165,66 +156,10 @@
             this.tbxTickerSearchInfo.Size = new System.Drawing.Size(282, 126);
             this.tbxTickerSearchInfo.TabIndex = 8;
             // 
-            // btnArkiverade
-            // 
-            this.btnArkiverade.Location = new System.Drawing.Point(1008, 1092);
-            this.btnArkiverade.Name = "btnArkiverade";
-            this.btnArkiverade.Size = new System.Drawing.Size(237, 38);
-            this.btnArkiverade.TabIndex = 9;
-            this.btnArkiverade.Text = "Utifrån arkiv // projekt";
-            this.btnArkiverade.UseVisualStyleBackColor = true;
-            // 
-            // tbxApiKey
-            // 
-            this.tbxApiKey.Location = new System.Drawing.Point(898, 58);
-            this.tbxApiKey.Name = "tbxApiKey";
-            this.tbxApiKey.Size = new System.Drawing.Size(234, 26);
-            this.tbxApiKey.TabIndex = 10;
-            this.tbxApiKey.TextChanged += new System.EventHandler(this.tbxApiKey_TextChanged);
-            // 
-            // lblAktieNyckel
-            // 
-            this.lblAktieNyckel.AutoSize = true;
-            this.lblAktieNyckel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAktieNyckel.Location = new System.Drawing.Point(894, 35);
-            this.lblAktieNyckel.Name = "lblAktieNyckel";
-            this.lblAktieNyckel.Size = new System.Drawing.Size(249, 20);
-            this.lblAktieNyckel.TabIndex = 11;
-            this.lblAktieNyckel.Text = "Din AlphaVantage API nyckel:";
-            // 
-            // btnValidering
-            // 
-            this.btnValidering.Location = new System.Drawing.Point(1162, 55);
-            this.btnValidering.Name = "btnValidering";
-            this.btnValidering.Size = new System.Drawing.Size(144, 32);
-            this.btnValidering.TabIndex = 12;
-            this.btnValidering.Text = "Validera nyckel";
-            this.btnValidering.UseVisualStyleBackColor = true;
-            this.btnValidering.Click += new System.EventHandler(this.btnValidering_Click);
-            // 
-            // tbxMarketOpenClose
-            // 
-            this.tbxMarketOpenClose.Location = new System.Drawing.Point(1556, 32);
-            this.tbxMarketOpenClose.Multiline = true;
-            this.tbxMarketOpenClose.Name = "tbxMarketOpenClose";
-            this.tbxMarketOpenClose.ReadOnly = true;
-            this.tbxMarketOpenClose.Size = new System.Drawing.Size(282, 126);
-            this.tbxMarketOpenClose.TabIndex = 10;
-            // 
-            // btnMarketStatus
-            // 
-            this.btnMarketStatus.Enabled = false;
-            this.btnMarketStatus.Location = new System.Drawing.Point(1618, 182);
-            this.btnMarketStatus.Name = "btnMarketStatus";
-            this.btnMarketStatus.Size = new System.Drawing.Size(176, 31);
-            this.btnMarketStatus.TabIndex = 13;
-            this.btnMarketStatus.Text = "Kolla marknadsstatus";
-            this.btnMarketStatus.UseVisualStyleBackColor = true;
-            // 
             // CheckBoxDemo
             // 
             this.CheckBoxDemo.AutoSize = true;
-            this.CheckBoxDemo.Location = new System.Drawing.Point(1392, 22);
+            this.CheckBoxDemo.Location = new System.Drawing.Point(1268, 76);
             this.CheckBoxDemo.Name = "CheckBoxDemo";
             this.CheckBoxDemo.Size = new System.Drawing.Size(83, 24);
             this.CheckBoxDemo.TabIndex = 14;
@@ -232,21 +167,69 @@
             this.CheckBoxDemo.UseVisualStyleBackColor = true;
             this.CheckBoxDemo.CheckedChanged += new System.EventHandler(this.CheckBoxDemo_CheckedChanged);
             // 
-            // Form1
+            // btnValidationOpen
+            // 
+            this.btnValidationOpen.Location = new System.Drawing.Point(1220, 106);
+            this.btnValidationOpen.Name = "btnValidationOpen";
+            this.btnValidationOpen.Size = new System.Drawing.Size(154, 49);
+            this.btnValidationOpen.TabIndex = 16;
+            this.btnValidationOpen.Text = "Set ApiKey";
+            this.btnValidationOpen.UseVisualStyleBackColor = true;
+            this.btnValidationOpen.Click += new System.EventHandler(this.btnValidationOpen_Click);
+            // 
+            // btnMarketOpenClose
+            // 
+            this.btnMarketOpenClose.Enabled = false;
+            this.btnMarketOpenClose.Location = new System.Drawing.Point(1589, 176);
+            this.btnMarketOpenClose.Name = "btnMarketOpenClose";
+            this.btnMarketOpenClose.Size = new System.Drawing.Size(197, 41);
+            this.btnMarketOpenClose.TabIndex = 17;
+            this.btnMarketOpenClose.Text = "Check market status";
+            this.btnMarketOpenClose.UseVisualStyleBackColor = true;
+            this.btnMarketOpenClose.Click += new System.EventHandler(this.btnMarketOpenClose_Click);
+            // 
+            // lblMarketOpenClose
+            // 
+            this.lblMarketOpenClose.AutoSize = true;
+            this.lblMarketOpenClose.Location = new System.Drawing.Point(1575, 52);
+            this.lblMarketOpenClose.Name = "lblMarketOpenClose";
+            this.lblMarketOpenClose.Size = new System.Drawing.Size(0, 20);
+            this.lblMarketOpenClose.TabIndex = 18;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft JhengHei", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(117, 602);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(124, 15);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "(showing of data is todo)";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft JhengHei", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(117, 298);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(126, 15);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "(not all tickers have data)";
+            // 
+            // BaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1875, 1182);
+            this.Controls.Add(this.lblMarketOpenClose);
+            this.Controls.Add(this.btnMarketOpenClose);
+            this.Controls.Add(this.btnValidationOpen);
             this.Controls.Add(this.CheckBoxDemo);
-            this.Controls.Add(this.btnMarketStatus);
-            this.Controls.Add(this.tbxMarketOpenClose);
-            this.Controls.Add(this.btnValidering);
-            this.Controls.Add(this.lblAktieNyckel);
-            this.Controls.Add(this.tbxApiKey);
             this.Controls.Add(this.gbxAktieSök);
-            this.Controls.Add(this.btnArkiverade);
-            this.Name = "Form1";
+            this.Name = "BaseForm";
             this.Text = "Form1";
+            this.Shown += new System.EventHandler(this.BaseDataForm_Shown);
+            this.VisibleChanged += new System.EventHandler(this.BaseDataForm_VisibleChanged);
             this.gbxAktieSök.ResumeLayout(false);
             this.gbxAktieSök.PerformLayout();
             this.ResumeLayout(false);
@@ -264,16 +247,14 @@
         private System.Windows.Forms.Label lblNamn;
         private System.Windows.Forms.Button btnSökAktie;
         private System.Windows.Forms.GroupBox gbxAktieSök;
-        private System.Windows.Forms.Button btnArkiverade;
-        private System.Windows.Forms.TextBox tbxApiKey;
-        private System.Windows.Forms.Label lblAktieNyckel;
-        private System.Windows.Forms.Button btnValidering;
         private System.Windows.Forms.TextBox tbxTickerSearchInfo;
         private System.Windows.Forms.Label lblTickerSök;
-        private System.Windows.Forms.TextBox tbxMarketOpenClose;
-        private System.Windows.Forms.Button btnMarketStatus;
         private System.Windows.Forms.CheckBox CheckBoxDemo;
-        public System.Windows.Forms.RichTextBox tbxData;
+        private System.Windows.Forms.Button btnValidationOpen;
+        private System.Windows.Forms.Button btnMarketOpenClose;
+        private System.Windows.Forms.Label lblMarketOpenClose;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

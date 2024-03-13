@@ -14,7 +14,7 @@ namespace Class_library
         protected string Symbol { get; set; }
 
 
-        public SymbolResponse(string apiKey, string reqType, string symbol) : base(apiKey, reqType)
+        public SymbolResponse(string apiKey, string symbol) : base(apiKey)
         {
             Symbol = symbol; //might not be needed realistically
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aktie_algoritm___windows_forms_app;
+using System;
 using System.Windows.Forms;
 
 
@@ -14,8 +15,8 @@ namespace Aktie_Logik
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
-
+            Application.Run(new BaseForm());
+   
         }
     }
 }
