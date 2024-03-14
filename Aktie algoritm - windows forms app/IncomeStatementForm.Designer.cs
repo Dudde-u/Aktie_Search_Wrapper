@@ -331,6 +331,7 @@
             this.Controls.Add(this.lbxDate);
             this.Name = "IncomeStatementForm";
             this.Text = "IncomeStatementForm";
+            this.Shown += new System.EventHandler(this.IncomeStatementForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.icAnnualreportBindingSource)).EndInit();
             this.ICdataPanel.ResumeLayout(false);
             this.ICdataPanel.PerformLayout();

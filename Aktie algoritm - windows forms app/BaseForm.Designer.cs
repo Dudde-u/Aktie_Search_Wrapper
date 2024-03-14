@@ -36,14 +36,14 @@
             this.lblNamn = new System.Windows.Forms.Label();
             this.btnSökAktie = new System.Windows.Forms.Button();
             this.gbxAktieSök = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblTickerSök = new System.Windows.Forms.Label();
             this.tbxTickerSearchInfo = new System.Windows.Forms.TextBox();
             this.CheckBoxDemo = new System.Windows.Forms.CheckBox();
             this.btnValidationOpen = new System.Windows.Forms.Button();
             this.btnMarketOpenClose = new System.Windows.Forms.Button();
             this.lblMarketOpenClose = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.gbxAktieSök.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -91,7 +91,7 @@
             // btnKör
             // 
             this.btnKör.Enabled = false;
-            this.btnKör.Location = new System.Drawing.Point(474, 478);
+            this.btnKör.Location = new System.Drawing.Point(470, 471);
             this.btnKör.Name = "btnKör";
             this.btnKör.Size = new System.Drawing.Size(124, 51);
             this.btnKör.TabIndex = 5;
@@ -137,6 +137,26 @@
             this.gbxAktieSök.TabIndex = 8;
             this.gbxAktieSök.TabStop = false;
             this.gbxAktieSök.Text = "Aktie Sök";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft JhengHei", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(117, 298);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(126, 15);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "(not all tickers have data)";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft JhengHei", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(117, 602);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(124, 15);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "(showing of data is todo)";
             // 
             // lblTickerSök
             // 
@@ -195,26 +215,6 @@
             this.lblMarketOpenClose.Name = "lblMarketOpenClose";
             this.lblMarketOpenClose.Size = new System.Drawing.Size(0, 20);
             this.lblMarketOpenClose.TabIndex = 18;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft JhengHei", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(117, 602);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(124, 15);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "(showing of data is todo)";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft JhengHei", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(117, 298);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(126, 15);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "(not all tickers have data)";
             // 
             // BaseForm
             // 

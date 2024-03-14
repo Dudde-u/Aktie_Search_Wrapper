@@ -17,12 +17,7 @@ namespace Aktie_algoritm___windows_forms_app
         public IncomeStatementForm()//IncomeStatementResponse incomeStatementResponse)
         {
             InitializeComponent();
-             //Data = incomeStatementResponse;
-            BindLabels();
-            for (int i = 0; i < incomestatement.ic_annualReports.Count; i++)
-            {
-                lbxDate.Items.Add(incomestatement.ic_annualReports[i].fiscalDateEnding);
-            }
+            //Data = incomeStatementResponse;
         }
         List<Label> labels = new List<Label>();
         private IncomeStatementResponse incomestatement;
@@ -41,6 +36,23 @@ namespace Aktie_algoritm___windows_forms_app
                 {
                     labels.Add(label);
                 }
+            }
+        }
+
+        private async void IncomeStatementForm_Shown(object sender, EventArgs e)
+        {
+            IncomeStatementResponse incomeStatement2 = new IncomeStatementResponse("1234", "IBM");
+
+            await incomeStatement2.Initialize();
+
+            await ResponseHelper.SetObjectAsync(incomeStatement2, incomeStatement2.Address);
+
+        
+            BindLabels();
+            for (int i = 0; i < incomestatement.ic_annualReports.Count
+                ; i++)
+            {
+                lbxDate.Items.Add(incomeStatement2.ic_annualReports[i].fiscalDateEnding);
             }
         }
     }
