@@ -13,7 +13,7 @@ namespace Aktie_algoritm___windows_forms_app
 {
     public partial class SetupForm : Form
     {
-        public event EventHandler ShowOriginalFormRequested;
+
         private readonly Form mainWindow;
         public SetupForm(Form mainForm)
         {

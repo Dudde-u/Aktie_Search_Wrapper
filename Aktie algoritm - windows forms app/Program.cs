@@ -15,7 +15,7 @@ namespace Aktie_Logik
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new IncomeStatementForm());
+            Application.Run(new BaseForm());
    
         }
     }

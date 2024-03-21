@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Class_library
 {
@@ -21,23 +17,23 @@ namespace Class_library
             }
             else
             {
-                
+
                 return false;
             }
         }
-        public static void SaveToFile(string JSONstring, string symbol,string RequstType)
+        public static void SaveToFile(string JSONstring, string symbol, string RequstType)
         {
             DateTime dateTime = DateTime.Now;
-            string filepath = "Save" + symbol +dateTime.Month+ RequstType + ".txt";
+            string filepath = "Save" + symbol + dateTime.Month + RequstType + ".txt";
             File.WriteAllText(filepath, JSONstring);
             StreamWriter writer = File.AppendText(filepath);
-            writer.Write(filepath+"   ");
+            writer.Write(filepath + "   ");
 
 
             File.WriteAllText(filepath, JSONstring);
-           
 
-         
+
+
         }
         public async static void ReadFromFile(string requestType, string symbol)
         {

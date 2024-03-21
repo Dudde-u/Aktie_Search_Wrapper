@@ -1,38 +1,31 @@
 ﻿
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using Class_library;
-using System.Security.Policy;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ClassLibrary // file for seeing the different types of responses
 {
     public class BalanceSheetResponse : SymbolResponse  // balance_sheet
     {
 
-       
+
 
         [JsonProperty("annualReports")]
         public List<bs_AnnualReport> bs_annualReports { get; set; }
         [JsonProperty("quarterlyReports")]
         public List<bs_QuarterlyReport> bs_quarterlyReports { get; set; }
-        public BalanceSheetResponse(string apiKey, string symbol) : base(apiKey,symbol) { }
+        public BalanceSheetResponse(string apiKey, string symbol) : base(apiKey, symbol) { }
         public BalanceSheetResponse() { }
         public override async Task Initialize()
         {
             await Task.Run(() => SetAddress());
         }
-        protected override void SetAddress() 
+        protected override void SetAddress()
         {
             Address = $"https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol={Symbol}&apikey={apiKey}";
         }
-      
+
     }
 
     public class GlobalMarketResponse : BaseResponse //market open/close status
@@ -51,7 +44,7 @@ namespace ClassLibrary // file for seeing the different types of responses
         }
         protected override void SetAddress()
         {
-          
+
             Address = $"https://www.alphavantage.co/query?function=MARKET_STATUS&apikey={apiKey}";
 
         }
@@ -66,7 +59,7 @@ namespace ClassLibrary // file for seeing the different types of responses
         public GlobalQuoteResponse(string apiKey, string symbol) : base(apiKey, symbol) { }
 
         public GlobalQuoteResponse() { }
-         public override async Task Initialize()
+        public override async Task Initialize()
         {
             await Task.Run(() => SetAddress());
         }
@@ -77,7 +70,7 @@ namespace ClassLibrary // file for seeing the different types of responses
     }
     public class TickerSearchResponse : SymbolResponse
     {
-       
+
         //TODO -> keywords not symbol, so new type of response and constructor
         [JsonProperty("bestMatches")]
         public List<BestMatch> bestMatches { get; set; }
@@ -93,22 +86,21 @@ namespace ClassLibrary // file for seeing the different types of responses
             Address = $"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={Symbol}&apikey={apiKey}";
         }
 
-        
+
 
     }
 
     public class IncomeStatementResponse : SymbolResponse // income_statement
     {
-    
+
         [JsonProperty("annualReports")]
         public List<ic_Annualreport> ic_annualReports { get; set; }
         [JsonProperty("quarterlyReports")]
         public List<ic_Quarterlyreport> ic_quarterlyReports { get; set; }
-        public bool success { get; set; }
-        public IncomeStatementResponse() {}
-        public IncomeStatementResponse(string apiKey, string symbol) : base(apiKey, symbol) 
+        public IncomeStatementResponse() { }
+        public IncomeStatementResponse(string apiKey, string symbol) : base(apiKey, symbol)
         {
-            
+
             SetAddress();
         }
 
@@ -134,7 +126,7 @@ namespace ClassLibrary // file for seeing the different types of responses
         [JsonProperty("quarterlyReports")]
         public List<CF_QuarterlyReport> CF_quarterlyReports { get; set; }
         public CashFlowResponse(string apiKey, string symbol) : base(apiKey, symbol) { }
-       public CashFlowResponse() { }
+        public CashFlowResponse() { }
         public override async Task Initialize()
         {
             await Task.Run(() => SetAddress());
@@ -162,13 +154,13 @@ namespace ClassLibrary // file for seeing the different types of responses
 
         [JsonProperty("most_actively_traded")]
         public List<MostActivelyTraded> most_actively_traded { get; set; }
-        public TopLosersGainersResponse(string apikey) : base(apikey) {}
-        public TopLosersGainersResponse():base() {}
-        public override async Task Initialize() 
+        public TopLosersGainersResponse(string apikey) : base(apikey) { }
+        public TopLosersGainersResponse() : base() { }
+        public override async Task Initialize()
         {
             await Task.Run(() => SetAddress());
         }
-        protected override void SetAddress() 
+        protected override void SetAddress()
         {
             Address = $"https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey={apiKey}";
         }

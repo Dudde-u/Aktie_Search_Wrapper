@@ -1,17 +1,11 @@
 ﻿using ClassLibrary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Class_library
 {
     public abstract class SymbolResponse : BaseResponse
     {
 
-        protected string Symbol { get; set; }
+        public string Symbol { get; set; }
 
 
         public SymbolResponse(string apiKey, string symbol) : base(apiKey)
@@ -21,9 +15,9 @@ namespace Class_library
             ResponseHelper.Symbol = symbol;
 
         }
-        protected SymbolResponse() : base() 
+        protected SymbolResponse() : base()
         {
-            
+
             Symbol = ResponseHelper.Symbol;
         }
     }

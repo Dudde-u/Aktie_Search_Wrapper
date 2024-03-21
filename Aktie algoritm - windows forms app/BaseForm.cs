@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Reflection;
 using Aktie_algoritm___windows_forms_app;
 using Class_library;
+
 using System.Threading;
 
 
@@ -75,19 +76,21 @@ namespace Aktie_Logik
         private async void btnKör_Click(object sender, EventArgs e)
         {
             string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
-            
+        
             string reqType=lbxRequestType.SelectedItem.ToString();
          
             try
             {
-                // hitta värden här
+                // hitta värden här++
                 switch (reqType.Replace(' ','_') )
                 { //response manager needed -> very bad logic otherwise
                     case "Income_Statement":
-                        IncomeStatementResponse response = new IncomeStatementResponse("demo", "IBM");
+                        IncomeStatementResponse response = new IncomeStatementResponse(ApiKeyHandler.Key, symbol); //if not response and response.Address then its testing
                         await response.Initialize();
                         response=await ResponseHelper.SetObjectAsync<IncomeStatementResponse>(response,response.Address);
-                        
+                        //this.Enabled = false;
+                        IncomeStatementForm form = new IncomeStatementForm(response);
+                        form.Show();
                         break;
                     case "Balance_Sheet":
                         BalanceSheetResponse balanceSheetResponse = new BalanceSheetResponse(ApiKeyHandler.Key, symbol);
@@ -106,7 +109,7 @@ namespace Aktie_Logik
                         MessageBox.Show("Internal logic issue");
                         break;
                 }
-                //göra något med data
+                
                
             }
             catch (Exception ex)

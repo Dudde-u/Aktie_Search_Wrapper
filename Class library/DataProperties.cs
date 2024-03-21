@@ -1,15 +1,9 @@
 ﻿
 
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Windows.Forms;
-using System.Text;
-using System.Threading.Tasks;
 using Class_library;
-using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ClassLibrary // file for the raw return data
 {
@@ -85,10 +79,7 @@ namespace ClassLibrary // file for the raw return data
         protected override void SetAddress()
         {
             Address = $"https://www.alphavantage.co/query?function=Overview&symbol={Symbol}&apikey={apiKey}";
-
         }
-       
-
     }
     public class GlobalQuote  // quote endpoint/global quote
     {
@@ -122,7 +113,7 @@ namespace ClassLibrary // file for the raw return data
         [JsonProperty("10. change percent")]
         public string _10changepercent { get; set; }
     }
-    public class BestMatch 
+    public class BestMatch
     {
         [JsonProperty("1. symbol")]
         public string Symbol { get; set; }
@@ -177,6 +168,7 @@ namespace ClassLibrary // file for the raw return data
 
     public class ic_Annualreport
     {
+
         [JsonProperty("fiscalDateEnding")]
         public string fiscalDateEnding { get; set; }
 
@@ -254,11 +246,41 @@ namespace ClassLibrary // file for the raw return data
 
         [JsonProperty("netIncome")]
         public string netIncome { get; set; }
+        public static string[] TextArray { get; set; }
+        public List<string> ReturnList()
+        {
+            List<string> DataList = new List<string>();
 
-       
+            //not as messy and should have less overhead than reflection
+            DataList.Add(grossProfit);
+            DataList.Add(totalRevenue);
+            DataList.Add(costOfRevenue);
+            DataList.Add(costofGoodsAndServicesSold);
+            DataList.Add(operatingIncome);
+            DataList.Add(sellingGeneralAndAdministrative);
+            DataList.Add(researchAndDevelopment);
+            DataList.Add(operatingExpenses);
+            DataList.Add(investmentIncomeNet);
+            DataList.Add(netInterestIncome);
+            DataList.Add(interestIncome);
+            DataList.Add(interestExpense);
+            DataList.Add(nonInterestIncome);
+            DataList.Add(otherNonOperatingIncome);
+            DataList.Add(depreciation);
+            DataList.Add(depreciationAndAmortization);
+            DataList.Add(incomeBeforeTax);
+            DataList.Add(incomeTaxExpense);
+            DataList.Add(interestAndDebtExpense);
+            DataList.Add(netIncomeFromContinuingOperations);
+            DataList.Add(comprehensiveIncomeNetOfTax);
+            DataList.Add(ebit);
+            DataList.Add(ebitda);
+            DataList.Add(netIncome);
+
+            return DataList;
+        }
     }
-
-    public class ic_Quarterlyreport //income statement - quarterly
+    public class ic_Quarterlyreport
     {
         [JsonProperty("fiscalDateEnding")]
         public string fiscalDateEnding { get; set; }
@@ -338,10 +360,39 @@ namespace ClassLibrary // file for the raw return data
         [JsonProperty("netIncome")]
         public string netIncome { get; set; }
 
+        public List<string> ReturnList()
+        {
+            List<string> DataList = new List<string>();
 
+            //not as messy and should have less overhead than reflection
+            DataList.Add(grossProfit);
+            DataList.Add(totalRevenue);
+            DataList.Add(costOfRevenue);
+            DataList.Add(costofGoodsAndServicesSold);
+            DataList.Add(operatingIncome);
+            DataList.Add(sellingGeneralAndAdministrative);
+            DataList.Add(researchAndDevelopment);
+            DataList.Add(operatingExpenses);
+            DataList.Add(investmentIncomeNet);
+            DataList.Add(netInterestIncome);
+            DataList.Add(interestIncome);
+            DataList.Add(interestExpense);
+            DataList.Add(nonInterestIncome);
+            DataList.Add(otherNonOperatingIncome);
+            DataList.Add(depreciation);
+            DataList.Add(depreciationAndAmortization);
+            DataList.Add(incomeBeforeTax);
+            DataList.Add(incomeTaxExpense);
+            DataList.Add(interestAndDebtExpense);
+            DataList.Add(netIncomeFromContinuingOperations);
+            DataList.Add(comprehensiveIncomeNetOfTax);
+            DataList.Add(ebit);
+            DataList.Add(ebitda);
+            DataList.Add(netIncome);
+
+            return DataList;
+        }
     }
-
-
     public class bs_AnnualReport //balancesheet
     {
         [JsonProperty("fiscalDateEnding")]
@@ -578,7 +629,7 @@ namespace ClassLibrary // file for the raw return data
     }
 
 
-   
+
     public class CF_AnnualReport
     {
         [JsonProperty("fiscalDateEnding")]

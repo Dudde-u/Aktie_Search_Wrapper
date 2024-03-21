@@ -48,6 +48,7 @@
     <Compile Include="ApiKeyHandler.cs" />
     <Compile Include="ArchivalClass.cs" />
     <Compile Include="BaseResponse.cs" />
+    <Compile Include="IncomeStatementHelper.cs" />
     <Compile Include="Responses.cs" />
     <Compile Include="ResponseHelperClass.cs" />
     <Compile Include="DataProperties.cs" />
