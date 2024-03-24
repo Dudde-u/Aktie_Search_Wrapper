@@ -76,16 +76,16 @@ namespace Aktie_Logik
         private async void btnKör_Click(object sender, EventArgs e)
         {
             string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
-        
-            string reqType=lbxRequestType.SelectedItem.ToString();
-         
+
+            string reqType = lbxRequestType.SelectedItem.ToString();
+
             try
             {
                 // hitta värden här++
                 switch (reqType.Replace(' ','_') )
                 { //response manager needed -> very bad logic otherwise
                     case "Income_Statement":
-                        IncomeStatementResponse response = new IncomeStatementResponse(ApiKeyHandler.Key, symbol); //if not response and response.Address then its testing
+                        IncomeStatementResponse response = new IncomeStatementResponse(ApiKeyHandler.Key,symbol); //if not response and response.Address then its testing
                         await response.Initialize();
                         response=await ResponseHelper.SetObjectAsync<IncomeStatementResponse>(response,response.Address);
                         //this.Enabled = false;
@@ -102,8 +102,6 @@ namespace Aktie_Logik
                         GlobalQuoteResponse globalQuoteResponse = new GlobalQuoteResponse(ApiKeyHandler.Key, symbol);
                         await globalQuoteResponse.Initialize();
                         globalQuoteResponse=await ResponseHelper.SetObjectAsync<GlobalQuoteResponse>(globalQuoteResponse, globalQuoteResponse.Address);
-                        
-
                         break;
                         default:
                         MessageBox.Show("Internal logic issue");

@@ -27,22 +27,23 @@ namespace Aktie_algoritm___windows_forms_app
         private async void btnValidering_Click(object sender, EventArgs e)
         {
             string prekey= tbxApiKey.Text;
-             if (await ResponseHelper.ValidateAsync(prekey) == true &&prekey!=("demo"))//to remove
+             if (await ResponseHelper.ValidateAsync(prekey) == true &&prekey!=("demo"))
             {
                 
-                MessageBox.Show("Validation and save of key succesful", "Validation result", MessageBoxButtons.OK);
+                MessageBox.Show("The validation and saving of the key were successful", "Validation result", MessageBoxButtons.OK);
 
                 File.WriteAllText("apiKeySave.txt",prekey);
 
-                
-                
+                mainWindow.Show();
+
+                this.Close();
             }
             else
             {
                 MessageBox.Show("Validation failed","Validation result", MessageBoxButtons.OK);
             }
         }
-        private void tbxApiKey_TextChanged(object sender, EventArgs e)
+        private void tbxApiKey_TextChanged(object sender, EventArgs e) //semantics
         {
             
             if (tbxApiKey.Text.Length > 1)
@@ -54,14 +55,13 @@ namespace Aktie_algoritm___windows_forms_app
             btnValidering.Enabled=false;
             }
         }
-        private async void ValidationForm_Shown(object sender, EventArgs e)
+        private async void ValidationForm_Shown(object sender, EventArgs e) //pulls key from text document and validates it
         {
             try
             {
                 string prekey = File.ReadAllText("apiKeySave.Txt");
 
-                if (prekey != null && await ResponseHelper.ValidateAsync(prekey) == true)
-
+                if (prekey != null && await ResponseHelper.ValidateAsync(prekey) == true&&prekey.ToLower()!="demo")
                 {
                     ApiKeyHandler.Key=prekey;
                     ApiKeyHandler.KeyIsValidated = true;
@@ -69,13 +69,7 @@ namespace Aktie_algoritm___windows_forms_app
 
                     this.Close();
 
-                    mainWindow.Show();
-                   
-                }
-                else
-                {
-                    this.Show();
-
+                    mainWindow.Show();  
                 }
             }
             catch { }

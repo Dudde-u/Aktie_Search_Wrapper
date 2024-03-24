@@ -1,4 +1,6 @@
-﻿namespace Aktie_algoritm___windows_forms_app
+﻿using System.Threading;
+
+namespace Aktie_algoritm___windows_forms_app
 {
     partial class IncomeStatementForm
     {
@@ -336,7 +338,7 @@
             this.lbxDateAnnual.Name = "lbxDateAnnual";
             this.lbxDateAnnual.Size = new System.Drawing.Size(145, 104);
             this.lbxDateAnnual.TabIndex = 42;
-            this.lbxDateAnnual.SelectedIndexChanged += new System.EventHandler(this.lbxDateAnnual_SelectedIndexChanged);
+            this.lbxDateAnnual.SelectedIndexChanged += new System.EventHandler(this.ReloadAnnualData);
             // 
             // ICdataPanel_Annual
             // 
@@ -709,7 +711,7 @@
             this.lbxDateQuarterly.Name = "lbxDateQuarterly";
             this.lbxDateQuarterly.Size = new System.Drawing.Size(145, 104);
             this.lbxDateQuarterly.TabIndex = 47;
-            this.lbxDateQuarterly.SelectedIndexChanged += new System.EventHandler(this.lbxDateQuarterly_SelectedIndexChanged);
+            this.lbxDateQuarterly.SelectedIndexChanged += new System.EventHandler(this.ReloadQuarterlyData);
             // 
             // lblSymbol
             // 
@@ -730,7 +732,6 @@
             this.label26.Size = new System.Drawing.Size(101, 20);
             this.label26.TabIndex = 50;
             this.label26.Text = "Time interval:";
-            this.label26.Visible = false;
             // 
             // btnAnnual1
             // 
@@ -740,8 +741,7 @@
             this.btnAnnual1.TabIndex = 52;
             this.btnAnnual1.Text = "1 y";
             this.btnAnnual1.UseVisualStyleBackColor = true;
-            this.btnAnnual1.Visible = false;
-            this.btnAnnual1.Click += new System.EventHandler(this.btnAnnual1_Click);
+            this.btnAnnual1.Click += new System.EventHandler(this.button_Click);
             // 
             // btnAnnual2
             // 
@@ -751,8 +751,7 @@
             this.btnAnnual2.TabIndex = 53;
             this.btnAnnual2.Text = "5 y";
             this.btnAnnual2.UseVisualStyleBackColor = true;
-            this.btnAnnual2.Visible = false;
-            this.btnAnnual2.Click += new System.EventHandler(this.btnAnnual2_Click);
+            this.btnAnnual2.Click += new System.EventHandler(this.button_Click);
             // 
             // btnAnnual3
             // 
@@ -762,8 +761,7 @@
             this.btnAnnual3.TabIndex = 54;
             this.btnAnnual3.Text = "10 y";
             this.btnAnnual3.UseVisualStyleBackColor = true;
-            this.btnAnnual3.Visible = false;
-            this.btnAnnual3.Click += new System.EventHandler(this.btnAnnual3_Click);
+            this.btnAnnual3.Click += new System.EventHandler(this.button_Click);
             // 
             // btnAnnual4
             // 
@@ -773,8 +771,7 @@
             this.btnAnnual4.TabIndex = 55;
             this.btnAnnual4.Text = "Max";
             this.btnAnnual4.UseVisualStyleBackColor = true;
-            this.btnAnnual4.Visible = false;
-            this.btnAnnual4.Click += new System.EventHandler(this.btnAnnual4_Click);
+            this.btnAnnual4.Click += new System.EventHandler(this.button_Click);
             // 
             // btnQuarterly4
             // 
@@ -782,9 +779,9 @@
             this.btnQuarterly4.Name = "btnQuarterly4";
             this.btnQuarterly4.Size = new System.Drawing.Size(80, 32);
             this.btnQuarterly4.TabIndex = 60;
-            this.btnQuarterly4.Text = "10";
+            this.btnQuarterly4.Text = "10 r";
             this.btnQuarterly4.UseVisualStyleBackColor = true;
-            this.btnQuarterly4.Visible = false;
+            this.btnQuarterly4.Click += new System.EventHandler(this.button_Click);
             // 
             // btnQuarterly3
             // 
@@ -792,9 +789,9 @@
             this.btnQuarterly3.Name = "btnQuarterly3";
             this.btnQuarterly3.Size = new System.Drawing.Size(80, 32);
             this.btnQuarterly3.TabIndex = 59;
-            this.btnQuarterly3.Text = "5 m";
+            this.btnQuarterly3.Text = "5 r";
             this.btnQuarterly3.UseVisualStyleBackColor = true;
-            this.btnQuarterly3.Visible = false;
+            this.btnQuarterly3.Click += new System.EventHandler(this.button_Click);
             // 
             // btnQuarterly2
             // 
@@ -802,9 +799,9 @@
             this.btnQuarterly2.Name = "btnQuarterly2";
             this.btnQuarterly2.Size = new System.Drawing.Size(80, 32);
             this.btnQuarterly2.TabIndex = 58;
-            this.btnQuarterly2.Text = "3 m";
+            this.btnQuarterly2.Text = "3 r";
             this.btnQuarterly2.UseVisualStyleBackColor = true;
-            this.btnQuarterly2.Visible = false;
+            this.btnQuarterly2.Click += new System.EventHandler(this.button_Click);
             // 
             // btnQuarterly1
             // 
@@ -812,9 +809,9 @@
             this.btnQuarterly1.Name = "btnQuarterly1";
             this.btnQuarterly1.Size = new System.Drawing.Size(80, 32);
             this.btnQuarterly1.TabIndex = 57;
-            this.btnQuarterly1.Text = "1 m";
+            this.btnQuarterly1.Text = "1 r";
             this.btnQuarterly1.UseVisualStyleBackColor = true;
-            this.btnQuarterly1.Visible = false;
+            this.btnQuarterly1.Click += new System.EventHandler(this.button_Click);
             // 
             // label25
             // 
@@ -825,7 +822,6 @@
             this.label25.Size = new System.Drawing.Size(101, 20);
             this.label25.TabIndex = 56;
             this.label25.Text = "Time interval:";
-            this.label25.Visible = false;
             // 
             // IncomeStatementForm
             // 
@@ -858,6 +854,8 @@
             this.PerformLayout();
 
         }
+
+   
 
         #endregion
 

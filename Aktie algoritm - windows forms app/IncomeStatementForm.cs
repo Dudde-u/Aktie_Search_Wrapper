@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,12 +21,24 @@ namespace Aktie_algoritm___windows_forms_app
 {
     public partial class IncomeStatementForm : Form
     {
+        
+
         public IncomeStatementForm(IncomeStatementResponse incomeStatementResponse)
         {
             InitializeComponent();
             incomestatement = incomeStatementResponse;
             AnnualOffset = 1;
             QuarterlyOffset = 1;
+            
+            this.btnQuarterly1.Click += this.ReloadQuarterlyData;
+            this.btnQuarterly2.Click += this.ReloadQuarterlyData;
+            this.btnQuarterly3.Click += this.ReloadQuarterlyData;
+            this.btnQuarterly4.Click += this.ReloadQuarterlyData;
+
+            this.btnAnnual1.Click += this.ReloadAnnualData;
+            this.btnAnnual2.Click += this.ReloadAnnualData;
+            this.btnAnnual3.Click += this.ReloadAnnualData;
+            this.btnAnnual4.Click += this.ReloadAnnualData;
         }
         List<Label> LabelsAnnual = new List<Label>();
         List<Label> LabelsQuarterly = new List<Label>();
@@ -33,28 +46,6 @@ namespace Aktie_algoritm___windows_forms_app
         public int QuarterlyOffset {  get; set; }
         
         private IncomeStatementResponse incomestatement;
-        private void lbxDateAnnual_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-            TextToDefault(LabelsAnnual);
-
-            int selectedindex = lbxDateAnnual.SelectedIndex;
-
-            int offset = AnnualOffset;
-            
-            List<string> thisDataList = incomestatement.ic_annualReports[selectedindex].ReturnList();
-           
-            if(selectedindex >= lbxDateAnnual.Items.Count - 1) 
-            {
-                offset = 0;
-            }
-            List<string> PreviousDataList = incomestatement.ic_annualReports[selectedindex + offset].ReturnList();
-
-            List<string> multiplierList= IncomeStatementHelper.CompareStatements(PreviousDataList, thisDataList);
-
-            IncomeStatementHelper.MergeAndShowLists(thisDataList, multiplierList,LabelsAnnual);
-
-        }
         private void BindLabels()
         {
             foreach (Control control in ICdataPanel_Annual.Controls)
@@ -74,52 +65,108 @@ namespace Aktie_algoritm___windows_forms_app
             IncomeStatementHelper.BubbleSortLabels(ref LabelsAnnual);
             IncomeStatementHelper.BubbleSortLabels(ref LabelsAnnual);
         }
-            private void IncomeStatementForm_Shown(object sender, EventArgs e)
+        private void IncomeStatementForm_Shown(object sender, EventArgs e)
+        {
+        lblSymbol.Text = "Ticker/Symbol: "+incomestatement.Symbol;
+        BindLabels();
+        try
+        {
+            foreach (ic_Quarterlyreport report in incomestatement.ic_quarterlyReports)
             {
-            lblSymbol.Text = "Ticker/Symbol: "+incomestatement.Symbol;
-            BindLabels();
-            try
+                string tempDate=report.fiscalDateEnding.Substring(0, 7);
+                        lbxDateQuarterly.Items.Add(tempDate);
+            }
+            foreach(ic_Annualreport report in incomestatement.ic_annualReports)
             {
-                foreach (ic_Quarterlyreport report in incomestatement.ic_quarterlyReports)
+                string tempDate=report.fiscalDateEnding.Substring(0,4);
+                lbxDateAnnual.Items.Add(tempDate);
+            }
+        }
+        catch (Exception) { MessageBox.Show("Something during loading of this page went wrong, try again"); }
+        }
+        private void ReloadQuarterlyData(object sender, EventArgs e)
+        {
+
+        TextToDefault(LabelsQuarterly);
+
+        int selectedindex = lbxDateQuarterly.SelectedIndex;
+        int offset = QuarterlyOffset;
+
+            if (selectedindex != -1 ) //&& selectedindex + offset < lbxDateQuarterly.Items.Count)
+            {
+                if (selectedindex + offset >= lbxDateQuarterly.Items.Count)
                 {
-                    string tempDate=report.fiscalDateEnding.Substring(0, 7);
-                          lbxDateQuarterly.Items.Add(tempDate);
+                    offset = 0;
                 }
-                foreach(ic_Annualreport report in incomestatement.ic_annualReports)
-                {
-                    string tempDate=report.fiscalDateEnding.Substring(0,4);
-                    lbxDateAnnual.Items.Add(tempDate);
-                }
-            }
-            catch (Exception) { MessageBox.Show("Something during loading of this page went wrong, try again"); }
-            }
-            private void lbxDateQuarterly_SelectedIndexChanged(object sender, EventArgs e)
-            {
 
-            
-            TextToDefault(LabelsQuarterly);
-
-            int selectedindex = lbxDateQuarterly.SelectedIndex;
-            int offset = QuarterlyOffset;
-
-            if (selectedindex >= lbxDateQuarterly.Items.Count - 1)
-            {
-                offset = 0;
-            }
-
-            List<string> thisDataList = incomestatement.ic_quarterlyReports[selectedindex].ReturnList();
-
-               
+                List<string> thisDataList = incomestatement.ic_quarterlyReports[selectedindex].ReturnList();
 
                 List<string> PreviousDataList = incomestatement.ic_quarterlyReports[selectedindex + offset].ReturnList();
 
-            List<string> multiplierList = IncomeStatementHelper.CompareStatements(PreviousDataList, thisDataList);
+                List<string> multiplierList = IncomeStatementHelper.CompareStatements(PreviousDataList, thisDataList);
 
-            IncomeStatementHelper.MergeAndShowLists(thisDataList, multiplierList, LabelsQuarterly);
+                IncomeStatementHelper.MergeAndShowLists(thisDataList, multiplierList, LabelsQuarterly);
+            }
 
-           
         }
-         static void TextToDefault(List<Label> labels)
+        private void button_Click(object sender, EventArgs e)
+        {
+            Button clickedButton=(Button)sender;
+            string buttonText=clickedButton.Text;
+            switch(buttonText)
+            {
+                case "1 y":
+                    AnnualOffset = 1;
+                        break;
+                case "5 y":
+                    AnnualOffset = 5;
+                    break;
+                case "10 y":
+                    AnnualOffset= 10;
+                    break;
+                case "Max":
+                    AnnualOffset = lbxDateAnnual.Items.Count - 1 - lbxDateAnnual.SelectedIndex;
+                    break;
+                case "1 r":
+                    QuarterlyOffset = 1;
+                    break;
+                case "3 r":
+                    QuarterlyOffset = 3;
+                    break;
+                case "5 r":
+                    QuarterlyOffset = 5;
+                    break;
+                case "10 r":
+                    QuarterlyOffset= 10;
+                    break;
+                default:
+                    throw new NotImplementedException();
+                    
+            }
+        }
+      private void ReloadAnnualData(object sender, EventArgs e)
+        {
+            TextToDefault(LabelsAnnual);
+            int offset = AnnualOffset;
+            int selectedindex = lbxDateAnnual.SelectedIndex;
+            if (selectedindex != -1)
+            {
+                List<string> thisDataList = incomestatement.ic_annualReports[selectedindex].ReturnList();
+
+                if (selectedindex+ offset >= lbxDateAnnual.Items.Count)
+                {
+                    offset = 0;
+                }
+                List<string> PreviousDataList = incomestatement.ic_annualReports[selectedindex + offset].ReturnList();
+
+                List<string> multiplierList = IncomeStatementHelper.CompareStatements(PreviousDataList, thisDataList);
+
+                IncomeStatementHelper.MergeAndShowLists(thisDataList, multiplierList, LabelsAnnual);
+            }
+
+        }
+
+        static void TextToDefault(List<Label> labels)
         {
             //can be done with array  amd loops but this should be more efficient:
             labels[0].Text = "Gross Profit: ";
@@ -148,31 +195,6 @@ namespace Aktie_algoritm___windows_forms_app
             labels[23].Text = "Net Income: ";
         }
 
-        private void btnAnnual1_Click(object sender, EventArgs e) //todo fix this
-        {
-            //AnnualOffset = 1;
-        }
-
-        private void btnAnnual2_Click(object sender, EventArgs e)
-        {
-            //if (lbxDateAnnual.SelectedIndex + 5 <= lbxDateAnnual.Items.Count)
-            //{
-            //    AnnualOffset = 5;
-            //}
-        }
-
-        private void btnAnnual3_Click(object sender, EventArgs e)
-        {
-            //if (lbxDateAnnual.SelectedIndex +10 <= lbxDateAnnual.Items.Count)
-            //{
-            //    AnnualOffset = 10;
-            //}
-        }
-
-        private void btnAnnual4_Click(object sender, EventArgs e)
-        {
-         //  AnnualOffset = lbxDateAnnual.Items.Count - 1 - lbxDateAnnual.SelectedIndex;
-        }
     }
     
 }
