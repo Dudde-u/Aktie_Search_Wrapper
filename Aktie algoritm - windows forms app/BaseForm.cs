@@ -33,7 +33,7 @@ namespace Aktie_Logik
 
         public BaseForm()
         {
-          
+         
             
             InitializeComponent();
 
@@ -79,29 +79,37 @@ namespace Aktie_Logik
 
             string reqType = lbxRequestType.SelectedItem.ToString();
 
+            //string reqType = ""; //for debugging
+            //string symbol="";
+
             try
             {
                 // hitta värden här++
                 switch (reqType.Replace(' ','_') )
                 { //response manager needed -> very bad logic otherwise
                     case "Income_Statement":
-                        IncomeStatementResponse response = new IncomeStatementResponse(ApiKeyHandler.Key,symbol); //if not response and response.Address then its testing
+                        IncomeStatementResponse response = new IncomeStatementResponse(ApiKeyHandler.Key,symbol); 
                         await response.Initialize();
                         response=await ResponseHelper.SetObjectAsync<IncomeStatementResponse>(response,response.Address);
                         //this.Enabled = false;
-                        IncomeStatementForm form = new IncomeStatementForm(response);
-                        form.Show();
+                        IncomeStatementForm IncomeStatementForm = new IncomeStatementForm(response);
+                        IncomeStatementForm.Show();
                         break;
                     case "Balance_Sheet":
+                      
                         BalanceSheetResponse balanceSheetResponse = new BalanceSheetResponse(ApiKeyHandler.Key, symbol);
                         await balanceSheetResponse.Initialize();
                         balanceSheetResponse=await ResponseHelper.SetObjectAsync<BalanceSheetResponse>(balanceSheetResponse, balanceSheetResponse.Address);
-                        
+
+                        BalanceSheetForm balanceSheetForm = new BalanceSheetForm(balanceSheetResponse);
+                        balanceSheetForm.Show();
+
                         break;
                     case "Global_Quote":
-                        GlobalQuoteResponse globalQuoteResponse = new GlobalQuoteResponse(ApiKeyHandler.Key, symbol);
-                        await globalQuoteResponse.Initialize();
-                        globalQuoteResponse=await ResponseHelper.SetObjectAsync<GlobalQuoteResponse>(globalQuoteResponse, globalQuoteResponse.Address);
+                        MessageBox.Show("This feature has not yet been implemented");
+                        //GlobalQuoteResponse globalQuoteResponse = new GlobalQuoteResponse(ApiKeyHandler.Key, symbol);
+                        //await globalQuoteResponse.Initialize();
+                        //globalQuoteResponse=await ResponseHelper.SetObjectAsync<GlobalQuoteResponse>(globalQuoteResponse, globalQuoteResponse.Address);
                         break;
                         default:
                         MessageBox.Show("Internal logic issue");

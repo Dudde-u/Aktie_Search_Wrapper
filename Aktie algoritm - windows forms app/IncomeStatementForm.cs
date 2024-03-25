@@ -62,8 +62,8 @@ namespace Aktie_algoritm___windows_forms_app
                     LabelsQuarterly.Add((Label) control);
                 }
             }
-            IncomeStatementHelper.BubbleSortLabels(ref LabelsAnnual);
-            IncomeStatementHelper.BubbleSortLabels(ref LabelsAnnual);
+            StatementVisualizationHelper.BubbleSortLabels(ref LabelsAnnual);
+            StatementVisualizationHelper.BubbleSortLabels(ref LabelsQuarterly);
         }
         private void IncomeStatementForm_Shown(object sender, EventArgs e)
         {
@@ -103,9 +103,9 @@ namespace Aktie_algoritm___windows_forms_app
 
                 List<string> PreviousDataList = incomestatement.ic_quarterlyReports[selectedindex + offset].ReturnList();
 
-                List<string> multiplierList = IncomeStatementHelper.CompareStatements(PreviousDataList, thisDataList);
+                List<string> multiplierList = StatementVisualizationHelper.CompareStatements(PreviousDataList, thisDataList);
 
-                IncomeStatementHelper.MergeAndShowLists(thisDataList, multiplierList, LabelsQuarterly);
+                MergeAndShowLists(thisDataList, multiplierList, LabelsQuarterly);
             }
 
         }
@@ -140,8 +140,8 @@ namespace Aktie_algoritm___windows_forms_app
                     QuarterlyOffset= 10;
                     break;
                 default:
-                    throw new NotImplementedException();
-                    
+                    throw new NotImplementedException(); //this should not happen unless configuration malfunctions
+
             }
         }
       private void ReloadAnnualData(object sender, EventArgs e)
@@ -159,13 +159,19 @@ namespace Aktie_algoritm___windows_forms_app
                 }
                 List<string> PreviousDataList = incomestatement.ic_annualReports[selectedindex + offset].ReturnList();
 
-                List<string> multiplierList = IncomeStatementHelper.CompareStatements(PreviousDataList, thisDataList);
+                List<string> multiplierList = StatementVisualizationHelper.CompareStatements(PreviousDataList, thisDataList);
 
-                IncomeStatementHelper.MergeAndShowLists(thisDataList, multiplierList, LabelsAnnual);
+                MergeAndShowLists(thisDataList, multiplierList, LabelsAnnual);
             }
 
         }
-
+        public static void MergeAndShowLists(List<string> dataList, List<string> multiplierList, List<Label> labellist)
+        {
+            for (int i = 0; i < labellist.Count; i++)
+            {
+                labellist[i].Text += dataList[i] + " " + multiplierList[i];
+            }
+        }
         static void TextToDefault(List<Label> labels)
         {
             //can be done with array  amd loops but this should be more efficient:

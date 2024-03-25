@@ -3,6 +3,7 @@
 using Class_library;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace ClassLibrary // file for the raw return data
@@ -508,6 +509,49 @@ namespace ClassLibrary // file for the raw return data
 
         [JsonProperty("commonStockSharesOutstanding")]
         public string commonStockSharesOutstanding { get; set; }
+        public List<string> ReturnList()
+        {
+            List<string> outlist = new List<string>();
+
+            outlist.Add(totalAssets);
+            outlist.Add(totalCurrentAssets);
+            outlist.Add(cashAndCashEquivalentsAtCarryingValue);
+            outlist.Add(cashAndShortTermInvestments);
+            outlist.Add(inventory);
+            outlist.Add(currentNetReceivables);
+            outlist.Add(totalNonCurrentAssets);
+            outlist.Add(propertyPlantEquipment);
+            outlist.Add(accumulatedDepreciationAmortizationPPE);
+            outlist.Add(intangibleAssets);
+            outlist.Add(intangibleAssetsExcludingGoodwill);
+            outlist.Add(goodwill);
+            outlist.Add(investments);
+            outlist.Add(longTermInvestments);
+            outlist.Add(shortTermInvestments);
+            outlist.Add(otherCurrentAssets);
+            outlist.Add(otherNonCurrentAssets);
+            outlist.Add(totalLiabilities);
+            outlist.Add(totalCurrentLiabilities);
+            outlist.Add(currentAccountsPayable);
+            outlist.Add(deferredRevenue);
+            outlist.Add(currentDebt);
+            outlist.Add(shortTermDebt);
+            outlist.Add(totalNonCurrentLiabilities);
+            outlist.Add(capitalLeaseObligations);
+            outlist.Add(longTermDebt);
+            outlist.Add(currentLongTermDebt);
+            outlist.Add(longTermDebtNoncurrent);
+            outlist.Add(shortLongTermDebtTotal);
+            outlist.Add(otherCurrentLiabilities);
+            outlist.Add(otherNonCurrentLiabilities);
+            outlist.Add(totalShareholderEquity);
+            outlist.Add(treasuryStock);
+            outlist.Add(retainedEarnings);
+            outlist.Add(commonStock);
+            outlist.Add(commonStockSharesOutstanding);
+
+            return outlist;
+        }
     }
 
 
@@ -520,7 +564,7 @@ namespace ClassLibrary // file for the raw return data
         public string reportedCurrency { get; set; }
 
         [JsonProperty("totalAssets")]
-        public string totalAssets { get; set; }
+        public string totalAssets { get; set; } //a
 
         [JsonProperty("totalCurrentAssets")]
         public string totalCurrentAssets { get; set; }
@@ -529,10 +573,10 @@ namespace ClassLibrary // file for the raw return data
         public string cashAndCashEquivalentsAtCarryingValue { get; set; }
 
         [JsonProperty("cashAndShortTermInvestments")]
-        public string cashAndShortTermInvestments { get; set; }
+        public string cashAndShortTermInvestments { get; set; } //a
 
         [JsonProperty("inventory")]
-        public string inventory { get; set; }
+        public string inventory { get; set; } //a
 
         [JsonProperty("currentNetReceivables")]
         public string currentNetReceivables { get; set; }
@@ -544,10 +588,10 @@ namespace ClassLibrary // file for the raw return data
         public string propertyPlantEquipment { get; set; }
 
         [JsonProperty("accumulatedDepreciationAmortizationPPE")]
-        public string accumulatedDepreciationAmortizationPPE { get; set; }
+        public string accumulatedDepreciationAmortizationPPE { get; set; } //a
 
         [JsonProperty("intangibleAssets")]
-        public string intangibleAssets { get; set; }
+        public string intangibleAssets { get; set; } //a
 
         [JsonProperty("intangibleAssetsExcludingGoodwill")]
         public string intangibleAssetsExcludingGoodwill { get; set; }
@@ -556,13 +600,13 @@ namespace ClassLibrary // file for the raw return data
         public string goodwill { get; set; }
 
         [JsonProperty("investments")]
-        public string investments { get; set; }
+        public string investments { get; set; } //a
 
         [JsonProperty("longTermInvestments")]
-        public string longTermInvestments { get; set; }
+        public string longTermInvestments { get; set; } //a
 
         [JsonProperty("shortTermInvestments")]
-        public string shortTermInvestments { get; set; }
+        public string shortTermInvestments { get; set; } //a
 
         [JsonProperty("otherCurrentAssets")]
         public string otherCurrentAssets { get; set; }
@@ -571,22 +615,22 @@ namespace ClassLibrary // file for the raw return data
         public string otherNonCurrentAssets { get; set; }
 
         [JsonProperty("totalLiabilities")]
-        public string totalLiabilities { get; set; }
+        public string totalLiabilities { get; set; } //a
 
         [JsonProperty("totalCurrentLiabilities")]
         public string totalCurrentLiabilities { get; set; }
 
         [JsonProperty("currentAccountsPayable")]
-        public string currentAccountsPayable { get; set; }
+        public string currentAccountsPayable { get; set; } //a
 
         [JsonProperty("deferredRevenue")]
-        public string deferredRevenue { get; set; }
+        public string deferredRevenue { get; set; } //a
 
         [JsonProperty("currentDebt")]
-        public string currentDebt { get; set; }
+        public string currentDebt { get; set; }//a
 
         [JsonProperty("shortTermDebt")]
-        public string shortTermDebt { get; set; }
+        public string shortTermDebt { get; set; }//a
 
         [JsonProperty("totalNonCurrentLiabilities")]
         public string totalNonCurrentLiabilities { get; set; }
@@ -595,7 +639,7 @@ namespace ClassLibrary // file for the raw return data
         public string capitalLeaseObligations { get; set; }
 
         [JsonProperty("longTermDebt")]
-        public string longTermDebt { get; set; }
+        public string longTermDebt { get; set; } //a
 
         [JsonProperty("currentLongTermDebt")]
         public string currentLongTermDebt { get; set; }
@@ -625,7 +669,50 @@ namespace ClassLibrary // file for the raw return data
         public string commonStock { get; set; }
 
         [JsonProperty("commonStockSharesOutstanding")]
-        public string commonStockSharesOutstanding { get; set; }
+        public string commonStockSharesOutstanding { get; set; } //a
+
+        public List<string> ReturnList()
+        {
+            List<string> outlist = new List<string>();
+            outlist.Add(totalAssets);
+            outlist.Add(totalCurrentAssets);
+            outlist.Add(cashAndCashEquivalentsAtCarryingValue);
+            outlist.Add(cashAndShortTermInvestments);
+            outlist.Add(inventory);
+            outlist.Add(currentNetReceivables);
+            outlist.Add(totalNonCurrentAssets);
+            outlist.Add(propertyPlantEquipment);
+            outlist.Add(accumulatedDepreciationAmortizationPPE);
+            outlist.Add(intangibleAssets);
+            outlist.Add(intangibleAssetsExcludingGoodwill);
+            outlist.Add(goodwill);
+            outlist.Add(investments);
+            outlist.Add(longTermInvestments);
+            outlist.Add(shortTermInvestments);
+            outlist.Add(otherCurrentAssets);
+            outlist.Add(otherNonCurrentAssets);
+            outlist.Add(totalLiabilities);
+            outlist.Add(totalCurrentLiabilities);
+            outlist.Add(currentAccountsPayable);
+            outlist.Add(deferredRevenue);
+            outlist.Add(currentDebt);
+            outlist.Add(shortTermDebt);
+            outlist.Add(totalNonCurrentLiabilities);
+            outlist.Add(capitalLeaseObligations);
+            outlist.Add(longTermDebt);
+            outlist.Add(currentLongTermDebt);
+            outlist.Add(longTermDebtNoncurrent);
+            outlist.Add(shortLongTermDebtTotal);
+            outlist.Add(otherCurrentLiabilities);
+            outlist.Add(otherNonCurrentLiabilities);
+            outlist.Add(totalShareholderEquity);
+            outlist.Add(treasuryStock);
+            outlist.Add(retainedEarnings);
+            outlist.Add(commonStock);
+            outlist.Add(commonStockSharesOutstanding);
+  
+            return outlist;
+        }
     }
 
 

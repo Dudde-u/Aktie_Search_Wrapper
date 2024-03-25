@@ -27,7 +27,7 @@ namespace Aktie_algoritm___windows_forms_app
         private async void btnValidering_Click(object sender, EventArgs e)
         {
             string prekey= tbxApiKey.Text;
-             if (await ResponseHelper.ValidateAsync(prekey) == true &&prekey!=("demo"))
+             if (await ApiKeyHandler.ValidateAsync(prekey) == true &&prekey!=("demo"))
             {
                 
                 MessageBox.Show("The validation and saving of the key were successful", "Validation result", MessageBoxButtons.OK);
@@ -61,10 +61,8 @@ namespace Aktie_algoritm___windows_forms_app
             {
                 string prekey = File.ReadAllText("apiKeySave.Txt");
 
-                if (prekey != null && await ResponseHelper.ValidateAsync(prekey) == true&&prekey.ToLower()!="demo")
+                if (prekey != null && await ApiKeyHandler.ValidateAsync(prekey) == true&&prekey.ToLower()!="demo")
                 {
-                    ApiKeyHandler.Key=prekey;
-                    ApiKeyHandler.KeyIsValidated = true;
                     MessageBox.Show("Saved Key Validated");
 
                     this.Close();

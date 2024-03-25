@@ -155,9 +155,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft JhengHei", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(57, 605);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(316, 16);
+            this.label1.Size = new System.Drawing.Size(293, 16);
             this.label1.TabIndex = 10;
-            this.label1.Text = "(only data visualizer for income statement currently)";
+            this.label1.Text = "(Income Statement and Balance sheet complete)";
             // 
             // lblTickerSök
             // 

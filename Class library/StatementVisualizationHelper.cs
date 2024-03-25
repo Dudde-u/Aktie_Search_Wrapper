@@ -5,7 +5,7 @@ using Label = System.Windows.Forms.Label;
 
 namespace Class_library
 {
-    public static class IncomeStatementHelper
+    public static class StatementVisualizationHelper
     {
         public static void BubbleSortLabels(ref List<Label> lista) //Label sorting based on the labels number
         {
@@ -21,13 +21,6 @@ namespace Class_library
                         lista[j] = temp;
                     }
                 }
-            }
-        }
-        public static void MergeAndShowLists(List<string> dataList, List<string> multiplierList, List<Label> labellist)
-        {
-            for (int i = 0; i < labellist.Count; i++)
-            {
-                labellist[i].Text += dataList[i] + " " + multiplierList[i];
             }
         }
         public static List<string> CompareStatements(List<string> oldList, List<string> NewList) // list has to be ordered
