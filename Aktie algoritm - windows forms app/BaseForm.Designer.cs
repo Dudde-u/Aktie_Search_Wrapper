@@ -37,7 +37,6 @@
             this.btnSökAktie = new System.Windows.Forms.Button();
             this.gbxAktieSök = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.lblTickerSök = new System.Windows.Forms.Label();
             this.tbxTickerSearchInfo = new System.Windows.Forms.TextBox();
             this.CheckBoxDemo = new System.Windows.Forms.CheckBox();
@@ -57,13 +56,12 @@
             // 
             // lbxRequestType
             // 
-            this.lbxRequestType.Enabled = false;
             this.lbxRequestType.FormattingEnabled = true;
             this.lbxRequestType.ItemHeight = 20;
             this.lbxRequestType.Items.AddRange(new object[] {
             "Income Statement",
             "Balance Sheet",
-            "Global Quote"});
+            "Cash Flow"});
             this.lbxRequestType.Location = new System.Drawing.Point(100, 445);
             this.lbxRequestType.Name = "lbxRequestType";
             this.lbxRequestType.Size = new System.Drawing.Size(250, 144);
@@ -90,7 +88,6 @@
             // 
             // btnKör
             // 
-            this.btnKör.Enabled = false;
             this.btnKör.Location = new System.Drawing.Point(470, 471);
             this.btnKör.Name = "btnKör";
             this.btnKör.Size = new System.Drawing.Size(124, 51);
@@ -122,7 +119,6 @@
             // gbxAktieSök
             // 
             this.gbxAktieSök.Controls.Add(this.label2);
-            this.gbxAktieSök.Controls.Add(this.label1);
             this.gbxAktieSök.Controls.Add(this.lblTickerSök);
             this.gbxAktieSök.Controls.Add(this.tbxTickerSearchInfo);
             this.gbxAktieSök.Controls.Add(this.lblNamn);
@@ -149,16 +145,6 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "(not all tickers have data)";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft JhengHei", 6F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(57, 605);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(293, 16);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "(Income Statement and Balance sheet complete)";
-            // 
             // lblTickerSök
             // 
             this.lblTickerSök.AutoSize = true;
@@ -170,11 +156,11 @@
             // 
             // tbxTickerSearchInfo
             // 
-            this.tbxTickerSearchInfo.Location = new System.Drawing.Point(404, 182);
+            this.tbxTickerSearchInfo.Location = new System.Drawing.Point(414, 170);
             this.tbxTickerSearchInfo.Multiline = true;
             this.tbxTickerSearchInfo.Name = "tbxTickerSearchInfo";
             this.tbxTickerSearchInfo.ReadOnly = true;
-            this.tbxTickerSearchInfo.Size = new System.Drawing.Size(282, 126);
+            this.tbxTickerSearchInfo.Size = new System.Drawing.Size(284, 172);
             this.tbxTickerSearchInfo.TabIndex = 8;
             // 
             // CheckBoxDemo
@@ -254,7 +240,6 @@
         private System.Windows.Forms.Button btnValidationOpen;
         private System.Windows.Forms.Button btnMarketOpenClose;
         private System.Windows.Forms.Label lblMarketOpenClose;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
     }
 }

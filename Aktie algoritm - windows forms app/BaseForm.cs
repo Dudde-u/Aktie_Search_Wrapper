@@ -75,12 +75,12 @@ namespace Aktie_Logik
 
         private async void btnKör_Click(object sender, EventArgs e)
         {
-            string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
+            //string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
 
-            string reqType = lbxRequestType.SelectedItem.ToString();
+            //string reqType = lbxRequestType.SelectedItem.ToString();
 
-            //string reqType = ""; //for debugging
-            //string symbol="";
+            string reqType = "Cash_Flow"; //for debugging
+            string symbol = "IBM";
 
             try
             {
@@ -104,6 +104,15 @@ namespace Aktie_Logik
                         BalanceSheetForm balanceSheetForm = new BalanceSheetForm(balanceSheetResponse);
                         balanceSheetForm.Show();
 
+                        break;
+                    case "Cash_Flow":
+                        CashFlowResponse cashFlowResponse = new CashFlowResponse(("demo"), symbol);
+                        await cashFlowResponse.Initialize();    
+                        cashFlowResponse = await ResponseHelper.SetObjectAsync<CashFlowResponse>(cashFlowResponse, cashFlowResponse.Address);
+
+                        CashFlowForm cashFlowForm = new CashFlowForm(cashFlowResponse);
+                        cashFlowForm.Show();
+                        
                         break;
                     case "Global_Quote":
                         MessageBox.Show("This feature has not yet been implemented");
@@ -131,21 +140,27 @@ namespace Aktie_Logik
         
 
 
-        private void LbxTickerSök_SelectedIndexChanged(object sender, EventArgs e)
+        private async void LbxTickerSök_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (LbxTickerSök.SelectedIndex != -1)
+            tbxTickerSearchInfo.Text = "";
+            int index = LbxTickerSök.SelectedIndex;
+            if (index != -1)
             {
-                string ut = "";
-                int index = LbxTickerSök.SelectedIndex;
-                ut += $"Name: {TickerSearch.bestMatches[index].name} \r\n";
-                ut += $"Symbol: {TickerSearch.bestMatches[index].Symbol} \r\n";
-                ut += $"Region: {TickerSearch.bestMatches[index].region} \r\n";
-                ut += $"Type: {TickerSearch.bestMatches[index].type} \r\n";
-                ut += $"Currency: {TickerSearch.bestMatches[index].currency} \r\n";
+               
 
-                tbxTickerSearchInfo.Text = ut;
+                tbxTickerSearchInfo.Text += $"Name: {TickerSearch.bestMatches[index].name} \r\n";
+                tbxTickerSearchInfo.Text += $"Symbol: {TickerSearch.bestMatches[index].Symbol} \r\n";
+                tbxTickerSearchInfo.Text += $"Region: {TickerSearch.bestMatches[index].region} \r\n";
+                tbxTickerSearchInfo.Text += $"Type: {TickerSearch.bestMatches[index].type} \r\n";
+                tbxTickerSearchInfo.Text += $"Currency: {TickerSearch.bestMatches[index].currency} \r\n";
 
+             
                 lbxRequestType.Enabled = true;
+                GlobalQuoteResponse globalQuoteresponse = new GlobalQuoteResponse(ApiKeyHandler.Key, TickerSearch.bestMatches[index].Symbol);
+                await globalQuoteresponse.Initialize();
+                globalQuoteresponse = await ResponseHelper.SetObjectAsync(globalQuoteresponse, globalQuoteresponse.Address);
+                tbxTickerSearchInfo.Text+="Price: "+globalQuoteresponse.GlobalQuote._05price + globalQuoteresponse.GlobalQuote;
+
             }
             else 
             {

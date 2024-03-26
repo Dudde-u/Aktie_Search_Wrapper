@@ -85,6 +85,12 @@
     <Compile Include="BalanceSheetForm.Designer.cs">
       <DependentUpon>BalanceSheetForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CashFlowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CashFlowForm.Designer.cs">
+      <DependentUpon>CashFlowForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="IncomeStatementForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +119,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BalanceSheetForm.resx">
       <DependentUpon>BalanceSheetForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CashFlowForm.resx">
+      <DependentUpon>CashFlowForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IncomeStatementForm.resx">
       <DependentUpon>IncomeStatementForm.cs</DependentUpon>

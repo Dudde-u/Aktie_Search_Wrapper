@@ -805,6 +805,38 @@ namespace ClassLibrary // file for the raw return data
 
         [JsonProperty("netIncome")]
         public string netIncome { get; set; }
+        public List<string> ReturnList()
+        {
+            List<string> returnList = new List<string>();
+            returnList.Add(operatingCashflow);
+            returnList.Add(paymentsForOperatingActivities);
+            returnList.Add(proceedsFromOperatingActivities);
+            returnList.Add(changeInOperatingLiabilities);
+            returnList.Add(changeInOperatingAssets);
+            returnList.Add(depreciationDepletionAndAmortization);
+            returnList.Add(capitalExpenditures);
+            returnList.Add(changeInReceivables);
+            returnList.Add(changeInInventory);
+            returnList.Add(profitLoss);
+            returnList.Add(cashflowFromInvestment);
+            returnList.Add(cashflowFromFinancing);
+            returnList.Add(proceedsFromRepaymentsOfShortTermDebt);
+            returnList.Add(paymentsForRepurchaseOfCommonStock);
+            returnList.Add(paymentsForRepurchaseOfEquity);
+            returnList.Add(paymentsForRepurchaseOfPreferredStock);
+            returnList.Add(dividendPayout);
+            returnList.Add(dividendPayoutCommonStock);
+            returnList.Add(dividendPayoutPreferredStock);
+            returnList.Add(proceedsFromIssuanceOfCommonStock);
+            returnList.Add(proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet);
+            returnList.Add(proceedsFromIssuanceOfPreferredStock);
+            returnList.Add(proceedsFromRepurchaseOfEquity);
+            returnList.Add(proceedsFromSaleOfTreasuryStock);
+            returnList.Add(changeInCashAndCashEquivalents);
+            returnList.Add(changeInExchangeRate);
+            returnList.Add(netIncome);
+            return returnList;
+        }
     }
 
     public class CF_QuarterlyReport
@@ -895,6 +927,38 @@ namespace ClassLibrary // file for the raw return data
 
         [JsonProperty("netIncome")]
         public string netIncome { get; set; }
+        public List<string> ReturnList()
+        {
+            List<string> returnList = new List<string>();
+            returnList.Add(operatingCashflow);
+            returnList.Add(paymentsForOperatingActivities);
+            returnList.Add(proceedsFromOperatingActivities);
+            returnList.Add(changeInOperatingLiabilities);
+            returnList.Add(changeInOperatingAssets);
+            returnList.Add(depreciationDepletionAndAmortization);
+            returnList.Add(capitalExpenditures);
+            returnList.Add(changeInReceivables);
+            returnList.Add(changeInInventory);
+            returnList.Add(profitLoss);
+            returnList.Add(cashflowFromInvestment);
+            returnList.Add(cashflowFromFinancing);
+            returnList.Add(proceedsFromRepaymentsOfShortTermDebt);
+            returnList.Add(paymentsForRepurchaseOfCommonStock);
+            returnList.Add(paymentsForRepurchaseOfEquity);
+            returnList.Add(paymentsForRepurchaseOfPreferredStock);
+            returnList.Add(dividendPayout);
+            returnList.Add(dividendPayoutCommonStock);
+            returnList.Add(dividendPayoutPreferredStock);
+            returnList.Add(proceedsFromIssuanceOfCommonStock);
+            returnList.Add(proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet);
+            returnList.Add(proceedsFromIssuanceOfPreferredStock);
+            returnList.Add(proceedsFromRepurchaseOfEquity);
+            returnList.Add(proceedsFromSaleOfTreasuryStock);
+            returnList.Add(changeInCashAndCashEquivalents);
+            returnList.Add(changeInExchangeRate);
+            returnList.Add(netIncome);
+            return returnList;
+        }
     }
 
     public class MostActivelyTraded

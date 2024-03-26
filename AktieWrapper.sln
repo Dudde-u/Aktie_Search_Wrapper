@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forms", "Aktie algoritm - w
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Class library", "Class library\Class library.csproj", "{906E977D-495B-4516-8C09-D4C05036F64B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EBC166F4-187A-4A7A-B237-11C0DAAA13A3}"
+	ProjectSection(SolutionItems) = preProject
+		TODO-list.txt = TODO-list.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
