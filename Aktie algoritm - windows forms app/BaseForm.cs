@@ -23,14 +23,6 @@ namespace Aktie_Logik
 
         HttpClient httpClient = new HttpClient();
         //instances are currently reused through the life of the application
-       
-        
-
-        bool demo = false; // for testing and not wasting API calls
-
-       
-        
-
         public BaseForm()
         {
          
@@ -167,20 +159,6 @@ namespace Aktie_Logik
             lbxRequestType.Enabled= false;
             }
             
-        }
-
-        private void CheckBoxDemo_CheckedChanged(object sender, EventArgs e)
-        {
-            if (CheckBoxDemo.Checked==true)
-            {
-                demo = true;
-            
-            }
-            else
-            {
-                demo = false;
-                
-            }
         }
 
         public void TextBoxStatus( TextBox textbox, Button button,int requiredLength)
