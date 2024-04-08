@@ -8,6 +8,7 @@ using Aktie_algoritm___windows_forms_app;
 using Class_library;
 
 using System.Threading;
+using System.Collections.Generic;
 
 
 
@@ -22,17 +23,60 @@ namespace Aktie_Logik
         TickerSearchResponse TickerSearch;
 
         HttpClient httpClient = new HttpClient();
+
+        //timer for rolling label
+        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        Queue<Label> LabelQueue = new Queue<Label>();
+        List<Label> LabelList = new List<Label>();
+
         //instances are currently reused through the life of the application
         public BaseForm()
         {
-         
-            
+        
+            timer.Interval = 5;
+            timer.Tick+=timer_Tick;
             InitializeComponent();
+       
 
+        }
+                            
+        private void timer_Tick(object sender, EventArgs e) //shows the banner on the top of the form, there is a bug where global is showed twice
+        {
+            List<Label> TempList = new List<Label>();
+                Label label;
+                if (LabelList.Count == 0)
+                {
+                    label = LabelQueue.Dequeue();
+                    label.Visible = true;
+                     LabelList.Add(label);
+                }
+                if (LabelList[LabelList.Count - 1].Location.X > LabelQueue.Peek().Width)
+                {
+                LabelList.Add(LabelQueue.Dequeue());
+                LabelList[LabelList.Count - 1].Visible = true;
+                }
+                foreach (Label SpecLabel in LabelList)
+                {
+                    if (SpecLabel.Location.X > this.Width)
+                    {
+                        SpecLabel.Visible = false;
+                        SpecLabel.Location = new System.Drawing.Point(0 - SpecLabel.Width, this.Size.Height - 70);
+                        LabelQueue.Enqueue(SpecLabel);
+                        TempList.Add(SpecLabel);
+                     
+                    }
+                    else
+                    {
+                        SpecLabel.Location = new System.Drawing.Point(SpecLabel.Location.X + 1);
+                    }
+
+                } 
+                foreach(Label SpecLabel in TempList)
+                    {
+                    LabelList.Remove(SpecLabel);
+                }
             
         }
-
-
         private async void btnSökAktie_Click(object sender, EventArgs e)
         {
             string intag = tbxSymbol.Text;
@@ -186,15 +230,34 @@ namespace Aktie_Logik
 
       
 
-        private void BaseDataForm_VisibleChanged(object sender, EventArgs e)
+        private async void BaseDataForm_VisibleChanged(object sender, EventArgs e)
         {
             if (ApiKeyHandler.KeyIsValidated)
             {
+                
                 gbxAktieSök.Enabled = true;
+
+                LabelQueue.Clear();
+                // Getting a new market response and putting the controls into a queue
+                GlobalMarketResponse marketResponse = new GlobalMarketResponse(ApiKeyHandler.Key);
+                await marketResponse.Initialize();
+                marketResponse = await ResponseHelper.SetObjectAsync(marketResponse, marketResponse.Address);
+                foreach (MarketData marketData in marketResponse.Markets)
+                {
+                    Label Bannerlabel = new Label();
+                    Bannerlabel.AutoSize = true;
+                    Bannerlabel.Visible = false;
+                    Bannerlabel.Text = "Region: " + marketData.region + "   Current Status: " + marketData.current_status;
+                    Bannerlabel.Location = new System.Drawing.Point(0 - Bannerlabel.Width, this.Size.Height-70);
+                    this.Controls.Add(Bannerlabel);
+                    LabelQueue.Enqueue(Bannerlabel);
+                }
+                timer.Start();
             }
             else
             {
                gbxAktieSök.Enabled=false;
+         
             }
          
         }
@@ -206,21 +269,7 @@ namespace Aktie_Logik
             validationForm.Show();
         }
 
-        private async void btnMarketOpenClose_Click(object sender, EventArgs e)//todo
-        {
-            GlobalMarketResponse response = new GlobalMarketResponse(ApiKeyHandler.Key);
-            await response.Initialize();
-           await ResponseHelper.SetObjectAsync(response, response.Address);
-            foreach( MarketData marketData in response.Markets)
-            {
-                string textOut = "";
-                textOut += "Region: "+marketData.region + "\n";
-                textOut +="Current Status: "+ marketData.current_status + "\n";
-               
-                lblMarketOpenClose.Text += textOut;
-            }
-
-        }
+   
 
         private void lbxRequestType_SelectedIndexChanged(object sender, EventArgs e)
         {

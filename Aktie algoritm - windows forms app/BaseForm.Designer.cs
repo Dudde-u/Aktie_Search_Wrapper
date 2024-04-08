@@ -41,8 +41,6 @@
             this.tbxTickerSearchInfo = new System.Windows.Forms.TextBox();
             this.CheckBoxDemo = new System.Windows.Forms.CheckBox();
             this.btnValidationOpen = new System.Windows.Forms.Button();
-            this.btnMarketOpenClose = new System.Windows.Forms.Button();
-            this.lblMarketOpenClose = new System.Windows.Forms.Label();
             this.gbxAktieSök.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -172,7 +170,6 @@
             this.CheckBoxDemo.TabIndex = 14;
             this.CheckBoxDemo.Text = "DEMO";
             this.CheckBoxDemo.UseVisualStyleBackColor = true;
-            this.CheckBoxDemo.CheckedChanged += new System.EventHandler(this.CheckBoxDemo_CheckedChanged);
             // 
             // btnValidationOpen
             // 
@@ -184,32 +181,11 @@
             this.btnValidationOpen.UseVisualStyleBackColor = true;
             this.btnValidationOpen.Click += new System.EventHandler(this.btnValidationOpen_Click);
             // 
-            // btnMarketOpenClose
-            // 
-            this.btnMarketOpenClose.Enabled = false;
-            this.btnMarketOpenClose.Location = new System.Drawing.Point(1589, 176);
-            this.btnMarketOpenClose.Name = "btnMarketOpenClose";
-            this.btnMarketOpenClose.Size = new System.Drawing.Size(197, 41);
-            this.btnMarketOpenClose.TabIndex = 17;
-            this.btnMarketOpenClose.Text = "Check market status";
-            this.btnMarketOpenClose.UseVisualStyleBackColor = true;
-            this.btnMarketOpenClose.Click += new System.EventHandler(this.btnMarketOpenClose_Click);
-            // 
-            // lblMarketOpenClose
-            // 
-            this.lblMarketOpenClose.AutoSize = true;
-            this.lblMarketOpenClose.Location = new System.Drawing.Point(1575, 52);
-            this.lblMarketOpenClose.Name = "lblMarketOpenClose";
-            this.lblMarketOpenClose.Size = new System.Drawing.Size(0, 20);
-            this.lblMarketOpenClose.TabIndex = 18;
-            // 
             // BaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1875, 1182);
-            this.Controls.Add(this.lblMarketOpenClose);
-            this.Controls.Add(this.btnMarketOpenClose);
             this.Controls.Add(this.btnValidationOpen);
             this.Controls.Add(this.CheckBoxDemo);
             this.Controls.Add(this.gbxAktieSök);
@@ -238,8 +214,6 @@
         private System.Windows.Forms.Label lblTickerSök;
         private System.Windows.Forms.CheckBox CheckBoxDemo;
         private System.Windows.Forms.Button btnValidationOpen;
-        private System.Windows.Forms.Button btnMarketOpenClose;
-        private System.Windows.Forms.Label lblMarketOpenClose;
         private System.Windows.Forms.Label label2;
     }
 }

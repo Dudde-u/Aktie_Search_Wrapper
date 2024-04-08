@@ -2,16 +2,18 @@
 
 REFACTORING:
 - Fix the MAX time option in the Response form buttons
-- Fix the ""backend" i.e the requests and the response objects i.e fixing ResponseHelperClass
+- Fix the "backend" i.e the requests and the response objects i.e fixing ResponseHelperClass
 - The Baseform is very messy and can be simplified
 - Income statement and balance sheet forms can be simplified/optimized
-- Validation can be made simpler maybe, but mostly the keyhandler etc should all be in one // otimized
+- Validation can be made simpler maybe, but mostly the keyhandler etc should all be in one // optimized
 
 
 FUTURE FEATURES:
 - Add graphs and choose what data to show there
 - Some LLM functionality which can in short describe the data
-- Market status to be added in some capacity
 - List of owned stocks
 - Some kind of Report generation and/or excel
 - Making sure that data is not asked for too much -> creating local save of recent data (working on Archival class)
+
+BUGS:
+- Sliding banner is showing the global data twice
