@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forms", "Aktie algoritm - windows forms app\Forms.csproj", "{89D95874-6F94-4B89-9B0F-31E7B98444BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Forms", "Forms_Library\Forms.csproj", "{89D95874-6F94-4B89-9B0F-31E7B98444BE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Class library", "Class library\Class library.csproj", "{906E977D-495B-4516-8C09-D4C05036F64B}"
 EndProject
