@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 
-namespace Aktie_algoritm___windows_forms_app
+namespace FormsSpace
 {
     partial class IncomeStatementForm
     {

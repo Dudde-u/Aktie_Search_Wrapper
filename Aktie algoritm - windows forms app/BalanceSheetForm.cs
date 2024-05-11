@@ -2,16 +2,9 @@
 using ClassLibrary;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Aktie_algoritm___windows_forms_app
+namespace FormsSpace
 {
     public partial class BalanceSheetForm : Form
     {
@@ -71,7 +64,11 @@ namespace Aktie_algoritm___windows_forms_app
                     lbxDateAnnual.Items.Add(tempDate);
                 }
             }
-            catch (Exception) { MessageBox.Show("Something during loading of this page went wrong, try again"); }
+            catch (Exception) 
+            {
+                MessageBox.Show("Something during loading of this page went wrong, try again");
+                this.Close();
+            }
         }
         private void ReloadQuarterlyData(object sender, EventArgs e)
         {
@@ -81,7 +78,7 @@ namespace Aktie_algoritm___windows_forms_app
             int selectedindex = lbxDateQuarterly.SelectedIndex;
             int offset = QuarterlyOffset;
 
-            if (selectedindex != -1) //&& selectedindex + offset < lbxDateQuarterly.Items.Count)
+            if (selectedindex != -1) 
             {
                 if (selectedindex + offset >= lbxDateQuarterly.Items.Count)
                 {

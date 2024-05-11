@@ -1,11 +1,11 @@
+______________________________________________________________________________________________________
+______________________________________________________________________________________________________
 
 
 REFACTORING:
-- Fix the MAX time option in the Response form buttons
-- Fix the "backend" i.e the requests and the response objects i.e fixing ResponseHelperClass
 - The Baseform is very messy and can be simplified
 - Income statement and balance sheet forms can be simplified/optimized
-- Validation can be made simpler maybe, but mostly the keyhandler etc should all be in one // optimized
+
 
 
 FUTURE FEATURES:
@@ -13,7 +13,41 @@ FUTURE FEATURES:
 - Some LLM functionality which can in short describe the data
 - List of owned stocks
 - Some kind of Report generation and/or excel
+
+
+CRITICAL BUGS:
+
+
+NON-CRITICAL BUGS:
+- Sliding banner is showing global data twice
+- Fix the MAX time option in the Response form buttons
+
+______________________________________________________________________________________________________
+______________________________________________________________________________________________________
+
+COMPLETED TASKS:
+
+
+COMPLETED REFACTORING:
+
+- Fix the "backend" i.e the requests and the response objects i.e fixing ResponseHelperClass
+- Make use of Interfaces to simplify the calls for SetObjectAsync and Archival class etc
+- Validation can be made simpler maybe, but mostly the keyhandler etc should all be in one / optimized
+- Archival class dataList writing needs to be corrected something is wrong there (almost everything was wrong)
+- Make the ResponseHelperClass handle api call limits and null data
+
+
+FIXED CRITICAL BUGS:
+
+- Archival.GetData is not working -> DataList is storing too many values
+
+FIXED NON-CRITICAL BUGS
+
+
+
+IMPLEMENTED FEATURES:
+
 - Making sure that data is not asked for too much -> creating local save of recent data (working on Archival class)
 
-BUGS:
-- Sliding banner is showing the global data twice
+______________________________________________________________________________________________________
+______________________________________________________________________________________________________

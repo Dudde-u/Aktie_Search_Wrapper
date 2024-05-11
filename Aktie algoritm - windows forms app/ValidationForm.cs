@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Class_library;
 
-namespace Aktie_algoritm___windows_forms_app
+namespace FormsSpace
 {
     public partial class ValidationForm : Form
     {
@@ -59,7 +59,7 @@ namespace Aktie_algoritm___windows_forms_app
         {
             try
             {
-                string prekey = File.ReadAllText("apiKeySave.Txt");
+                string prekey = File.ReadAllText("../../../DATA/ApplicationData/apiKeySave.txt");
 
                 if (prekey != null && await ApiKeyHandler.ValidateAsync(prekey) == true&&prekey.ToLower()!="demo")
                 {
@@ -72,6 +72,12 @@ namespace Aktie_algoritm___windows_forms_app
             }
             catch { }
             tbxApiKey.Enabled = true;
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+       
+            System.Diagnostics.Process.Start("https://www.alphavantage.co/support/#api-key");
         }
     }
     

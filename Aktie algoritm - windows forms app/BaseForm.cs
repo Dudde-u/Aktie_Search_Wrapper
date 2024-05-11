@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
-using Aktie_algoritm___windows_forms_app;
+using FormsSpace;
 using Class_library;
 
 using System.Threading;
@@ -27,22 +27,16 @@ namespace Aktie_Logik
         //timer for rolling label
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         Queue<Label> LabelQueue = new Queue<Label>();
-        List<Label> LabelList = new List<Label>();
-
-        //instances are currently reused through the life of the application
+        List<Label> LabelList = new List<Label>(); 
         public BaseForm()
         {
-        
             timer.Interval = 5;
             timer.Tick+=timer_Tick;
             InitializeComponent();
-       
-
-        }
-                            
+        }   
         private void timer_Tick(object sender, EventArgs e) //shows the banner on the top of the form, there is a bug where global is showed twice
         {
-            List<Label> TempList = new List<Label>();
+            List<Label> delList = new List<Label>();
                 Label label;
                 if (LabelList.Count == 0)
                 {
@@ -50,30 +44,33 @@ namespace Aktie_Logik
                     label.Visible = true;
                      LabelList.Add(label);
                 }
-                if (LabelList[LabelList.Count - 1].Location.X > LabelQueue.Peek().Width)
+                if (LabelList[LabelList.Count - 1].Location.X > LabelQueue.Peek().Width-150)
                 {
                 LabelList.Add(LabelQueue.Dequeue());
                 LabelList[LabelList.Count - 1].Visible = true;
                 }
-                foreach (Label SpecLabel in LabelList)
+                foreach (Label showLabel in LabelList)
                 {
-                    if (SpecLabel.Location.X > this.Width)
+                    if (showLabel.Location.X > this.Width)
                     {
-                        SpecLabel.Visible = false;
-                        SpecLabel.Location = new System.Drawing.Point(0 - SpecLabel.Width, this.Size.Height - 70);
-                        LabelQueue.Enqueue(SpecLabel);
-                        TempList.Add(SpecLabel);
+                   // showLabel.Visible = false;
+                    showLabel.Location = new System.Drawing.Point(0 - showLabel.Width, this.Size.Height - 770);
+                    showLabel.Visible = false;
+                    LabelQueue.Enqueue(showLabel);
+                    delList.Add(showLabel);
                      
                     }
                     else
                     {
-                        SpecLabel.Location = new System.Drawing.Point(SpecLabel.Location.X + 1);
+                    int testheight = this.Size.Height - 100;
+                    //tbxTest.Text += testheight + "\n";
+                        showLabel.Location = new System.Drawing.Point(showLabel.Location.X + 1, testheight);
                     }
 
                 } 
-                foreach(Label SpecLabel in TempList)
+                foreach(Label removeLabel in delList)
                     {
-                    LabelList.Remove(SpecLabel);
+                    LabelList.Remove(removeLabel);
                 }
             
         }
@@ -82,28 +79,28 @@ namespace Aktie_Logik
             string intag = tbxSymbol.Text;
            
             TickerSearch=new TickerSearchResponse(ApiKeyHandler.Key,intag);
-            await TickerSearch.Initialize();
+       
             
-            TickerSearch = await ResponseHelper.SetObjectAsync<TickerSearchResponse>(TickerSearch,TickerSearch.Address);
-            //TODO add jsonstring
+            await ResponseHelper.SetObjectAsync<TickerSearchResponse>(TickerSearch);
+            TickerSearch.EnsureIsSet();
+
             try
             {
                 LbxTickerSök.Items.Clear();
                 LbxTickerSök.ClearSelected();
-           
 
-                for (int i = 0; i < TickerSearch.bestMatches.Count; i++)
+                for (int i = 0;  i < TickerSearch.bestMatches.Count; i++)
                 {
                     LbxTickerSök.Items.Add(TickerSearch.bestMatches[i].name);
                 }
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
-                MessageBox.Show("nullvalue reference " + ex);
+                
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Unexpected Error: "+ex);
+               
             }
             LbxTickerSök.Enabled = true;
 
@@ -111,92 +108,100 @@ namespace Aktie_Logik
 
         private async void btnKör_Click(object sender, EventArgs e)
         {
-            //string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
-
-            //string reqType = lbxRequestType.SelectedItem.ToString();
-
-            string reqType = "Cash_Flow"; //for debugging
-            string symbol = "IBM";
+            string symbol = TickerSearch.bestMatches[LbxTickerSök.SelectedIndex].Symbol;
 
             try
             {
-                // hitta värden här++
-                switch (reqType.Replace(' ','_') )
-                { //response manager needed -> very bad logic otherwise
-                    case "Income_Statement":
-                        IncomeStatementResponse response = new IncomeStatementResponse(ApiKeyHandler.Key,symbol); 
-                        await response.Initialize();
-                        response=await ResponseHelper.SetObjectAsync<IncomeStatementResponse>(response,response.Address);
-                        //this.Enabled = false;
-                        IncomeStatementForm IncomeStatementForm = new IncomeStatementForm(response);
+               
+                switch (lbxRequestType.SelectedIndex)
+                { 
+                    case 0:
+                        IncomeStatementResponse IncomeStatementResponse = new IncomeStatementResponse(ApiKeyHandler.Key,symbol); 
+                      
+                        await ResponseHelper.SetObjectAsync<IncomeStatementResponse>(IncomeStatementResponse);
+                        IncomeStatementResponse.EnsureIsSet();
+                        IncomeStatementForm IncomeStatementForm = new IncomeStatementForm(IncomeStatementResponse);
                         IncomeStatementForm.Show();
                         break;
-                    case "Balance_Sheet":
+                    case 1:
                       
                         BalanceSheetResponse balanceSheetResponse = new BalanceSheetResponse(ApiKeyHandler.Key, symbol);
-                        await balanceSheetResponse.Initialize();
-                        balanceSheetResponse=await ResponseHelper.SetObjectAsync<BalanceSheetResponse>(balanceSheetResponse, balanceSheetResponse.Address);
-
+                   
+                        await ResponseHelper.SetObjectAsync<BalanceSheetResponse>(balanceSheetResponse);
+                        balanceSheetResponse.EnsureIsSet();
                         BalanceSheetForm balanceSheetForm = new BalanceSheetForm(balanceSheetResponse);
                         balanceSheetForm.Show();
 
                         break;
-                    case "Cash_Flow":
-                        CashFlowResponse cashFlowResponse = new CashFlowResponse(("demo"), symbol);
-                        await cashFlowResponse.Initialize();    
-                        cashFlowResponse = await ResponseHelper.SetObjectAsync<CashFlowResponse>(cashFlowResponse, cashFlowResponse.Address);
-
+                    case 2:
+                        CashFlowResponse cashFlowResponse = new CashFlowResponse(ApiKeyHandler.Key, symbol);
+                          
+                        await ResponseHelper.SetObjectAsync<CashFlowResponse>(cashFlowResponse);
+                        cashFlowResponse.EnsureIsSet();
                         CashFlowForm cashFlowForm = new CashFlowForm(cashFlowResponse);
                         cashFlowForm.Show();
+                        break;
+                    case 3:
+
+                        throw new NotImplementedException();
                         
-                        break;
-                    case "Global_Quote":
-                        MessageBox.Show("This feature has not yet been implemented");
-                        //GlobalQuoteResponse globalQuoteResponse = new GlobalQuoteResponse(ApiKeyHandler.Key, symbol);
-                        //await globalQuoteResponse.Initialize();
-                        //globalQuoteResponse=await ResponseHelper.SetObjectAsync<GlobalQuoteResponse>(globalQuoteResponse, globalQuoteResponse.Address);
-                        break;
+
+
                         default:
-                        MessageBox.Show("Internal logic issue");
-                        break;
+                        throw new Exception();
+                       
                 }
                 
                
             }
-            catch (Exception ex)
-            { MessageBox.Show("Exception caught: "+ex);}
+            catch (Exception)
+            { }
         }
-        
-
         private void tbxSymbol_TextChanged(object sender, EventArgs e)
         {
             TextBoxStatus(tbxSymbol, btnSökAktie, 2);
-           
         }
-        
-
-
         private async void LbxTickerSök_SelectedIndexChanged(object sender, EventArgs e)
         {
             tbxTickerSearchInfo.Text = "";
+            tbxOverview.Text = "";
             int index = LbxTickerSök.SelectedIndex;
             if (index != -1)
             {
-               
+                try
+                {
+                    tbxTickerSearchInfo.Text += $"Name: {TickerSearch.bestMatches[index].name} \r\n";
+                    tbxTickerSearchInfo.Text += $"Symbol: {TickerSearch.bestMatches[index].Symbol} \r\n";
+                    tbxTickerSearchInfo.Text += $"Region: {TickerSearch.bestMatches[index].region} \r\n";
+                    tbxTickerSearchInfo.Text += $"Type: {TickerSearch.bestMatches[index].type} \r\n";
+                    tbxTickerSearchInfo.Text += $"Currency: {TickerSearch.bestMatches[index].currency} \r\n";
 
-                tbxTickerSearchInfo.Text += $"Name: {TickerSearch.bestMatches[index].name} \r\n";
-                tbxTickerSearchInfo.Text += $"Symbol: {TickerSearch.bestMatches[index].Symbol} \r\n";
-                tbxTickerSearchInfo.Text += $"Region: {TickerSearch.bestMatches[index].region} \r\n";
-                tbxTickerSearchInfo.Text += $"Type: {TickerSearch.bestMatches[index].type} \r\n";
-                tbxTickerSearchInfo.Text += $"Currency: {TickerSearch.bestMatches[index].currency} \r\n";
+                    GlobalQuoteResponse globalQuoteresponse = new GlobalQuoteResponse(ApiKeyHandler.Key, TickerSearch.bestMatches[index].Symbol);
+                    OverviewResponse overviewResponse = new OverviewResponse(ApiKeyHandler.Key, TickerSearch.bestMatches[index].Symbol);
 
-             
-                lbxRequestType.Enabled = true;
-                GlobalQuoteResponse globalQuoteresponse = new GlobalQuoteResponse(ApiKeyHandler.Key, TickerSearch.bestMatches[index].Symbol);
-                await globalQuoteresponse.Initialize();
-                globalQuoteresponse = await ResponseHelper.SetObjectAsync(globalQuoteresponse, globalQuoteresponse.Address);
-                tbxTickerSearchInfo.Text+="Price: "+globalQuoteresponse.GlobalQuote._05price + globalQuoteresponse.GlobalQuote;
+                    //fix this async
 
+                   await ResponseHelper.SetObjectAsync<GlobalQuoteResponse>(globalQuoteresponse);
+                    await ResponseHelper.SetObjectAsync<OverviewResponse>(overviewResponse);
+                    globalQuoteresponse.EnsureIsSet();
+                    overviewResponse.EnsureIsSet();
+
+                
+                   tbxOverview.Text += $"{overviewResponse.Description}\r\n"; 
+                    tbxTickerSearchInfo.Text += "Price: " + globalQuoteresponse.GlobalQuote._05price+ " (" + TickerSearch.bestMatches[index].currency+")";
+                    tbxOverview.Text +=$"P/E ratio: {overviewResponse.PERatio}\r\n";
+                    tbxOverview.Text += $"Profit margin: {overviewResponse.ProfitMargin}\r\n";
+                    tbxOverview.Text += $"Market capitalization: {overviewResponse.MarketCapitalization}\r\n";
+                    tbxOverview.Text+=$"Dividend yield: {overviewResponse.DividendYield}\r\n";
+                    tbxOverview.Text += $"Beta : {overviewResponse.Beta}\r\n";
+                    tbxOverview.Text += $"ebidta: {overviewResponse.EBITDA}\r\n";
+                    tbxOverview.Text += $"Analyst target price: {overviewResponse.AnalystTargetPrice}\r\n";
+                    lbxRequestType.Enabled = true;
+                }
+                catch (Exception)
+                {
+                 
+                }
             }
             else 
             {
@@ -232,27 +237,38 @@ namespace Aktie_Logik
 
         private async void BaseDataForm_VisibleChanged(object sender, EventArgs e)
         {
-            if (ApiKeyHandler.KeyIsValidated)
+            timer.Stop();
+            if (ApiKeyHandler.KeyIsValidated&&this.Visible==true)
             {
                 
                 gbxAktieSök.Enabled = true;
 
                 LabelQueue.Clear();
-                // Getting a new market response and putting the controls into a queue
+
                 GlobalMarketResponse marketResponse = new GlobalMarketResponse(ApiKeyHandler.Key);
-                await marketResponse.Initialize();
-                marketResponse = await ResponseHelper.SetObjectAsync(marketResponse, marketResponse.Address);
-                foreach (MarketData marketData in marketResponse.Markets)
+           
+
+             
+                await ResponseHelper.SetObjectAsync<GlobalMarketResponse>(marketResponse);
+
+                try
                 {
-                    Label Bannerlabel = new Label();
-                    Bannerlabel.AutoSize = true;
-                    Bannerlabel.Visible = false;
-                    Bannerlabel.Text = "Region: " + marketData.region + "   Current Status: " + marketData.current_status;
-                    Bannerlabel.Location = new System.Drawing.Point(0 - Bannerlabel.Width, this.Size.Height-70);
-                    this.Controls.Add(Bannerlabel);
-                    LabelQueue.Enqueue(Bannerlabel);
+                    foreach (MarketData marketData in marketResponse.Markets)
+                    {
+                        Label Bannerlabel = new Label();
+                        Bannerlabel.AutoSize = true;
+                        Bannerlabel.Visible = false;
+                        Bannerlabel.Text = "Region: " + marketData.region + "   Current Status: " + marketData.current_status;
+                        Bannerlabel.Location = new System.Drawing.Point(80 - Bannerlabel.Width - 140, this.Size.Height);
+                        this.Controls.Add(Bannerlabel);
+                        LabelQueue.Enqueue(Bannerlabel);
+                    }
+
+
+                    timer.Start();
                 }
-                timer.Start();
+                catch (Exception) { }
+               
             }
             else
             {
@@ -277,6 +293,12 @@ namespace Aktie_Logik
             {
                 btnKör.Enabled = true;
             }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            Archival.ClearAllStockData();
+            MessageBox.Show("All data has been cleared");
         }
     }
 

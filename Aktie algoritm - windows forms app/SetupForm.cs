@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Aktie_algoritm___windows_forms_app
+namespace FormsSpace
 {
     public partial class SetupForm : Form
     {

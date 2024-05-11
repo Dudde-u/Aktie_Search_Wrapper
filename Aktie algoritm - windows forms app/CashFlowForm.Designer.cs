@@ -1,4 +1,4 @@
-﻿namespace Aktie_algoritm___windows_forms_app
+﻿namespace FormsSpace
 {
     partial class CashFlowForm
     {
@@ -48,6 +48,7 @@
             // 
             // lblCurrency
             // 
+            this.lblCurrency.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblCurrency.AutoSize = true;
             this.lblCurrency.Location = new System.Drawing.Point(66, 156);
             this.lblCurrency.Name = "lblCurrency";
@@ -67,6 +68,7 @@
             // 
             // lbxAnnualData
             // 
+            this.lbxAnnualData.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lbxAnnualData.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxAnnualData.FormattingEnabled = true;
             this.lbxAnnualData.ItemHeight = 22;
@@ -77,6 +79,7 @@
             // 
             // btnQuarterly4
             // 
+            this.btnQuarterly4.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnQuarterly4.Location = new System.Drawing.Point(1084, 193);
             this.btnQuarterly4.Name = "btnQuarterly4";
             this.btnQuarterly4.Size = new System.Drawing.Size(80, 32);
@@ -86,6 +89,7 @@
             // 
             // btnQuarterly3
             // 
+            this.btnQuarterly3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnQuarterly3.Location = new System.Drawing.Point(1004, 193);
             this.btnQuarterly3.Name = "btnQuarterly3";
             this.btnQuarterly3.Size = new System.Drawing.Size(80, 32);
@@ -95,6 +99,7 @@
             // 
             // btnQuarterly2
             // 
+            this.btnQuarterly2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnQuarterly2.Location = new System.Drawing.Point(924, 193);
             this.btnQuarterly2.Name = "btnQuarterly2";
             this.btnQuarterly2.Size = new System.Drawing.Size(80, 32);
@@ -104,6 +109,7 @@
             // 
             // btnQuarterly1
             // 
+            this.btnQuarterly1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnQuarterly1.Location = new System.Drawing.Point(844, 193);
             this.btnQuarterly1.Name = "btnQuarterly1";
             this.btnQuarterly1.Size = new System.Drawing.Size(80, 32);
@@ -113,6 +119,7 @@
             // 
             // label25
             // 
+            this.label25.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label25.Location = new System.Drawing.Point(734, 197);
@@ -123,6 +130,7 @@
             // 
             // btnAnnual4
             // 
+            this.btnAnnual4.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnAnnual4.Location = new System.Drawing.Point(416, 193);
             this.btnAnnual4.Name = "btnAnnual4";
             this.btnAnnual4.Size = new System.Drawing.Size(80, 32);
@@ -132,6 +140,7 @@
             // 
             // btnAnnual3
             // 
+            this.btnAnnual3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnAnnual3.Location = new System.Drawing.Point(336, 193);
             this.btnAnnual3.Name = "btnAnnual3";
             this.btnAnnual3.Size = new System.Drawing.Size(80, 32);
@@ -141,6 +150,7 @@
             // 
             // btnAnnual2
             // 
+            this.btnAnnual2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnAnnual2.Location = new System.Drawing.Point(256, 193);
             this.btnAnnual2.Name = "btnAnnual2";
             this.btnAnnual2.Size = new System.Drawing.Size(80, 32);
@@ -150,6 +160,7 @@
             // 
             // btnAnnual1
             // 
+            this.btnAnnual1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.btnAnnual1.Location = new System.Drawing.Point(176, 193);
             this.btnAnnual1.Name = "btnAnnual1";
             this.btnAnnual1.Size = new System.Drawing.Size(80, 32);
@@ -159,6 +170,7 @@
             // 
             // label26
             // 
+            this.label26.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label26.Location = new System.Drawing.Point(66, 197);
@@ -169,6 +181,7 @@
             // 
             // lbxQuarterlyDates
             // 
+            this.lbxQuarterlyDates.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lbxQuarterlyDates.Font = new System.Drawing.Font("Microsoft JhengHei UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxQuarterlyDates.FormattingEnabled = true;
             this.lbxQuarterlyDates.HorizontalScrollbar = true;
@@ -181,6 +194,7 @@
             // 
             // lblSymbol
             // 
+            this.lblSymbol.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblSymbol.AutoSize = true;
             this.lblSymbol.Font = new System.Drawing.Font("Microsoft JhengHei UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSymbol.Location = new System.Drawing.Point(64, 53);
@@ -191,6 +205,7 @@
             // 
             // lbxAnnualDates
             // 
+            this.lbxAnnualDates.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lbxAnnualDates.Font = new System.Drawing.Font("Microsoft JhengHei UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbxAnnualDates.FormattingEnabled = true;
             this.lbxAnnualDates.HorizontalScrollbar = true;
@@ -222,8 +237,10 @@
             this.Controls.Add(this.lbxQuarterlyDates);
             this.Controls.Add(this.lblSymbol);
             this.Controls.Add(this.lbxAnnualDates);
+            this.MinimumSize = new System.Drawing.Size(1437, 1047);
             this.Name = "CashFlowForm";
             this.Text = "CashFlowForm";
+            this.TopMost = true;
             this.Shown += new System.EventHandler(this.CashFlowForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

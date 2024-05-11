@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Label = System.Windows.Forms.Label;
 
 
-namespace Class_library
+namespace Class_library //contains some functions for the data forms
 {
     public static class StatementVisualizationHelper
     {

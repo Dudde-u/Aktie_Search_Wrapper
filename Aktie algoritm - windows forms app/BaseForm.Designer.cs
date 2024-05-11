@@ -36,11 +36,13 @@
             this.lblNamn = new System.Windows.Forms.Label();
             this.btnSökAktie = new System.Windows.Forms.Button();
             this.gbxAktieSök = new System.Windows.Forms.GroupBox();
+            this.tbxOverview = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblTickerSök = new System.Windows.Forms.Label();
             this.tbxTickerSearchInfo = new System.Windows.Forms.TextBox();
             this.CheckBoxDemo = new System.Windows.Forms.CheckBox();
             this.btnValidationOpen = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             this.gbxAktieSök.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,6 +56,7 @@
             // 
             // lbxRequestType
             // 
+            this.lbxRequestType.Enabled = false;
             this.lbxRequestType.FormattingEnabled = true;
             this.lbxRequestType.ItemHeight = 20;
             this.lbxRequestType.Items.AddRange(new object[] {
@@ -86,6 +89,7 @@
             // 
             // btnKör
             // 
+            this.btnKör.Enabled = false;
             this.btnKör.Location = new System.Drawing.Point(470, 471);
             this.btnKör.Name = "btnKör";
             this.btnKör.Size = new System.Drawing.Size(124, 51);
@@ -116,6 +120,7 @@
             // 
             // gbxAktieSök
             // 
+            this.gbxAktieSök.Controls.Add(this.tbxOverview);
             this.gbxAktieSök.Controls.Add(this.label2);
             this.gbxAktieSök.Controls.Add(this.lblTickerSök);
             this.gbxAktieSök.Controls.Add(this.tbxTickerSearchInfo);
@@ -126,12 +131,21 @@
             this.gbxAktieSök.Controls.Add(this.lbxRequestType);
             this.gbxAktieSök.Controls.Add(this.tbxSymbol);
             this.gbxAktieSök.Enabled = false;
-            this.gbxAktieSök.Location = new System.Drawing.Point(12, 52);
+            this.gbxAktieSök.Location = new System.Drawing.Point(29, 106);
             this.gbxAktieSök.Name = "gbxAktieSök";
-            this.gbxAktieSök.Size = new System.Drawing.Size(786, 665);
+            this.gbxAktieSök.Size = new System.Drawing.Size(1059, 900);
             this.gbxAktieSök.TabIndex = 8;
             this.gbxAktieSök.TabStop = false;
-            this.gbxAktieSök.Text = "Aktie Sök";
+            this.gbxAktieSök.Text = "Stock Search";
+            // 
+            // tbxOverview
+            // 
+            this.tbxOverview.Location = new System.Drawing.Point(748, 170);
+            this.tbxOverview.Multiline = true;
+            this.tbxOverview.Name = "tbxOverview";
+            this.tbxOverview.ReadOnly = true;
+            this.tbxOverview.Size = new System.Drawing.Size(265, 321);
+            this.tbxOverview.TabIndex = 12;
             // 
             // label2
             // 
@@ -181,16 +195,27 @@
             this.btnValidationOpen.UseVisualStyleBackColor = true;
             this.btnValidationOpen.Click += new System.EventHandler(this.btnValidationOpen_Click);
             // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(29, 25);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(230, 40);
+            this.btnClear.TabIndex = 18;
+            this.btnClear.Text = "Clear stock data";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // BaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1875, 1182);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnValidationOpen);
             this.Controls.Add(this.CheckBoxDemo);
             this.Controls.Add(this.gbxAktieSök);
             this.Name = "BaseForm";
-            this.Text = "Form1";
+            this.Text = "Stock Analtyzer";
             this.Shown += new System.EventHandler(this.BaseDataForm_Shown);
             this.VisibleChanged += new System.EventHandler(this.BaseDataForm_VisibleChanged);
             this.gbxAktieSök.ResumeLayout(false);
@@ -215,6 +240,8 @@
         private System.Windows.Forms.CheckBox CheckBoxDemo;
         private System.Windows.Forms.Button btnValidationOpen;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox tbxOverview;
+        private System.Windows.Forms.Button btnClear;
     }
 }
 

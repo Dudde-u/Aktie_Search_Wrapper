@@ -1,56 +1,73 @@
 ﻿
 
+using Class_library;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
-
-
-
-
-
 namespace ClassLibrary
 {
+    //class that helps with getting data from the API
 
-
-    public class ResponseHelper
+    public class ResponseHelper 
     {
 
 
-        public static string JsonString { get; set; }
-        public static string Symbol { get; set; }
-        public static string reqType { get; set; }
-        public static string Address { get; set; }
-        public static string apiKey { get; set; }
-
-
         //method returns an object enabling it to be async contrary to using ref etc
-        public static async Task<TargetClass> SetObjectAsync<TargetClass>(TargetClass target, string Address)
+        public static async Task SetObjectAsync<TargetClass>(ISettable target)
         {
+            target.IsSet = false;
+            if (target is ISaveable)
+            {
+                ISaveable tempSaveable = (ISaveable)target;
 
-            ResponseHelper.Address = Address;
-
-
-            //Gets the JSON data 
-            HttpClient httpClient = HttpClientProvider.GetHttpClient();
-
-            HttpResponseMessage response = await httpClient.GetAsync(Address);
-
-            string JsonString = await response.Content.ReadAsStringAsync();
-
-            ResponseHelper.JsonString = JsonString;
+                Archival.GetData(tempSaveable); //get archived data if it exists
+            }
 
 
-            //Deserealization of said JSON data
-            TargetClass ReturnObject = default(TargetClass);
             try
             {
-                ReturnObject = await Task.Run(() => JsonConvert.DeserializeObject<TargetClass>(JsonString));
 
+                if (target.JsonString == null) // if the data is not already stored in the object, get it from the API
+                {
+                    //Gets the JSON data
+                    HttpClient httpClient = HttpClientProvider.GetHttpClient();
+
+                    HttpResponseMessage response = await httpClient.GetAsync(target.Address);
+
+                    response.EnsureSuccessStatusCode();
+
+                    target.JsonString = await response.Content.ReadAsStringAsync();
+
+                    
+                    string exceptionstring = "Thank you for using Alpha Vantage!";
+                    
+                    if (target.JsonString.Contains(exceptionstring))
+                    {
+                        MessageBox.Show("API rate limit reached");
+                        return;
+                    }
+
+
+                    if ((target.JsonString.Length > 40) && target is ISaveable saveable) // if data is more or less empty, don't save it
+                    {
+                        Archival.SaveToFile(saveable); // Save the data that has been requested
+                    }
+
+                }
+
+                //Populate the object
+
+
+                JsonConvert.PopulateObject(target.JsonString, target);
+
+                target.IsSet = true;
             }
+
             catch (HttpRequestException ex)
             {
                 MessageBox.Show($"HTTP Request Exception: {ex.Message}");
@@ -59,13 +76,10 @@ namespace ClassLibrary
             {
                 MessageBox.Show($"JSON Deserialization Exception: {ex.Message}");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+                MessageBox.Show($"An unexpected error occurred");
             }
-
-
-            return ReturnObject;
         }
     }
     public static class HttpClientProvider

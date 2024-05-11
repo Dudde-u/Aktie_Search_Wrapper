@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Aktie_algoritm___windows_forms_app
+namespace FormsSpace
 {
     public partial class CashFlowForm : Form
     {
@@ -162,7 +162,7 @@ namespace Aktie_algoritm___windows_forms_app
                     QuarterlyOffset = 10;
                     break;
                 default:
-                    throw new NotImplementedException(); //this should not happen unless configuration malfunctions
+                    throw new NotImplementedException(); //this should not happen unless something malfunctions
 
             }
         }
@@ -199,14 +199,5 @@ namespace Aktie_algoritm___windows_forms_app
             DefaultTextList.Add("Net Income: ");
         }
 
-        private void lbxAnnualDates_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lbxQuarterlyDates_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -1,27 +1,15 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
-using Class_library;
+﻿using Class_library;
 using ClassLibrary;
-
-
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using Label = System.Windows.Forms.Label;
 
-namespace Aktie_algoritm___windows_forms_app
+namespace FormsSpace
 {
     public partial class IncomeStatementForm : Form
     {
-        
+
 
         public IncomeStatementForm(IncomeStatementResponse incomeStatementResponse)
         {
@@ -29,7 +17,13 @@ namespace Aktie_algoritm___windows_forms_app
             incomestatement = incomeStatementResponse;
             AnnualOffset = 1;
             QuarterlyOffset = 1;
-            
+
+            if (incomestatement.JsonString == null)
+            {
+                MessageBox.Show("No data available for this company");
+                this.Close();
+            }
+
             this.btnQuarterly1.Click += this.ReloadQuarterlyData;
             this.btnQuarterly2.Click += this.ReloadQuarterlyData;
             this.btnQuarterly3.Click += this.ReloadQuarterlyData;
@@ -42,9 +36,9 @@ namespace Aktie_algoritm___windows_forms_app
         }
         List<Label> LabelsAnnual = new List<Label>();
         List<Label> LabelsQuarterly = new List<Label>();
-        public int AnnualOffset {  get; set; }
-        public int QuarterlyOffset {  get; set; }
-        
+        public int AnnualOffset { get; set; }
+        public int QuarterlyOffset { get; set; }
+
         private IncomeStatementResponse incomestatement;
         private void BindLabels()
         {
@@ -55,11 +49,11 @@ namespace Aktie_algoritm___windows_forms_app
                     LabelsAnnual.Add((Label)control);
                 }
             }
-            foreach(Control control in ICdataPanel_Quarterly.Controls)
+            foreach (Control control in ICdataPanel_Quarterly.Controls)
             {
                 if (control is Label) //redundancy
                 {
-                    LabelsQuarterly.Add((Label) control);
+                    LabelsQuarterly.Add((Label)control);
                 }
             }
             StatementVisualizationHelper.BubbleSortLabels(ref LabelsAnnual);
@@ -67,32 +61,32 @@ namespace Aktie_algoritm___windows_forms_app
         }
         private void IncomeStatementForm_Shown(object sender, EventArgs e)
         {
-        lblSymbol.Text = "Ticker/Symbol: "+incomestatement.Symbol;
-        BindLabels();
-        try
-        {
-            foreach (ic_Quarterlyreport report in incomestatement.ic_quarterlyReports)
+            lblSymbol.Text = "Ticker/Symbol: " + incomestatement.Symbol;
+            BindLabels();
+            try
             {
-                string tempDate=report.fiscalDateEnding.Substring(0, 7);
-                        lbxDateQuarterly.Items.Add(tempDate);
+                foreach (ic_Quarterlyreport report in incomestatement.ic_quarterlyReports)
+                {
+                    string tempDate = report.fiscalDateEnding.Substring(0, 7);
+                    lbxDateQuarterly.Items.Add(tempDate);
+                }
+                foreach (ic_Annualreport report in incomestatement.ic_annualReports)
+                {
+                    string tempDate = report.fiscalDateEnding.Substring(0, 4);
+                    lbxDateAnnual.Items.Add(tempDate);
+                }
             }
-            foreach(ic_Annualreport report in incomestatement.ic_annualReports)
-            {
-                string tempDate=report.fiscalDateEnding.Substring(0,4);
-                lbxDateAnnual.Items.Add(tempDate);
-            }
-        }
-        catch (Exception) { MessageBox.Show("Something during loading of this page went wrong, try again"); }
+            catch (Exception) { MessageBox.Show("Something during loading of this page went wrong, try again"); }
         }
         private void ReloadQuarterlyData(object sender, EventArgs e)
         {
 
-        TextToDefault(LabelsQuarterly);
+            TextToDefault(LabelsQuarterly);
 
-        int selectedindex = lbxDateQuarterly.SelectedIndex;
-        int offset = QuarterlyOffset;
+            int selectedindex = lbxDateQuarterly.SelectedIndex;
+            int offset = QuarterlyOffset;
 
-            if (selectedindex != -1 ) //&& selectedindex + offset < lbxDateQuarterly.Items.Count)
+            if (selectedindex != -1) //&& selectedindex + offset < lbxDateQuarterly.Items.Count)
             {
                 if (selectedindex + offset >= lbxDateQuarterly.Items.Count)
                 {
@@ -111,18 +105,18 @@ namespace Aktie_algoritm___windows_forms_app
         }
         private void button_Click(object sender, EventArgs e)
         {
-            Button clickedButton=(Button)sender;
-            string buttonText=clickedButton.Text;
-            switch(buttonText)
+            Button clickedButton = (Button)sender;
+            string buttonText = clickedButton.Text;
+            switch (buttonText)
             {
                 case "1 y":
                     AnnualOffset = 1;
-                        break;
+                    break;
                 case "5 y":
                     AnnualOffset = 5;
                     break;
                 case "10 y":
-                    AnnualOffset= 10;
+                    AnnualOffset = 10;
                     break;
                 case "Max":
                     AnnualOffset = lbxDateAnnual.Items.Count - 1 - lbxDateAnnual.SelectedIndex;
@@ -137,14 +131,14 @@ namespace Aktie_algoritm___windows_forms_app
                     QuarterlyOffset = 5;
                     break;
                 case "10 r":
-                    QuarterlyOffset= 10;
+                    QuarterlyOffset = 10;
                     break;
                 default:
                     throw new NotImplementedException(); //this should not happen unless configuration malfunctions
 
             }
         }
-      private void ReloadAnnualData(object sender, EventArgs e)
+        private void ReloadAnnualData(object sender, EventArgs e)
         {
             TextToDefault(LabelsAnnual);
             int offset = AnnualOffset;
@@ -153,7 +147,7 @@ namespace Aktie_algoritm___windows_forms_app
             {
                 List<string> thisDataList = incomestatement.ic_annualReports[selectedindex].ReturnList();
 
-                if (selectedindex+ offset >= lbxDateAnnual.Items.Count)
+                if (selectedindex + offset >= lbxDateAnnual.Items.Count)
                 {
                     offset = 0;
                 }
@@ -202,5 +196,5 @@ namespace Aktie_algoritm___windows_forms_app
         }
 
     }
-    
+
 }

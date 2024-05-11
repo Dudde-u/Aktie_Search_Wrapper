@@ -1,4 +1,4 @@
-﻿namespace Aktie_algoritm___windows_forms_app
+﻿namespace FormsSpace
 {
     partial class ValidationForm
     {
@@ -32,6 +32,7 @@
             this.btnValidering = new System.Windows.Forms.Button();
             this.lblAktieNyckel = new System.Windows.Forms.Label();
             this.tbxApiKey = new System.Windows.Forms.TextBox();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -74,11 +75,24 @@
             this.tbxApiKey.TabIndex = 13;
             this.tbxApiKey.TextChanged += new System.EventHandler(this.tbxApiKey_TextChanged);
             // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Location = new System.Drawing.Point(174, 183);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(261, 20);
+            this.linkLabel2.TabIndex = 17;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Tag = "https://www.alphavantage.co/support/#api-key";
+            this.linkLabel2.Text = "Get your free AlphaVantage ApiKey";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
             // ValidationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.btnValidering);
             this.Controls.Add(this.lblAktieNyckel);
             this.Controls.Add(this.tbxApiKey);
@@ -98,5 +112,6 @@
         private System.Windows.Forms.Button btnValidering;
         private System.Windows.Forms.Label lblAktieNyckel;
         private System.Windows.Forms.TextBox tbxApiKey;
+        private System.Windows.Forms.LinkLabel linkLabel2;
     }
 }

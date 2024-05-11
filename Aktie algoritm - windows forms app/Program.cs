@@ -1,7 +1,8 @@
-﻿using Aktie_algoritm___windows_forms_app;
+﻿using FormsSpace;
 using System;
 using System.Windows.Forms;
-
+using Class_library;
+using ClassLibrary;
 
 namespace Aktie_Logik
 {
@@ -16,7 +17,7 @@ namespace Aktie_Logik
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new BaseForm());
-   
+  
         }
     }
 }
