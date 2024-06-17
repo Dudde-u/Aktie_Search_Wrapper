@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
+using static ClassLibrary.CashFlowResponse;
+
 
 namespace Class_library
 {
@@ -40,7 +42,6 @@ namespace Class_library
                 else
                 {
                     KeyIsValidated = false;
-                    Key = prekey;
                     return false;
                 }
             }

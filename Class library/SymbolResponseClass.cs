@@ -10,15 +10,7 @@
 
         public SymbolResponse(string apiKey, string symbol) : base(apiKey)
         {
-            Symbol = symbol.ToLower(); //might not be needed realistically
-
-            
-
-        }
-        protected SymbolResponse() : base()
-        {
-
-            
+            Symbol = symbol.ToLower(); 
         }
     }
 }

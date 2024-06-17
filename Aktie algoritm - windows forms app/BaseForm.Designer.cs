@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BaseForm));
             this.tbxSymbol = new System.Windows.Forms.TextBox();
             this.lbxRequestType = new System.Windows.Forms.ListBox();
-            this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
             this.LbxTickerSök = new System.Windows.Forms.ListBox();
             this.btnKör = new System.Windows.Forms.Button();
             this.lblNamn = new System.Windows.Forms.Label();
@@ -40,15 +40,30 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblTickerSök = new System.Windows.Forms.Label();
             this.tbxTickerSearchInfo = new System.Windows.Forms.TextBox();
-            this.CheckBoxDemo = new System.Windows.Forms.CheckBox();
             this.btnValidationOpen = new System.Windows.Forms.Button();
-            this.btnClear = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.DataToolstrip = new System.Windows.Forms.ToolStripDropDownButton();
+            this.clearDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.applicationStrip = new System.Windows.Forms.ToolStripDropDownButton();
+            this.ToolStripMenuItemQuit = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeAuxillaryProgramsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rollingBannerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.onToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.offToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.apiKeyStrip = new System.Windows.Forms.ToolStripDropDownButton();
+            this.changeApiKeyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BannerStateItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.gbxAktieSök.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbxSymbol
             // 
-            this.tbxSymbol.Location = new System.Drawing.Point(208, 77);
+            this.tbxSymbol.Location = new System.Drawing.Point(220, 77);
             this.tbxSymbol.Name = "tbxSymbol";
             this.tbxSymbol.Size = new System.Drawing.Size(276, 26);
             this.tbxSymbol.TabIndex = 0;
@@ -69,12 +84,6 @@
             this.lbxRequestType.TabIndex = 2;
             this.lbxRequestType.SelectedIndexChanged += new System.EventHandler(this.lbxRequestType_SelectedIndexChanged);
             // 
-            // directorySearcher1
-            // 
-            this.directorySearcher1.ClientTimeout = System.TimeSpan.Parse("-00:00:01");
-            this.directorySearcher1.ServerPageTimeLimit = System.TimeSpan.Parse("-00:00:01");
-            this.directorySearcher1.ServerTimeLimit = System.TimeSpan.Parse("-00:00:01");
-            // 
             // LbxTickerSök
             // 
             this.LbxTickerSök.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -90,7 +99,7 @@
             // btnKör
             // 
             this.btnKör.Enabled = false;
-            this.btnKör.Location = new System.Drawing.Point(470, 471);
+            this.btnKör.Location = new System.Drawing.Point(414, 479);
             this.btnKör.Name = "btnKör";
             this.btnKör.Size = new System.Drawing.Size(124, 51);
             this.btnKör.TabIndex = 5;
@@ -144,6 +153,7 @@
             this.tbxOverview.Multiline = true;
             this.tbxOverview.Name = "tbxOverview";
             this.tbxOverview.ReadOnly = true;
+            this.tbxOverview.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbxOverview.Size = new System.Drawing.Size(265, 321);
             this.tbxOverview.TabIndex = 12;
             // 
@@ -175,19 +185,9 @@
             this.tbxTickerSearchInfo.Size = new System.Drawing.Size(284, 172);
             this.tbxTickerSearchInfo.TabIndex = 8;
             // 
-            // CheckBoxDemo
-            // 
-            this.CheckBoxDemo.AutoSize = true;
-            this.CheckBoxDemo.Location = new System.Drawing.Point(1268, 76);
-            this.CheckBoxDemo.Name = "CheckBoxDemo";
-            this.CheckBoxDemo.Size = new System.Drawing.Size(83, 24);
-            this.CheckBoxDemo.TabIndex = 14;
-            this.CheckBoxDemo.Text = "DEMO";
-            this.CheckBoxDemo.UseVisualStyleBackColor = true;
-            // 
             // btnValidationOpen
             // 
-            this.btnValidationOpen.Location = new System.Drawing.Point(1220, 106);
+            this.btnValidationOpen.Location = new System.Drawing.Point(1256, 106);
             this.btnValidationOpen.Name = "btnValidationOpen";
             this.btnValidationOpen.Size = new System.Drawing.Size(154, 49);
             this.btnValidationOpen.TabIndex = 16;
@@ -195,24 +195,143 @@
             this.btnValidationOpen.UseVisualStyleBackColor = true;
             this.btnValidationOpen.Click += new System.EventHandler(this.btnValidationOpen_Click);
             // 
-            // btnClear
+            // toolStrip1
             // 
-            this.btnClear.Location = new System.Drawing.Point(29, 25);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(230, 40);
-            this.btnClear.TabIndex = 18;
-            this.btnClear.Text = "Clear stock data";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.DataToolstrip,
+            this.toolStripSeparator3,
+            this.toolStripSeparator2,
+            this.applicationStrip,
+            this.toolStripSeparator4,
+            this.toolStripSeparator1,
+            this.apiKeyStrip});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(1875, 34);
+            this.toolStrip1.TabIndex = 19;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 34);
+            // 
+            // DataToolstrip
+            // 
+            this.DataToolstrip.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.DataToolstrip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearDataToolStripMenuItem});
+            this.DataToolstrip.Image = ((System.Drawing.Image)(resources.GetObject("DataToolstrip.Image")));
+            this.DataToolstrip.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.DataToolstrip.Name = "DataToolstrip";
+            this.DataToolstrip.Size = new System.Drawing.Size(132, 29);
+            this.DataToolstrip.Text = "Data storage";
+            this.DataToolstrip.ToolTipText = "Data Management";
+            // 
+            // clearDataToolStripMenuItem
+            // 
+            this.clearDataToolStripMenuItem.Name = "clearDataToolStripMenuItem";
+            this.clearDataToolStripMenuItem.Size = new System.Drawing.Size(193, 34);
+            this.clearDataToolStripMenuItem.Text = "Clear data";
+            this.clearDataToolStripMenuItem.Click += new System.EventHandler(this.clearDataToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 34);
+            // 
+            // applicationStrip
+            // 
+            this.applicationStrip.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.applicationStrip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItemQuit,
+            this.closeAuxillaryProgramsToolStripMenuItem,
+            this.rollingBannerToolStripMenuItem});
+            this.applicationStrip.Image = ((System.Drawing.Image)(resources.GetObject("applicationStrip.Image")));
+            this.applicationStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.applicationStrip.Name = "applicationStrip";
+            this.applicationStrip.Size = new System.Drawing.Size(120, 29);
+            this.applicationStrip.Text = "Application";
+            // 
+            // ToolStripMenuItemQuit
+            // 
+            this.ToolStripMenuItemQuit.Name = "ToolStripMenuItemQuit";
+            this.ToolStripMenuItemQuit.Size = new System.Drawing.Size(300, 34);
+            this.ToolStripMenuItemQuit.Text = "Quit";
+            this.ToolStripMenuItemQuit.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // closeAuxillaryProgramsToolStripMenuItem
+            // 
+            this.closeAuxillaryProgramsToolStripMenuItem.Name = "closeAuxillaryProgramsToolStripMenuItem";
+            this.closeAuxillaryProgramsToolStripMenuItem.Size = new System.Drawing.Size(300, 34);
+            this.closeAuxillaryProgramsToolStripMenuItem.Text = "Close auxillary windows";
+            this.closeAuxillaryProgramsToolStripMenuItem.Click += new System.EventHandler(this.closeAuxillaryProgramsToolStripMenuItem_Click);
+            // 
+            // rollingBannerToolStripMenuItem
+            // 
+            this.rollingBannerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.onToolStripMenuItem,
+            this.offToolStripMenuItem});
+            this.rollingBannerToolStripMenuItem.Name = "rollingBannerToolStripMenuItem";
+            this.rollingBannerToolStripMenuItem.Size = new System.Drawing.Size(300, 34);
+            this.rollingBannerToolStripMenuItem.Text = "Rolling banner";
+            // 
+            // onToolStripMenuItem
+            // 
+            this.onToolStripMenuItem.Name = "onToolStripMenuItem";
+            this.onToolStripMenuItem.Size = new System.Drawing.Size(140, 34);
+            this.onToolStripMenuItem.Text = "On";
+            this.onToolStripMenuItem.Click += new System.EventHandler(this.onToolStripMenuItem_Click);
+            // 
+            // offToolStripMenuItem
+            // 
+            this.offToolStripMenuItem.Name = "offToolStripMenuItem";
+            this.offToolStripMenuItem.Size = new System.Drawing.Size(140, 34);
+            this.offToolStripMenuItem.Text = "Off";
+            this.offToolStripMenuItem.Click += new System.EventHandler(this.offToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 34);
+            // 
+            // apiKeyStrip
+            // 
+            this.apiKeyStrip.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.apiKeyStrip.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.changeApiKeyToolStripMenuItem});
+            this.apiKeyStrip.Image = ((System.Drawing.Image)(resources.GetObject("apiKeyStrip.Image")));
+            this.apiKeyStrip.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.apiKeyStrip.Name = "apiKeyStrip";
+            this.apiKeyStrip.Size = new System.Drawing.Size(85, 29);
+            this.apiKeyStrip.Text = "ApiKey";
+            // 
+            // changeApiKeyToolStripMenuItem
+            // 
+            this.changeApiKeyToolStripMenuItem.Name = "changeApiKeyToolStripMenuItem";
+            this.changeApiKeyToolStripMenuItem.Size = new System.Drawing.Size(247, 34);
+            this.changeApiKeyToolStripMenuItem.Text = "Change apiKey";
+            this.changeApiKeyToolStripMenuItem.Click += new System.EventHandler(this.changeApiKeyToolStripMenuItem_Click);
+            // 
+            // BannerStateItem
+            // 
+            this.BannerStateItem.Name = "BannerStateItem";
+            this.BannerStateItem.Size = new System.Drawing.Size(308, 34);
+            this.BannerStateItem.Text = "Rolling banner";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 34);
             // 
             // BaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1875, 1182);
-            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.btnValidationOpen);
-            this.Controls.Add(this.CheckBoxDemo);
             this.Controls.Add(this.gbxAktieSök);
             this.Name = "BaseForm";
             this.Text = "Stock Analtyzer";
@@ -220,6 +339,8 @@
             this.VisibleChanged += new System.EventHandler(this.BaseDataForm_VisibleChanged);
             this.gbxAktieSök.ResumeLayout(false);
             this.gbxAktieSök.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,7 +350,6 @@
 
         private System.Windows.Forms.TextBox tbxSymbol;
         private System.Windows.Forms.ListBox lbxRequestType;
-        private System.DirectoryServices.DirectorySearcher directorySearcher1;
         private System.Windows.Forms.ListBox LbxTickerSök;
         private System.Windows.Forms.Button btnKör;
         private System.Windows.Forms.Label lblNamn;
@@ -237,11 +357,25 @@
         private System.Windows.Forms.GroupBox gbxAktieSök;
         private System.Windows.Forms.TextBox tbxTickerSearchInfo;
         private System.Windows.Forms.Label lblTickerSök;
-        private System.Windows.Forms.CheckBox CheckBoxDemo;
         private System.Windows.Forms.Button btnValidationOpen;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbxOverview;
-        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripDropDownButton DataToolstrip;
+        private System.Windows.Forms.ToolStripMenuItem clearDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton apiKeyStrip;
+        private System.Windows.Forms.ToolStripMenuItem changeApiKeyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripDropDownButton applicationStrip;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemQuit;
+        private System.Windows.Forms.ToolStripMenuItem closeAuxillaryProgramsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem BannerStateItem;
+        private System.Windows.Forms.ToolStripMenuItem rollingBannerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem onToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem offToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 

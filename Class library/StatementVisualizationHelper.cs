@@ -32,9 +32,9 @@ namespace Class_library //contains some functions for the data forms
                 throw new Exception(message: "List count does not match");
             }
             double multiplier;
-            for (int i = 0; i < oldList.Count; i++) // could be either old or new list
+            for (int i = 0; i < oldList.Count; i++) //loop through the lists
             {
-                try //really careful here to handle all outlier data, as "outliers" are quite frequent in the data
+                try //really careful here to handle all outlier data, as "outliers" are quite frequent
                 {
                     string oldValueString = oldList[i];
                     string newValueString = NewList[i];
@@ -56,7 +56,7 @@ namespace Class_library //contains some functions for the data forms
                         newValue = 0;
                     }
 
-                    if (oldValue == 0) //can be condensed
+                    if (oldValue == 0) //can be condensed but it does not matter really
                     {
                         if (newValue > 0)
                         {

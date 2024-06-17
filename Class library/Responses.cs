@@ -1,10 +1,9 @@
-﻿
-using Class_library;
+﻿using Class_library;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System;
 
-namespace ClassLibrary 
+namespace ClassLibrary
 {
 
     // this file contatains all of the response classes that are used to store the data from the API
@@ -15,14 +14,31 @@ namespace ClassLibrary
         public List<bs_AnnualReport> bs_annualReports { get; set; }
         [JsonProperty("quarterlyReports")]
         public List<bs_QuarterlyReport> bs_quarterlyReports { get; set; }
-        public BalanceSheetResponse(string apiKey, string symbol) : base(apiKey, symbol) 
+        public BalanceSheetResponse(string apiKey, string symbol) : base(apiKey, symbol)
         {
             Address = $"https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol={symbol}&apikey={apiKey}";
         }
-       
-        public override string FolderName { get { return "BalanceSheet"; } }
-  
 
+        public override string FolderName { get { return "BalanceSheet"; } }
+
+        public override void ensureIsSet()
+        {
+            try
+            {
+                if (bs_annualReports == null || bs_quarterlyReports == null)
+                {
+                    isSet = false;
+                   
+                }
+                else
+                {
+                    isSet = true;
+
+                }
+               
+            }
+            catch (Exception) { isSet=false; }
+        }
     }
 
     public class bs_AnnualReport //balancesheet
@@ -140,7 +156,7 @@ namespace ClassLibrary
 
         [JsonProperty("commonStockSharesOutstanding")]
         public string commonStockSharesOutstanding { get; set; }
-        public List<string> ReturnList()
+        public List<string> ReturnList()  //this is used to return a list of all the data that should be shown in the forms
         {
             List<string> outlist = new List<string>();
 
@@ -195,7 +211,7 @@ namespace ClassLibrary
         public string reportedCurrency { get; set; }
 
         [JsonProperty("totalAssets")]
-        public string totalAssets { get; set; } //a
+        public string totalAssets { get; set; } 
 
         [JsonProperty("totalCurrentAssets")]
         public string totalCurrentAssets { get; set; }
@@ -204,10 +220,10 @@ namespace ClassLibrary
         public string cashAndCashEquivalentsAtCarryingValue { get; set; }
 
         [JsonProperty("cashAndShortTermInvestments")]
-        public string cashAndShortTermInvestments { get; set; } //a
+        public string cashAndShortTermInvestments { get; set; } 
 
         [JsonProperty("inventory")]
-        public string inventory { get; set; } //a
+        public string inventory { get; set; } 
 
         [JsonProperty("currentNetReceivables")]
         public string currentNetReceivables { get; set; }
@@ -219,10 +235,10 @@ namespace ClassLibrary
         public string propertyPlantEquipment { get; set; }
 
         [JsonProperty("accumulatedDepreciationAmortizationPPE")]
-        public string accumulatedDepreciationAmortizationPPE { get; set; } //a
+        public string accumulatedDepreciationAmortizationPPE { get; set; } 
 
         [JsonProperty("intangibleAssets")]
-        public string intangibleAssets { get; set; } //a
+        public string intangibleAssets { get; set; } 
 
         [JsonProperty("intangibleAssetsExcludingGoodwill")]
         public string intangibleAssetsExcludingGoodwill { get; set; }
@@ -231,13 +247,13 @@ namespace ClassLibrary
         public string goodwill { get; set; }
 
         [JsonProperty("investments")]
-        public string investments { get; set; } //a
+        public string investments { get; set; } 
 
         [JsonProperty("longTermInvestments")]
-        public string longTermInvestments { get; set; } //a
+        public string longTermInvestments { get; set; } 
 
         [JsonProperty("shortTermInvestments")]
-        public string shortTermInvestments { get; set; } //a
+        public string shortTermInvestments { get; set; } 
 
         [JsonProperty("otherCurrentAssets")]
         public string otherCurrentAssets { get; set; }
@@ -246,22 +262,22 @@ namespace ClassLibrary
         public string otherNonCurrentAssets { get; set; }
 
         [JsonProperty("totalLiabilities")]
-        public string totalLiabilities { get; set; } //a
+        public string totalLiabilities { get; set; } 
 
         [JsonProperty("totalCurrentLiabilities")]
         public string totalCurrentLiabilities { get; set; }
 
         [JsonProperty("currentAccountsPayable")]
-        public string currentAccountsPayable { get; set; } //a
+        public string currentAccountsPayable { get; set; } 
 
         [JsonProperty("deferredRevenue")]
-        public string deferredRevenue { get; set; } //a
+        public string deferredRevenue { get; set; } 
 
         [JsonProperty("currentDebt")]
-        public string currentDebt { get; set; }//a
+        public string currentDebt { get; set; }
 
         [JsonProperty("shortTermDebt")]
-        public string shortTermDebt { get; set; }//a
+        public string shortTermDebt { get; set; }
 
         [JsonProperty("totalNonCurrentLiabilities")]
         public string totalNonCurrentLiabilities { get; set; }
@@ -270,7 +286,7 @@ namespace ClassLibrary
         public string capitalLeaseObligations { get; set; }
 
         [JsonProperty("longTermDebt")]
-        public string longTermDebt { get; set; } //a
+        public string longTermDebt { get; set; } 
 
         [JsonProperty("currentLongTermDebt")]
         public string currentLongTermDebt { get; set; }
@@ -300,9 +316,9 @@ namespace ClassLibrary
         public string commonStock { get; set; }
 
         [JsonProperty("commonStockSharesOutstanding")]
-        public string commonStockSharesOutstanding { get; set; } //a
+        public string commonStockSharesOutstanding { get; set; } 
 
-        public List<string> ReturnList()
+        public List<string> ReturnList() //this creates a list of all the data that should be shown in the forms
         {
             List<string> outlist = new List<string>();
             outlist.Add(totalAssets);
@@ -352,15 +368,25 @@ namespace ClassLibrary
         public string Endpoint { get; set; }
 
         [JsonProperty("markets")]
-        public List<MarketData> Markets { get; set; }
+        public List<MarketData> MarketList { get; set; }
         public override string FileIdentifier { get { return "GlobalMarket"; } }
         public override string FolderName { get { return "GlobalMarket"; } }
+        public override int deltaHours { get { return 0; } }
 
-        public GlobalMarketResponse(string apikey) : base(apikey) {
+        public GlobalMarketResponse(string apikey) : base(apikey)
+        {
 
             Address = $"https://www.alphavantage.co/query?function=MARKET_STATUS&apikey={apikey}";
         }
+        public override void ensureIsSet()
+        {
 
+            if (MarketList == null)
+            {
+                isSet = false;
+            }
+            else { isSet = true;}
+        }
 
 
     }
@@ -394,15 +420,32 @@ namespace ClassLibrary
         [JsonProperty("Global Quote")]
         public GlobalQuote GlobalQuote { get; set; }
 
-        public GlobalQuoteResponse(string apiKey, string symbol) : base(apiKey, symbol) 
+        public GlobalQuoteResponse(string apiKey, string symbol) : base(apiKey, symbol)
         {
             Address = $"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={apiKey}";
         }
 
- 
+
         public override string FolderName { get { return "GlobalQuote"; } }
 
-   
+        public override void ensureIsSet()
+        {
+            try
+            {
+                if (GlobalQuote == null)
+                {
+                    isSet = false;
+                }
+                else
+                {
+                    isSet = true;
+                }
+            }
+            catch (Exception) { isSet = false; }
+
+        }
+
+
     }
     public class GlobalQuote  // quote endpoint/global quote
     {
@@ -441,15 +484,38 @@ namespace ClassLibrary
     public class TickerSearchResponse : SymbolResponse
     {
 
-        
+
         [JsonProperty("bestMatches")]
         public List<BestMatch> bestMatches { get; set; }
 
-        public TickerSearchResponse(string apikey, string symbol) : base(apikey, symbol) 
+        public TickerSearchResponse(string apikey, string symbol) : base(apikey, symbol)
         {
             Address = $"https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords={symbol}&apikey={apikey}";
         }
         public override string FolderName { get { return "TickerSearch"; } }
+        
+     
+        public override void ensureIsSet()
+        {
+
+            try
+            {
+
+                if (bestMatches == null)
+                {
+                    isSet = false;
+
+                }
+                else
+                {
+                    isSet = true;
+                } 
+            }
+            catch (Exception) { isSet = false; }
+        }
+
+
+
 
 
     }
@@ -492,7 +558,7 @@ namespace ClassLibrary
         public List<ic_Annualreport> ic_annualReports { get; set; }
         [JsonProperty("quarterlyReports")]
         public List<ic_Quarterlyreport> ic_quarterlyReports { get; set; }
-        public IncomeStatementResponse() { }
+       
         public override string FolderName { get { return "IncomeStatement"; } }
         public IncomeStatementResponse(string apiKey, string symbol) : base(apiKey, symbol)
         {
@@ -500,7 +566,28 @@ namespace ClassLibrary
             Address = "https://www.alphavantage.co/query?function=INCOME_STATEMENT&symbol=" + symbol + "&apikey=" + apiKey;
         }
 
-    
+        public override void ensureIsSet()
+        {
+            try
+            {
+                if (ic_annualReports == null || ic_quarterlyReports == null)
+                {
+                    isSet = false;
+                    return;
+                }
+                else
+                {
+                    isSet = true;
+                    
+                }
+              
+            }
+            catch (Exception)
+            {
+                isSet = false;
+            }
+        }
+
 
 
     }
@@ -590,9 +677,9 @@ namespace ClassLibrary
         public static string[] TextArray { get; set; }
         public List<string> ReturnList()
         {
-            List<string> DataList = new List<string>();
+            List<string> DataList = new List<string>(); //returns a list of all the data that should be shown in the forms
 
-            //not as messy and should have less overhead than reflection
+
             DataList.Add(grossProfit);
             DataList.Add(totalRevenue);
             DataList.Add(costOfRevenue);
@@ -705,7 +792,7 @@ namespace ClassLibrary
         {
             List<string> DataList = new List<string>();
 
-            //not as messy and should have less overhead than reflection
+           
             DataList.Add(grossProfit);
             DataList.Add(totalRevenue);
             DataList.Add(costOfRevenue);
@@ -744,412 +831,453 @@ namespace ClassLibrary
 
         [JsonProperty("quarterlyReports")]
         public List<CF_QuarterlyReport> CF_quarterlyReports { get; set; }
-        public CashFlowResponse(string apiKey, string symbol) : base(apiKey, symbol) 
+        public CashFlowResponse(string apiKey, string symbol) : base(apiKey, symbol)
         {
             Address = $"https://www.alphavantage.co/query?function=CASH_FLOW&symbol={symbol}&apikey={apiKey}";
         }
 
         public override string FolderName { get { return "CashFlow"; } }
-  
-    }
-    public class CF_AnnualReport
-    {
-        [JsonProperty("fiscalDateEnding")]
-        public string fiscalDateEnding { get; set; }
-
-        [JsonProperty("reportedCurrency")]
-        public string reportedCurrency { get; set; }
-
-        [JsonProperty("operatingCashflow")]
-        public string operatingCashflow { get; set; }
-
-        [JsonProperty("paymentsForOperatingActivities")]
-        public string paymentsForOperatingActivities { get; set; }
-
-        [JsonProperty("proceedsFromOperatingActivities")]
-        public string proceedsFromOperatingActivities { get; set; }
-
-        [JsonProperty("changeInOperatingLiabilities")]
-        public string changeInOperatingLiabilities { get; set; }
-
-        [JsonProperty("changeInOperatingAssets")]
-        public string changeInOperatingAssets { get; set; }
-
-        [JsonProperty("depreciationDepletionAndAmortization")]
-        public string depreciationDepletionAndAmortization { get; set; }
-
-        [JsonProperty("capitalExpenditures")]
-        public string capitalExpenditures { get; set; }
-
-        [JsonProperty("changeInReceivables")]
-        public string changeInReceivables { get; set; }
-
-        [JsonProperty("changeInInventory")]
-        public string changeInInventory { get; set; }
-
-        [JsonProperty("profitLoss")]
-        public string profitLoss { get; set; }
-
-        [JsonProperty("cashflowFromInvestment")]
-        public string cashflowFromInvestment { get; set; }
-
-        [JsonProperty("cashflowFromFinancing")]
-        public string cashflowFromFinancing { get; set; }
-
-        [JsonProperty("proceedsFromRepaymentsOfShortTermDebt")]
-        public string proceedsFromRepaymentsOfShortTermDebt { get; set; }
-
-        [JsonProperty("paymentsForRepurchaseOfCommonStock")]
-        public string paymentsForRepurchaseOfCommonStock { get; set; }
-
-        [JsonProperty("paymentsForRepurchaseOfEquity")]
-        public string paymentsForRepurchaseOfEquity { get; set; }
-
-        [JsonProperty("paymentsForRepurchaseOfPreferredStock")]
-        public string paymentsForRepurchaseOfPreferredStock { get; set; }
-
-        [JsonProperty("dividendPayout")]
-        public string dividendPayout { get; set; }
-
-        [JsonProperty("dividendPayoutCommonStock")]
-        public string dividendPayoutCommonStock { get; set; }
-
-        [JsonProperty("dividendPayoutPreferredStock")]
-        public string dividendPayoutPreferredStock { get; set; }
-
-        [JsonProperty("proceedsFromIssuanceOfCommonStock")]
-        public string proceedsFromIssuanceOfCommonStock { get; set; }
-
-        [JsonProperty("proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet")]
-        public string proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet { get; set; }
-
-        [JsonProperty("proceedsFromIssuanceOfPreferredStock")]
-        public string proceedsFromIssuanceOfPreferredStock { get; set; }
-
-        [JsonProperty("proceedsFromRepurchaseOfEquity")]
-        public string proceedsFromRepurchaseOfEquity { get; set; }
-
-        [JsonProperty("proceedsFromSaleOfTreasuryStock")]
-        public string proceedsFromSaleOfTreasuryStock { get; set; }
-
-        [JsonProperty("changeInCashAndCashEquivalents")]
-        public string changeInCashAndCashEquivalents { get; set; }
-
-        [JsonProperty("changeInExchangeRate")]
-        public string changeInExchangeRate { get; set; }
-
-        [JsonProperty("netIncome")]
-        public string netIncome { get; set; }
-        public List<string> ReturnList() //returns a list of all the data that should be shown in the forms
+        public override void ensureIsSet()
         {
-            List<string> returnList = new List<string>();
-            returnList.Add(operatingCashflow);
-            returnList.Add(paymentsForOperatingActivities);
-            returnList.Add(proceedsFromOperatingActivities);
-            returnList.Add(changeInOperatingLiabilities);
-            returnList.Add(changeInOperatingAssets);
-            returnList.Add(depreciationDepletionAndAmortization);
-            returnList.Add(capitalExpenditures);
-            returnList.Add(changeInReceivables);
-            returnList.Add(changeInInventory);
-            returnList.Add(profitLoss);
-            returnList.Add(cashflowFromInvestment);
-            returnList.Add(cashflowFromFinancing);
-            returnList.Add(proceedsFromRepaymentsOfShortTermDebt);
-            returnList.Add(paymentsForRepurchaseOfCommonStock);
-            returnList.Add(paymentsForRepurchaseOfEquity);
-            returnList.Add(paymentsForRepurchaseOfPreferredStock);
-            returnList.Add(dividendPayout);
-            returnList.Add(dividendPayoutCommonStock);
-            returnList.Add(dividendPayoutPreferredStock);
-            returnList.Add(proceedsFromIssuanceOfCommonStock);
-            returnList.Add(proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet);
-            returnList.Add(proceedsFromIssuanceOfPreferredStock);
-            returnList.Add(proceedsFromRepurchaseOfEquity);
-            returnList.Add(proceedsFromSaleOfTreasuryStock);
-            returnList.Add(changeInCashAndCashEquivalents);
-            returnList.Add(changeInExchangeRate);
-            returnList.Add(netIncome);
-            return returnList;
+            try
+            {
+                if (CF_annualReports == null || CF_quarterlyReports == null)
+                {
+                    isSet = false;
+                }
+                else
+                {
+                    isSet = true;
+                }
+            }
+            catch (Exception) { isSet = false; }
+
+        }
+        public class CF_AnnualReport
+        {
+            [JsonProperty("fiscalDateEnding")]
+            public string fiscalDateEnding { get; set; }
+
+            [JsonProperty("reportedCurrency")]
+            public string reportedCurrency { get; set; }
+
+            [JsonProperty("operatingCashflow")]
+            public string operatingCashflow { get; set; }
+
+            [JsonProperty("paymentsForOperatingActivities")]
+            public string paymentsForOperatingActivities { get; set; }
+
+            [JsonProperty("proceedsFromOperatingActivities")]
+            public string proceedsFromOperatingActivities { get; set; }
+
+            [JsonProperty("changeInOperatingLiabilities")]
+            public string changeInOperatingLiabilities { get; set; }
+
+            [JsonProperty("changeInOperatingAssets")]
+            public string changeInOperatingAssets { get; set; }
+
+            [JsonProperty("depreciationDepletionAndAmortization")]
+            public string depreciationDepletionAndAmortization { get; set; }
+
+            [JsonProperty("capitalExpenditures")]
+            public string capitalExpenditures { get; set; }
+
+            [JsonProperty("changeInReceivables")]
+            public string changeInReceivables { get; set; }
+
+            [JsonProperty("changeInInventory")]
+            public string changeInInventory { get; set; }
+
+            [JsonProperty("profitLoss")]
+            public string profitLoss { get; set; }
+
+            [JsonProperty("cashflowFromInvestment")]
+            public string cashflowFromInvestment { get; set; }
+
+            [JsonProperty("cashflowFromFinancing")]
+            public string cashflowFromFinancing { get; set; }
+
+            [JsonProperty("proceedsFromRepaymentsOfShortTermDebt")]
+            public string proceedsFromRepaymentsOfShortTermDebt { get; set; }
+
+            [JsonProperty("paymentsForRepurchaseOfCommonStock")]
+            public string paymentsForRepurchaseOfCommonStock { get; set; }
+
+            [JsonProperty("paymentsForRepurchaseOfEquity")]
+            public string paymentsForRepurchaseOfEquity { get; set; }
+
+            [JsonProperty("paymentsForRepurchaseOfPreferredStock")]
+            public string paymentsForRepurchaseOfPreferredStock { get; set; }
+
+            [JsonProperty("dividendPayout")]
+            public string dividendPayout { get; set; }
+
+            [JsonProperty("dividendPayoutCommonStock")]
+            public string dividendPayoutCommonStock { get; set; }
+
+            [JsonProperty("dividendPayoutPreferredStock")]
+            public string dividendPayoutPreferredStock { get; set; }
+
+            [JsonProperty("proceedsFromIssuanceOfCommonStock")]
+            public string proceedsFromIssuanceOfCommonStock { get; set; }
+
+            [JsonProperty("proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet")]
+            public string proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet { get; set; }
+
+            [JsonProperty("proceedsFromIssuanceOfPreferredStock")]
+            public string proceedsFromIssuanceOfPreferredStock { get; set; }
+
+            [JsonProperty("proceedsFromRepurchaseOfEquity")]
+            public string proceedsFromRepurchaseOfEquity { get; set; }
+
+            [JsonProperty("proceedsFromSaleOfTreasuryStock")]
+            public string proceedsFromSaleOfTreasuryStock { get; set; }
+
+            [JsonProperty("changeInCashAndCashEquivalents")]
+            public string changeInCashAndCashEquivalents { get; set; }
+
+            [JsonProperty("changeInExchangeRate")]
+            public string changeInExchangeRate { get; set; }
+
+            [JsonProperty("netIncome")]
+            public string netIncome { get; set; }
+            public List<string> ReturnList() //returns a list of all the data that should be shown in the forms
+            {
+                List<string> returnList = new List<string>();
+                returnList.Add(operatingCashflow);
+                returnList.Add(paymentsForOperatingActivities);
+                returnList.Add(proceedsFromOperatingActivities);
+                returnList.Add(changeInOperatingLiabilities);
+                returnList.Add(changeInOperatingAssets);
+                returnList.Add(depreciationDepletionAndAmortization);
+                returnList.Add(capitalExpenditures);
+                returnList.Add(changeInReceivables);
+                returnList.Add(changeInInventory);
+                returnList.Add(profitLoss);
+                returnList.Add(cashflowFromInvestment);
+                returnList.Add(cashflowFromFinancing);
+                returnList.Add(proceedsFromRepaymentsOfShortTermDebt);
+                returnList.Add(paymentsForRepurchaseOfCommonStock);
+                returnList.Add(paymentsForRepurchaseOfEquity);
+                returnList.Add(paymentsForRepurchaseOfPreferredStock);
+                returnList.Add(dividendPayout);
+                returnList.Add(dividendPayoutCommonStock);
+                returnList.Add(dividendPayoutPreferredStock);
+                returnList.Add(proceedsFromIssuanceOfCommonStock);
+                returnList.Add(proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet);
+                returnList.Add(proceedsFromIssuanceOfPreferredStock);
+                returnList.Add(proceedsFromRepurchaseOfEquity);
+                returnList.Add(proceedsFromSaleOfTreasuryStock);
+                returnList.Add(changeInCashAndCashEquivalents);
+                returnList.Add(changeInExchangeRate);
+                returnList.Add(netIncome);
+                return returnList;
+            }
+        }
+
+        public class CF_QuarterlyReport
+        {
+            [JsonProperty("fiscalDateEnding")]
+            public string fiscalDateEnding { get; set; }
+
+            [JsonProperty("reportedCurrency")]
+            public string reportedCurrency { get; set; }
+
+            [JsonProperty("operatingCashflow")]
+            public string operatingCashflow { get; set; }
+
+            [JsonProperty("paymentsForOperatingActivities")]
+            public string paymentsForOperatingActivities { get; set; }
+
+            [JsonProperty("proceedsFromOperatingActivities")]
+            public string proceedsFromOperatingActivities { get; set; }
+
+            [JsonProperty("changeInOperatingLiabilities")]
+            public string changeInOperatingLiabilities { get; set; }
+
+            [JsonProperty("changeInOperatingAssets")]
+            public string changeInOperatingAssets { get; set; }
+
+            [JsonProperty("depreciationDepletionAndAmortization")]
+            public string depreciationDepletionAndAmortization { get; set; }
+
+            [JsonProperty("capitalExpenditures")]
+            public string capitalExpenditures { get; set; }
+
+            [JsonProperty("changeInReceivables")]
+            public string changeInReceivables { get; set; }
+
+            [JsonProperty("changeInInventory")]
+            public string changeInInventory { get; set; }
+
+            [JsonProperty("profitLoss")]
+            public string profitLoss { get; set; }
+
+            [JsonProperty("cashflowFromInvestment")]
+            public string cashflowFromInvestment { get; set; }
+
+            [JsonProperty("cashflowFromFinancing")]
+            public string cashflowFromFinancing { get; set; }
+
+            [JsonProperty("proceedsFromRepaymentsOfShortTermDebt")]
+            public string proceedsFromRepaymentsOfShortTermDebt { get; set; }
+
+            [JsonProperty("paymentsForRepurchaseOfCommonStock")]
+            public string paymentsForRepurchaseOfCommonStock { get; set; }
+
+            [JsonProperty("paymentsForRepurchaseOfEquity")]
+            public string paymentsForRepurchaseOfEquity { get; set; }
+
+            [JsonProperty("paymentsForRepurchaseOfPreferredStock")]
+            public string paymentsForRepurchaseOfPreferredStock { get; set; }
+
+            [JsonProperty("dividendPayout")]
+            public string dividendPayout { get; set; }
+
+            [JsonProperty("dividendPayoutCommonStock")]
+            public string dividendPayoutCommonStock { get; set; }
+
+            [JsonProperty("dividendPayoutPreferredStock")]
+            public string dividendPayoutPreferredStock { get; set; }
+
+            [JsonProperty("proceedsFromIssuanceOfCommonStock")]
+            public string proceedsFromIssuanceOfCommonStock { get; set; }
+
+            [JsonProperty("proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet")]
+            public string proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet { get; set; }
+
+            [JsonProperty("proceedsFromIssuanceOfPreferredStock")]
+            public string proceedsFromIssuanceOfPreferredStock { get; set; }
+
+            [JsonProperty("proceedsFromRepurchaseOfEquity")]
+            public string proceedsFromRepurchaseOfEquity { get; set; }
+
+            [JsonProperty("proceedsFromSaleOfTreasuryStock")]
+            public string proceedsFromSaleOfTreasuryStock { get; set; }
+
+            [JsonProperty("changeInCashAndCashEquivalents")]
+            public string changeInCashAndCashEquivalents { get; set; }
+
+            [JsonProperty("changeInExchangeRate")]
+            public string changeInExchangeRate { get; set; }
+
+            [JsonProperty("netIncome")]
+            public string netIncome { get; set; }
+            public List<string> ReturnList()
+            {
+                List<string> returnList = new List<string>(); //returns a list of all the data that should be shown in the forms
+                returnList.Add(operatingCashflow);
+                returnList.Add(paymentsForOperatingActivities);
+                returnList.Add(proceedsFromOperatingActivities);
+                returnList.Add(changeInOperatingLiabilities);
+                returnList.Add(changeInOperatingAssets);
+                returnList.Add(depreciationDepletionAndAmortization);
+                returnList.Add(capitalExpenditures);
+                returnList.Add(changeInReceivables);
+                returnList.Add(changeInInventory);
+                returnList.Add(profitLoss);
+                returnList.Add(cashflowFromInvestment);
+                returnList.Add(cashflowFromFinancing);
+                returnList.Add(proceedsFromRepaymentsOfShortTermDebt);
+                returnList.Add(paymentsForRepurchaseOfCommonStock);
+                returnList.Add(paymentsForRepurchaseOfEquity);
+                returnList.Add(paymentsForRepurchaseOfPreferredStock);
+                returnList.Add(dividendPayout);
+                returnList.Add(dividendPayoutCommonStock);
+                returnList.Add(dividendPayoutPreferredStock);
+                returnList.Add(proceedsFromIssuanceOfCommonStock);
+                returnList.Add(proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet);
+                returnList.Add(proceedsFromIssuanceOfPreferredStock);
+                returnList.Add(proceedsFromRepurchaseOfEquity);
+                returnList.Add(proceedsFromSaleOfTreasuryStock);
+                returnList.Add(changeInCashAndCashEquivalents);
+                returnList.Add(changeInExchangeRate);
+                returnList.Add(netIncome);
+                return returnList;
+            }
+        }
+
+
+        public class TopLosersGainersResponse : BaseResponse // LosersGainers
+        {
+            [JsonProperty("metadata")]
+            public string metadata { get; set; }
+
+            [JsonProperty("last_updated")]
+            public string last_updated { get; set; }
+
+            [JsonProperty("top_gainers")]
+            public List<TopGainer> top_gainers { get; set; }
+
+            [JsonProperty("top_losers")]
+            public List<TopLoser> top_losers { get; set; }
+
+            [JsonProperty("most_actively_traded")]
+            public List<MostActivelyTraded> most_actively_traded { get; set; }
+            public TopLosersGainersResponse(string apikey) : base(apikey)
+            {
+                Address = $"https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey={apikey}";
+            }
+            public class MostActivelyTraded
+            {
+                [JsonProperty("ticker")]
+                public string ticker { get; set; }
+
+                [JsonProperty("price")]
+                public string price { get; set; }
+
+                [JsonProperty("change_amount")]
+                public string change_amount { get; set; }
+
+                [JsonProperty("change_percentage")]
+                public string change_percentage { get; set; }
+
+                [JsonProperty("volume")]
+                public string volume { get; set; }
+            }
+
+            public class TopGainer
+            {
+                [JsonProperty("ticker")]
+                public string ticker { get; set; }
+
+                [JsonProperty("price")]
+                public string price { get; set; }
+
+                [JsonProperty("change_amount")]
+                public string change_amount { get; set; }
+
+                [JsonProperty("change_percentage")]
+                public string change_percentage { get; set; }
+
+                [JsonProperty("volume")]
+                public string volume { get; set; }
+            }
+
+            public class TopLoser
+            {
+                [JsonProperty("ticker")]
+                public string ticker { get; set; }
+
+                [JsonProperty("price")]
+                public string price { get; set; }
+
+                [JsonProperty("change_amount")]
+                public string change_amount { get; set; }
+
+                [JsonProperty("change_percentage")]
+                public string change_percentage { get; set; }
+
+                [JsonProperty("volume")]
+                public string volume { get; set; }
+            }
+
+            public override int deltaHours { get { return 2; } }
+            public override string FolderName { get { return "TopLosersGainers"; } }
+            public override string FileIdentifier { get { return "TopLosersGainers"; } }
+            public override void ensureIsSet()
+            {
+                if (top_gainers == null || top_losers == null || most_actively_traded == null)
+                {
+                    isSet = false;
+                }
+                else
+                {
+                    isSet = true;
+                }
+            }
+        }
+
+
+
+
+
+
+        public class OverviewResponse : SymbolResponse //overview
+        {
+            public string AssetType { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public string CIK { get; set; }
+            public string Exchange { get; set; }
+            public string Currency { get; set; }
+            public string Country { get; set; }
+            public string Sector { get; set; }
+            public string Industry { get; set; }
+            public string FiscalYearEnd { get; set; }
+            public string LatestQuarter { get; set; }
+            public string MarketCapitalization { get; set; }
+            public string EBITDA { get; set; }
+            public string PERatio { get; set; }
+            public string PEGRatio { get; set; }
+            public string BookValue { get; set; }
+            public string DividendPerShare { get; set; }
+
+            public string DividendYield { get; set; }
+
+            public string EPS { get; set; }
+
+            public string RevenuePerShareTTM { get; set; }
+
+            public string ProfitMargin { get; set; }
+
+            public string OperatingMarginTTM { get; set; }
+
+            public string ReturnOnAssetsTTM { get; set; }
+
+            public string ReturnOnEquityTTM { get; set; }
+
+            public string RevenueTTM { get; set; }
+
+            public string GrossProfitTTM { get; set; }
+
+            public string DilutedEPSTTM { get; set; }
+
+            public string QuarterlyEarningsGrowthYOY { get; set; }
+
+            public string QuarterlyRevenueGrowthYOY { get; set; }
+            public string AnalystTargetPrice { get; set; }
+            public string TrailingPE { get; set; }
+            public string ForwardPE { get; set; }
+            public string PriceToSalesRatioTTM { get; set; }
+            public string PriceToBookRatio { get; set; }
+            public string EVToRevenue { get; set; }
+            public string EVToEBITDA { get; set; }
+            public string Beta { get; set; }
+
+            [JsonProperty("52WeekHigh")]
+            public string _52WeekHigh { get; set; }
+            [JsonProperty("52WeekLow")]
+            public string _52WeekLow { get; set; }
+            [JsonProperty("50DayMovingAverage")]
+            public string _50DayMovingAverage { get; set; }
+            [JsonProperty("200DayMovingAverage")]
+            public string _200DayMovingAverage { get; set; }
+            public string SharesOutstanding { get; set; }
+            public string DividendDate { get; set; }
+            public string ExDividendDate { get; set; }
+            public OverviewResponse(string apiKey, string symbol) : base(apiKey, symbol)
+            {
+                Address = "https://www.alphavantage.co/query?function=OVERVIEW&symbol=" + symbol + "&apikey=" + apiKey;
+            }
+            public override string FolderName { get { return "Overview"; } }
+            public override string FileIdentifier { get { return Symbol; } }
+            public override void ensureIsSet()
+            {
+
+                if (ForwardPE == null & Beta == null & Sector == null)
+                {
+                    isSet= false;
+                }
+                else
+                {
+                    isSet = true;
+                }
+                
+            }
         }
     }
-
-    public class CF_QuarterlyReport
-    {
-        [JsonProperty("fiscalDateEnding")]
-        public string fiscalDateEnding { get; set; }
-
-        [JsonProperty("reportedCurrency")]
-        public string reportedCurrency { get; set; }
-
-        [JsonProperty("operatingCashflow")]
-        public string operatingCashflow { get; set; }
-
-        [JsonProperty("paymentsForOperatingActivities")]
-        public string paymentsForOperatingActivities { get; set; }
-
-        [JsonProperty("proceedsFromOperatingActivities")]
-        public string proceedsFromOperatingActivities { get; set; }
-
-        [JsonProperty("changeInOperatingLiabilities")]
-        public string changeInOperatingLiabilities { get; set; }
-
-        [JsonProperty("changeInOperatingAssets")]
-        public string changeInOperatingAssets { get; set; }
-
-        [JsonProperty("depreciationDepletionAndAmortization")]
-        public string depreciationDepletionAndAmortization { get; set; }
-
-        [JsonProperty("capitalExpenditures")]
-        public string capitalExpenditures { get; set; }
-
-        [JsonProperty("changeInReceivables")]
-        public string changeInReceivables { get; set; }
-
-        [JsonProperty("changeInInventory")]
-        public string changeInInventory { get; set; }
-
-        [JsonProperty("profitLoss")]
-        public string profitLoss { get; set; }
-
-        [JsonProperty("cashflowFromInvestment")]
-        public string cashflowFromInvestment { get; set; }
-
-        [JsonProperty("cashflowFromFinancing")]
-        public string cashflowFromFinancing { get; set; }
-
-        [JsonProperty("proceedsFromRepaymentsOfShortTermDebt")]
-        public string proceedsFromRepaymentsOfShortTermDebt { get; set; }
-
-        [JsonProperty("paymentsForRepurchaseOfCommonStock")]
-        public string paymentsForRepurchaseOfCommonStock { get; set; }
-
-        [JsonProperty("paymentsForRepurchaseOfEquity")]
-        public string paymentsForRepurchaseOfEquity { get; set; }
-
-        [JsonProperty("paymentsForRepurchaseOfPreferredStock")]
-        public string paymentsForRepurchaseOfPreferredStock { get; set; }
-
-        [JsonProperty("dividendPayout")]
-        public string dividendPayout { get; set; }
-
-        [JsonProperty("dividendPayoutCommonStock")]
-        public string dividendPayoutCommonStock { get; set; }
-
-        [JsonProperty("dividendPayoutPreferredStock")]
-        public string dividendPayoutPreferredStock { get; set; }
-
-        [JsonProperty("proceedsFromIssuanceOfCommonStock")]
-        public string proceedsFromIssuanceOfCommonStock { get; set; }
-
-        [JsonProperty("proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet")]
-        public string proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet { get; set; }
-
-        [JsonProperty("proceedsFromIssuanceOfPreferredStock")]
-        public string proceedsFromIssuanceOfPreferredStock { get; set; }
-
-        [JsonProperty("proceedsFromRepurchaseOfEquity")]
-        public string proceedsFromRepurchaseOfEquity { get; set; }
-
-        [JsonProperty("proceedsFromSaleOfTreasuryStock")]
-        public string proceedsFromSaleOfTreasuryStock { get; set; }
-
-        [JsonProperty("changeInCashAndCashEquivalents")]
-        public string changeInCashAndCashEquivalents { get; set; }
-
-        [JsonProperty("changeInExchangeRate")]
-        public string changeInExchangeRate { get; set; }
-
-        [JsonProperty("netIncome")]
-        public string netIncome { get; set; }
-        public List<string> ReturnList()
-        {
-            List<string> returnList = new List<string>();
-            returnList.Add(operatingCashflow);
-            returnList.Add(paymentsForOperatingActivities);
-            returnList.Add(proceedsFromOperatingActivities);
-            returnList.Add(changeInOperatingLiabilities);
-            returnList.Add(changeInOperatingAssets);
-            returnList.Add(depreciationDepletionAndAmortization);
-            returnList.Add(capitalExpenditures);
-            returnList.Add(changeInReceivables);
-            returnList.Add(changeInInventory);
-            returnList.Add(profitLoss);
-            returnList.Add(cashflowFromInvestment);
-            returnList.Add(cashflowFromFinancing);
-            returnList.Add(proceedsFromRepaymentsOfShortTermDebt);
-            returnList.Add(paymentsForRepurchaseOfCommonStock);
-            returnList.Add(paymentsForRepurchaseOfEquity);
-            returnList.Add(paymentsForRepurchaseOfPreferredStock);
-            returnList.Add(dividendPayout);
-            returnList.Add(dividendPayoutCommonStock);
-            returnList.Add(dividendPayoutPreferredStock);
-            returnList.Add(proceedsFromIssuanceOfCommonStock);
-            returnList.Add(proceedsFromIssuanceOfLongTermDebtAndCapitalSecuritiesNet);
-            returnList.Add(proceedsFromIssuanceOfPreferredStock);
-            returnList.Add(proceedsFromRepurchaseOfEquity);
-            returnList.Add(proceedsFromSaleOfTreasuryStock);
-            returnList.Add(changeInCashAndCashEquivalents);
-            returnList.Add(changeInExchangeRate);
-            returnList.Add(netIncome);
-            return returnList;
-        }
-    }
-
-
-    public class TopLosersGainersResponse : BaseResponse // LosersGainers
-    {
-        [JsonProperty("metadata")]
-        public string metadata { get; set; }
-
-        [JsonProperty("last_updated")]
-        public string last_updated { get; set; }
-
-        [JsonProperty("top_gainers")]
-        public List<TopGainer> top_gainers { get; set; }
-
-        [JsonProperty("top_losers")]
-        public List<TopLoser> top_losers { get; set; }
-
-        [JsonProperty("most_actively_traded")]
-        public List<MostActivelyTraded> most_actively_traded { get; set; }
-        public TopLosersGainersResponse(string apikey) : base(apikey) 
-        {
-            Address = $"https://www.alphavantage.co/query?function=TOP_GAINERS_LOSERS&apikey={apikey}";
-        }
-        public class MostActivelyTraded
-        {
-            [JsonProperty("ticker")]
-            public string ticker { get; set; }
-
-            [JsonProperty("price")]
-            public string price { get; set; }
-
-            [JsonProperty("change_amount")]
-            public string change_amount { get; set; }
-
-            [JsonProperty("change_percentage")]
-            public string change_percentage { get; set; }
-
-            [JsonProperty("volume")]
-            public string volume { get; set; }
-        }
-
-        public class TopGainer
-        {
-            [JsonProperty("ticker")]
-            public string ticker { get; set; }
-
-            [JsonProperty("price")]
-            public string price { get; set; }
-
-            [JsonProperty("change_amount")]
-            public string change_amount { get; set; }
-
-            [JsonProperty("change_percentage")]
-            public string change_percentage { get; set; }
-
-            [JsonProperty("volume")]
-            public string volume { get; set; }
-        }
-
-        public class TopLoser
-        {
-            [JsonProperty("ticker")]
-            public string ticker { get; set; }
-
-            [JsonProperty("price")]
-            public string price { get; set; }
-
-            [JsonProperty("change_amount")]
-            public string change_amount { get; set; }
-
-            [JsonProperty("change_percentage")]
-            public string change_percentage { get; set; }
-
-            [JsonProperty("volume")]
-            public string volume { get; set; }
-        }
-
-
-
-    }
-
-
-
-
-
-
-    public class OverviewResponse : SymbolResponse
-    {
-        public string AssetType { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string CIK { get; set; }
-        public string Exchange { get; set; }
-        public string Currency { get; set; }
-        public string Country { get; set; }
-        public string Sector { get; set; }
-        public string Industry { get; set; }
-        public string FiscalYearEnd { get; set; }
-        public string LatestQuarter { get; set; }
-        public string MarketCapitalization { get; set; }
-        public string EBITDA { get; set; }
-        public string PERatio { get; set; }
-        public string PEGRatio { get; set; }
-        public string BookValue { get; set; }
-        public string DividendPerShare { get; set; }
-
-        public string DividendYield { get; set; }
-
-        public string EPS { get; set; }
-
-        public string RevenuePerShareTTM { get; set; }
-
-        public string ProfitMargin { get; set; }
-
-        public string OperatingMarginTTM { get; set; }
-
-        public string ReturnOnAssetsTTM { get; set; }
-
-        public string ReturnOnEquityTTM { get; set; }
-
-        public string RevenueTTM { get; set; }
-
-        public string GrossProfitTTM { get; set; }
-
-        public string DilutedEPSTTM { get; set; }
-
-        public string QuarterlyEarningsGrowthYOY { get; set; }
-
-        public string QuarterlyRevenueGrowthYOY { get; set; }
-        public string AnalystTargetPrice { get; set; }
-        public string TrailingPE { get; set; }
-        public string ForwardPE { get; set; }
-        public string PriceToSalesRatioTTM { get; set; }
-        public string PriceToBookRatio { get; set; }
-        public string EVToRevenue { get; set; }
-        public string EVToEBITDA { get; set; }
-        public string Beta { get; set; }
-
-        [JsonProperty("52WeekHigh")]
-        public string _52WeekHigh { get; set; }
-        [JsonProperty("52WeekLow")]
-        public string _52WeekLow { get; set; }
-        [JsonProperty("50DayMovingAverage")]
-        public string _50DayMovingAverage { get; set; }
-        [JsonProperty("200DayMovingAverage")]
-        public string _200DayMovingAverage { get; set; }
-        public string SharesOutstanding { get; set; }
-        public string DividendDate { get; set; }
-        public string ExDividendDate { get; set; }
-        public OverviewResponse(string apiKey, string symbol) : base(apiKey, symbol) 
-        {
-            Address = "https://www.alphavantage.co/query?function=OVERVIEW&symbol=" + symbol + "&apikey=" + apiKey;
-        }
-        public override string FolderName { get { return "Overview"; } }
-      
-    }
-
-
 }
+
+
+

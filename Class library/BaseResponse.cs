@@ -1,38 +1,34 @@
-﻿using System.Threading.Tasks;
+﻿
 
 namespace Class_library
 {
-    public abstract class BaseResponse : ISettable, ISaveable
+    public abstract class BaseResponse : ISaveable, ISettable
     {
-
+        public abstract void ensureIsSet();
         protected string apiKey { get; set; }
         public string Address { get; set; }
         public string JsonString { get; set; }
-        public virtual string FileIdentifier { get; }
-        public virtual string FolderName { get; }
-        public virtual int deltaHours { get; }
-        public bool IsSet { get; set; }
-        public void EnsureIsSet()
-        {
-            if (!IsSet)
-            {
-                throw new System.Exception("Object not set");
-            }
-        }
+        public abstract string FileIdentifier { get; }
+        public abstract string FolderName { get; }
+
+        public abstract int deltaHours {  get; }
+        public bool isSet { get; set; }
+
+
 
 
         protected BaseResponse()
         {
 
-            apiKey = ApiKeyHandler.Key; //maybe remove this line and always call the apikeyhandler
+            apiKey = ApiKeyHandler.Key; 
         }
         public BaseResponse(string apiKey)
         {
 
-            this.apiKey = apiKey; //same thing here
+            this.apiKey = apiKey; 
 
         }
- 
+        
 
     }
 }

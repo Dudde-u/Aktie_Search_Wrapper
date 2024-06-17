@@ -1,4 +1,6 @@
-﻿namespace Class_library
+﻿
+
+namespace Class_library
 {
     public interface ISaveable
     {
@@ -12,7 +14,8 @@
     {
         string JsonString { get; set; }
         string Address { get; set; }
-        bool IsSet { get; set; }
-       
+
+        bool isSet { get; set; }
+        void ensureIsSet();
     }
 }

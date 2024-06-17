@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
-
 namespace Class_library
 {
     //this file contains the code for saving and loading data locally
-    public static class Archival //this could and should be done with JSON
+    public static class Archival
     {
+       
         public static void GetData(ISaveable SaveObject)
         {
             string FileIdentifier = SaveObject.FileIdentifier;
@@ -62,10 +62,9 @@ namespace Class_library
                     SaveObject.JsonString = null;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e);
-                SaveObject.JsonString = null;
+      
             }
         }
         private static void RewriteDataList(string[] oldArray, string filepath)
@@ -111,6 +110,7 @@ namespace Class_library
             string FileIdentifier = SaveObject.FileIdentifier.ToLower();
 
             string filepath = Path.GetFullPath("../../../DATA/SavedStockData/" + SaveObject.FolderName + "/");
+
             File.WriteAllText(filepath + FileIdentifier + ".txt", SaveObject.JsonString);
             File.AppendAllText(filepath + "DataList.txt", FileIdentifier + "," + DateTime.Now.ToUniversalTime() + ";");
         }

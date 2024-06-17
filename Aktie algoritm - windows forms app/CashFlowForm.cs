@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ClassLibrary.CashFlowResponse;
 
 namespace FormsSpace
 {
@@ -74,12 +75,13 @@ namespace FormsSpace
             catch (Exception) { MessageBox.Show("Something during loading of this page went wrong, try again"); }
         }
 
-        private void ReloadAnnualData(object sender, EventArgs e)
+        private  void ReloadAnnualData(object sender, EventArgs e)
         {
             lbxAnnualData.Items.Clear();
 
             int offset = AnnualOffset;
             int selectedindex = lbxAnnualDates.SelectedIndex;
+
             if (selectedindex != -1)
             {
                 List<string> thisDataList = cashFlowResponse.CF_annualReports[selectedindex].ReturnList();
@@ -92,7 +94,7 @@ namespace FormsSpace
 
                 List<string> multiplierList = StatementVisualizationHelper.CompareStatements(PreviousDataList, thisDataList);
 
-                MergeAndShowLists(thisDataList, multiplierList, lbxAnnualData);
+               MergeAndShowLists(thisDataList, multiplierList, lbxAnnualData);
             }
         }
         private void ReloadQuarterlyData(object sender, EventArgs e)

@@ -1,8 +1,5 @@
-﻿using FormsSpace;
-using System;
+﻿using System;
 using System.Windows.Forms;
-using Class_library;
-using ClassLibrary;
 
 namespace Aktie_Logik
 {
